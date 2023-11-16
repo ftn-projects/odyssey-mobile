@@ -10,7 +10,7 @@
         android:id="@+id/splashTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
+        android:fontFamily="@font"
         android:text="@string/app_name"
         android:textColor="@color/cardview_dark_background"
         android:textSize="48sp"

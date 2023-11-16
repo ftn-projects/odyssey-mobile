@@ -1,11 +1,19 @@
 <resources>
-    <string name="app_name">Odyssey</string>
-    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="app_name" translatable="false">Odyssey</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+
+    <string name="navigation_drawer_open">Navigation Drawer Open</string>
+    <string name="navigation_drawer_close">Navigation Drawer Close</string>
+W
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Log out</string>
+    <string name="search">Search</string>
+
+    <string name="example_name">Petar Petrovic</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
