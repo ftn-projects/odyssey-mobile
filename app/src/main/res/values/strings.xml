@@ -9,8 +9,15 @@
 W
     <string name="home">Home</string>
     <string name="profile">Profile</string>
-    <string name="logout">Log out</string>
     <string name="search">Search</string>
+    <string name="admin_users">Users management</string>
+    <string name="admin_reviews">Reviews management</string>
+    <string name="admin_accommodations">Accommodations management</string>
+    <string name="guest_reservations">My reservations</string>
+    <string name="host_accommodations">My accommodations</string>
+    <string name="host_reservations">Reservations</string>
+    <string name="host_stats">Stats</string>
+    <string name="logout">Log out</string>
 
     <string name="example_name">Petar Petrovic</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>

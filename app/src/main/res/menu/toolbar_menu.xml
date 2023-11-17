@@ -2,10 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/nav_search"
+        android:title="@string/search"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="ifRoom" />
+
     <item android:id="@+id/nav_profile"
         android:title="@string/profile"
         android:icon="@drawable/profile_example"
-        android:orderInCategory="100"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
 </menu>
