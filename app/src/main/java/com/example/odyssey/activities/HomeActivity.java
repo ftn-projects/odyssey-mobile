@@ -13,7 +13,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.fragment_guest_main_screen);
         /*
          * Log klasa se koristi za logovanje informacija, errora, warning-a unutar aplikacije.
          * Logovi se ispisuju u logcat delu i moguce ih je filtrirati po zadatom tag-u
