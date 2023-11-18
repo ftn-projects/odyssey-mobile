@@ -6,7 +6,7 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
+    <string name="clear_filter"><u>Clear all</u></string>
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
@@ -43,4 +43,45 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="accommodation_types">
+        <item>Home</item>
+        <item>Apartment</item>
+        <item>Hotel</item>
+    </string-array>
+    <string-array name="accommodation_locations">
+        <item>New York, USA</item>
+        <item>Paris, France</item>
+        <item>Tokyo, Japan</item>
+        <item>Rome, Italy</item>
+        <item>Sydney, Australia</item>
+        <item>Rio de Janeiro, Brazil</item>
+        <item>London, United Kingdom</item>
+        <item>Beijing, China</item>
+        <item>Cairo, Egypt</item>
+        <item>Moscow, Russia</item>
+        <item>Dubai, United Arab Emirates</item>
+        <item>Mumbai, India</item>
+        <item>Cape Town, South Africa</item>
+        <item>Toronto, Canada</item>
+        <item>Seoul, South Korea</item>
+        <item>Berlin, Germany</item>
+        <item>Istanbul, Turkey</item>
+        <item>Buenos Aires, Argentina</item>
+        <item>Barcelona, Spain</item>
+        <item>Singapore, Singapore</item>
+        <item>Bangkok, Thailand</item>
+        <item>Amsterdam, Netherlands</item>
+        <item>Hong Kong, China</item>
+        <item>San Francisco, USA</item>
+        <item>Stockholm, Sweden</item>
+        <item>Mexico City, Mexico</item>
+        <item>Athens, Greece</item>
+        <item>Sao Paulo, Brazil</item>
+        <item>Vienna, Austria</item>
+        <item>Prague, Czech Republic</item>
+    </string-array>
+
 </resources>
