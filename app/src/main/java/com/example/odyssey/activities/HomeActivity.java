@@ -1,36 +1,28 @@
 package com.example.odyssey.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
-import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageButton;
 
 import com.example.odyssey.R;
-import com.example.odyssey.fragments.FilterPopupDialog;
+import com.example.odyssey.fragments.HomeFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.guest_main_screen_layout);
+        setContentView(R.layout.activity_home);
 
-        ImageButton showPopupButton = findViewById(R.id.filter_button);
-        showPopupButton.setOnClickListener(view -> showPopup());
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-    }
 
-    private void showPopup() {
-        FilterPopupDialog dialog = new FilterPopupDialog();
-        dialog.show(getSupportFragmentManager(), "filterPopupDialog");
+        if (savedInstanceState == null) {
+            // Create an instance of HomeFragment
+            HomeFragment homeFragment = new HomeFragment();
+
+            // Use FragmentTransaction to add HomeFragment to the activity
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, homeFragment) // Replace with the ID of your container view
+                    .commit();
+        }
     }
 }
