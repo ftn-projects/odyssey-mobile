@@ -104,7 +104,8 @@
                         android:textSize="18sp"
                         android:backgroundTint="@color/atomic_tangerine"
                         android:textColor="@color/white"
-                        android:fontFamily="@font/montserrat_bold"/>
+                        android:fontFamily="@font/montserrat_bold"
+                        android:onClick="goToHome"/>
 
                     <Space
                         android:layout_width="25dp"
@@ -119,7 +120,8 @@
                         android:textSize="18sp"
                         android:backgroundTint="@color/atomic_tangerine"
                         android:textColor="@color/white"
-                        android:fontFamily="@font/montserrat_bold"/>
+                        android:fontFamily="@font/montserrat_bold"
+                        android:onClick="goToRegister"/>
                 </LinearLayout>
 
 

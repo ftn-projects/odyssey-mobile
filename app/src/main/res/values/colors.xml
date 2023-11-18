@@ -2,9 +2,11 @@
 <resources>
     <color name="footer">#10425B</color>
     <color name="moonstone">#0FA3B1</color>
+    <color name="moonstone_50">#800FA3B1</color>
     <color name="uranian_blue">#B5E2FA</color>
     <color name="atomic_tangerine">#F7A072</color>
     <color name="zirko_siva">#787575</color>
+    <color name="zirko_30">#4D787575</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="mtrl_textinput_default_box_stroke_color">#FF000000</color>
