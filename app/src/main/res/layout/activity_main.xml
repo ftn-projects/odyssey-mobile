@@ -11,7 +11,7 @@
 
     <include
         android:id="@+id/activity_home_base"
-        layout="@layout/activity_home_base" />
+        layout="@layout/activity_main_base" />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/main_nav_view"
@@ -20,6 +20,6 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:menu="@menu/drawer_guest_menu"
-        app:headerLayout="@layout/main_nav_header" />
+        app:headerLayout="@layout/drawer_header" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
