@@ -1,24 +1,36 @@
 package com.example.odyssey.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.odyssey.R;
+import com.example.odyssey.fragments.FilterPopupDialog;
 
 public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.guest_main_screen_layout);
 
-        setContentView(R.layout.fragment_guest_main_screen);
-        /*
-         * Log klasa se koristi za logovanje informacija, errora, warning-a unutar aplikacije.
-         * Logovi se ispisuju u logcat delu i moguce ih je filtrirati po zadatom tag-u
-         * (prvi parametar)
-         * */
-        Log.d("Odyssey", "HomeActivity onCreate()");
+        ImageButton showPopupButton = findViewById(R.id.filter_button);
+        showPopupButton.setOnClickListener(view -> showPopup());
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+    }
+
+    private void showPopup() {
+        FilterPopupDialog dialog = new FilterPopupDialog();
+        dialog.show(getSupportFragmentManager(), "filterPopupDialog");
     }
 }

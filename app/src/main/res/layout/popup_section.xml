@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/filterPopup"
+    android:padding="16dp"
+    android:layout_margin="15dp"
+>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/rounded_corners_filter">
+
+
+        <!-- Header Section -->
+        <RelativeLayout
+            android:id="@+id/headerSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/headerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Filters"
+                android:textColor="@color/black"
+                android:textSize="18sp"/>
+
+            <ImageView
+                android:id="@+id/closeIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_close_icon"
+                android:contentDescription="Close"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/filter_close_button"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="Close"
+                android:background="@drawable/ic_close_icon"
+                android:layout_gravity="center_vertical"
+                android:gravity="fill_vertical|center_horizontal"/>
+
+        </RelativeLayout>
+
+        <!-- Scrollable Section -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="15dp">
+
+                    <!-- First Element: TextView - Date range -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date range"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
+                    <!-- Second Element: LinearLayout with two TextViews - Starting and End dates -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp">
+
+                        <TextView
+                            android:id="@+id/startDateTextFilter"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Starting date not selected"
+                            android:textSize="12sp"/>
+
+                        <TextView
+                            android:id="@+id/endDateTextFilter"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="End date not selected"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+
+                    <!-- Third Element: MaterialButton - Select date -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/selectDateButtonFilter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Select date"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="25dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Price range"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+                    <com.google.android.material.slider.RangeSlider
+                        android:id="@+id/priceRangeSliderFilter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:valueFrom="0.0"
+                        android:valueTo="100.0"
+                        app:values="@array/initial_slider_values" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/priceStartFilter"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Starting price"
+                            app:expandedHintEnabled="false"
+                            >
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/priceStartFilterEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="$0"
+                                />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Add a small gap between the TextInputLayouts -->
+                        <Space
+                            android:layout_width="8dp"
+                            android:layout_height="match_parent" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/priceEndFilter"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Ending price"
+                            app:expandedHintEnabled="false">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/priceEndFilterEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="$70"
+                                />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="25dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" Location"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/locationMenu"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Location">
+
+                        <AutoCompleteTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:simpleItems="@array/accommodation_locations"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="25dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Amenities"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!-- Checkbox 1 -->
+                            <CheckBox
+                                android:id="@+id/checkbox1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="WiFi"/>
+
+                            <CheckBox
+                                android:id="@+id/checkbox2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="TV"/>
+                            <CheckBox
+                                android:id="@+id/checkbox3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Lake view"/>
+                            <CheckBox
+                                android:id="@+id/checkbox4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="BBQ"/>
+                            <CheckBox
+                                android:id="@+id/checkbox5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Beach"/>
+                            <CheckBox
+                                android:id="@+id/checkbox6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Gym"/>
+                        </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="25dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Accommodation type"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/menu"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Type">
+
+                        <AutoCompleteTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            app:simpleItems="@array/accommodation_types"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="25dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Guests"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/NumberOfGuestsFilter"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Number of guests"
+                        app:expandedHintEnabled="false"
+                        android:layout_marginTop="10dp"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/NumberOfGuestsEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </ScrollView>
+        <!-- Footer Section -->
+        <LinearLayout
+            android:id="@+id/footerSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/clearAllText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/clear_filter"
+                android:textColor="@color/black"
+                android:textSize="16sp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/filter_apply_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Apply"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
