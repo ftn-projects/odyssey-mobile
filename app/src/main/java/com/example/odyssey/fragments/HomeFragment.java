@@ -2,12 +2,14 @@ package com.example.odyssey.fragments;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.example.odyssey.R;
 
@@ -57,14 +59,23 @@ public class HomeFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
         Log.i("(¬‿¬)", "HomeFragment onCreate()");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        // Inflate the layout for this fragment;
+        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
+        ImageButton showPopupButton = rootView.findViewById(R.id.filter_button);
+        showPopupButton.setOnClickListener(view -> showPopup());
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        return rootView;
+    }
+
+    private void showPopup() {
+        FilterPopupDialog dialog = new FilterPopupDialog();
+        dialog.show(requireActivity().getSupportFragmentManager(), "filterPopupDialog");
     }
 }
