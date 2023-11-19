@@ -3,6 +3,7 @@ package com.example.odyssey.activities;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -11,6 +12,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuProvider;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         navController = Navigation.findNavController(this, R.id.fragment_container_main);
         appBarConfiguration = new AppBarConfiguration
-                .Builder(R.id.nav_home, R.id.nav_account, R.id.nav_guest_reservations, R.id.nav_host_reservations,
+                .Builder(R.id.nav_home, R.id.nav_guest_reservations, R.id.nav_host_reservations,
                 R.id.nav_host_accommodations, R.id.nav_host_stats, R.id.nav_admin_accommodations, R.id.nav_admin_reviews, R.id.nav_admin_users)
                 .setOpenableLayout(drawer)
                 .build();
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // menu.clear();  if there are menus for specific fragments inside toolbar
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        getMenuInflater().inflate(R.menu.home_menu, menu);
         return true;
     }
 

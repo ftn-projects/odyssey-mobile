@@ -8,64 +8,64 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.example.odyssey.fragments.HomeFragment"
-        android:label="Home"
+        android:label="@string/home"
         tools:layout="@layout/fragment_home">
     </fragment>
 
     <fragment
         android:id="@+id/nav_account"
         android:name="com.example.odyssey.fragments.AccountFragment"
-        android:label="Profile"
+        android:label="@string/account"
         tools:layout="@layout/fragment_account">
     </fragment>
 
     <fragment
         android:id="@+id/nav_guest_reservations"
         android:name="com.example.odyssey.fragments.HomeFragment"
-        android:label="Home"
-        tools:layout="@layout/fragment_account">
+        android:label="@string/guest_reservations"
+        tools:layout="@layout/fragment_home">
     </fragment>
 
     <fragment
         android:id="@+id/nav_host_reservations"
-        android:name="com.example.odyssey.fragments.AccountFragment"
-        android:label="Profile"
-        tools:layout="@layout/fragment_account">
+        android:name="com.example.odyssey.fragments.HomeFragment"
+        android:label="@string/host_reservations"
+        tools:layout="@layout/fragment_home">
     </fragment>
 
     <fragment
         android:id="@+id/nav_host_accommodations"
-        android:name="com.example.odyssey.fragments.AccountFragment"
-        android:label="Profile"
-        tools:layout="@layout/fragment_account">
+        android:name="com.example.odyssey.fragments.HomeFragment"
+        android:label="@string/host_accommodations"
+        tools:layout="@layout/fragment_home">
     </fragment>
 
     <fragment
         android:id="@+id/nav_host_stats"
-        android:name="com.example.odyssey.fragments.AccountFragment"
-        android:label="Profile"
-        tools:layout="@layout/fragment_account">
+        android:name="com.example.odyssey.fragments.HomeFragment"
+        android:label="@string/host_stats"
+        tools:layout="@layout/fragment_home">
     </fragment>
 
     <fragment
         android:id="@+id/nav_admin_users"
-        android:name="com.example.odyssey.fragments.AccountFragment"
-        android:label="Profile"
-        tools:layout="@layout/fragment_account">
+        android:name="com.example.odyssey.fragments.HomeFragment"
+        android:label="@string/admin_users"
+        tools:layout="@layout/fragment_home">
     </fragment>
 
     <fragment
         android:id="@+id/nav_admin_reviews"
-        android:name="com.example.odyssey.fragments.AccountFragment"
-        android:label="Profile"
-        tools:layout="@layout/fragment_account">
+        android:name="com.example.odyssey.fragments.HomeFragment"
+        android:label="@string/admin_reviews"
+        tools:layout="@layout/fragment_home">
     </fragment>
 
     <fragment
         android:id="@+id/nav_admin_accommodations"
-        android:name="com.example.odyssey.fragments.AccountFragment"
-        android:label="Profile"
-        tools:layout="@layout/fragment_account">
+        android:name="com.example.odyssey.fragments.HomeFragment"
+        android:label="@string/admin_accommodations"
+        tools:layout="@layout/fragment_home">
     </fragment>
 
 </navigation>
