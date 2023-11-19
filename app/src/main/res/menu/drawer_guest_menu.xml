@@ -10,7 +10,7 @@
             android:orderInCategory="1" />
 
         <item android:id="@+id/nav_account"
-            android:title="@string/profile"
+            android:title="@string/account"
             android:icon="@drawable/ic_person"
             android:orderInCategory="2" />
 
@@ -19,9 +19,14 @@
             android:icon="@drawable/ic_reservation"
             android:orderInCategory="3" />
 
+        <item android:id="@+id/nav_guest_notifications"
+            android:title="@string/notifications"
+            android:icon="@drawable/ic_notification"
+            android:orderInCategory="4" />
+
         <item android:id="@+id/nav_logout"
             android:title="@string/logout"
             android:icon="@drawable/ic_logout"
-            android:orderInCategory="4" />
+            android:orderInCategory="5" />
     </group>
 </menu>

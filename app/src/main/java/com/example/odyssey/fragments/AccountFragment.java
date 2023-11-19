@@ -2,12 +2,17 @@ package com.example.odyssey.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.odyssey.R;
 
@@ -63,6 +68,54 @@ public class AccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false);
+        View v = inflater.inflate(R.layout.fragment_account, container, false);
+        setHasOptionsMenu(true);
+        return v;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        initViewMode(menu, inflater);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    private void initViewMode(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.edit_menu, menu);
+        menu.findItem(R.id.nav_edit_action).setOnMenuItemClickListener(item -> {
+            Toast.makeText(requireActivity(), "EDITING", Toast.LENGTH_SHORT).show();
+            initEditMode(menu, inflater);
+            return true;
+        });
+        setEditingVisibility(View.GONE);
+    }
+
+    private void initEditMode(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.cancel_confirm_menu, menu);
+        menu.findItem(R.id.nav_cancel_action).setOnMenuItemClickListener(item1 -> {
+            Toast.makeText(requireActivity(), "RESET CHANGES", Toast.LENGTH_SHORT).show();
+
+            // reset fields
+
+            initViewMode(menu, inflater);
+            return true;
+        });
+        menu.findItem(R.id.nav_commit_action).setOnMenuItemClickListener(item2 -> {
+            Toast.makeText(requireActivity(), "SUBMIT CHANGES", Toast.LENGTH_SHORT).show();
+
+            // collect data, send request...
+
+            initViewMode(menu, inflater);
+            return true;
+        });
+        setEditingVisibility(View.VISIBLE);
+    }
+
+    private void setEditingVisibility(int visibility) {
+        requireView().findViewById(R.id.btnEditImage).setVisibility(visibility);
+        requireView().findViewById(R.id.btnConfirmEmail).setVisibility(visibility);
+        requireView().findViewById(R.id.confirm_password_section).setVisibility(visibility);
+        requireView().findViewById(R.id.btnDeactivateOwn).setVisibility(visibility);
     }
 }
