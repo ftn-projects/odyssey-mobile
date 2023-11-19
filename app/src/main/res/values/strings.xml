@@ -79,6 +79,7 @@ W
     <string name="deactivate_account">DEACTIVATE ACCOUNT</string>
     <string name="cancel">Cancel</string>
     <string name="edit">Edit</string>
+    <string name="notifications">Notifications</string>
 
     <string-array name="accommodation_types">
         <item>Home</item>

@@ -27,6 +27,13 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_guest_notifications"
+        android:name="com.example.odyssey.fragments.HomeFragment"
+        android:label="@string/notifications"
+        tools:layout="@layout/fragment_home">
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_host_reservations"
         android:name="com.example.odyssey.fragments.HomeFragment"
         android:label="@string/host_reservations"
@@ -37,6 +44,13 @@
         android:id="@+id/nav_host_accommodations"
         android:name="com.example.odyssey.fragments.HomeFragment"
         android:label="@string/host_accommodations"
+        tools:layout="@layout/fragment_home">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_host_notifications"
+        android:name="com.example.odyssey.fragments.HomeFragment"
+        android:label="@string/notifications"
         tools:layout="@layout/fragment_home">
     </fragment>
 
