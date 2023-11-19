@@ -106,7 +106,7 @@ public class AccountFragment extends Fragment {
 
             // collect data, send request...
 
-            Navigation.findNavController(requireActivity(), R.id.fragment_container_main).navigateUp();
+            initViewMode(menu, inflater);
             return true;
         });
         setEditingVisibility(View.VISIBLE);
