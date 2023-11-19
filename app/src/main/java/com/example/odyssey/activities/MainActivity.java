@@ -1,5 +1,6 @@
 package com.example.odyssey.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -63,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
 
         navView.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(item -> {
             Toast.makeText(MainActivity.this, "LOGOUT", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
             return true;
         });
 
