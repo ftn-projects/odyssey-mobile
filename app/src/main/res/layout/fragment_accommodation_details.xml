@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <ScrollView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <LinearLayout
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/image_slider"
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"
+                app:iss_auto_cycle="true"
+                app:iss_period="1000"
+                app:iss_delay="1000"
+                app:iss_text_align="CENTER"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <!-- Accommodation Name -->
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="The Willow"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="left"
+                        android:layout_marginEnd="8dp"/>
+
+                    <!-- Rating -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="end">
+
+                        <RatingBar
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:rating="4.35"
+                        android:numStars="5"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:progressTint="#FFCC01"
+                        android:scaleX="0.8"
+                        android:scaleY="0.8"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:text=" (4.35)"
+                        android:textSize="16sp"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Home in Novi Sad, Serbia"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="16dp">
+
+                    <!-- First item: ShapeableImageView with the custom profile icon -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="28dp">
+                        <ImageView
+                            android:id="@+id/profileImageView"
+                            app:strokeColor="@color/black"
+                            app:strokeWidth="1dp"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:src="@drawable/user_stock_image"
+                            android:layout_gravity="center_vertical"
+                            android:adjustViewBounds="true"
+                            android:scaleType="centerCrop"/>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Second item: Text "Hosted by Gradimir" -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hosted by Svetlana"
+                        android:textSize="16sp"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:layout_marginStart="8dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="16dp">
+
+                    <!-- First item: Text "About the place" -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="About the place"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:paddingBottom="8dp"/>
+
+                    <!-- Second item: Lorem Ipsum text -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin cursus efficitur augue, vel semper turpis semper a. Integer cursus accumsan nisi, vel varius tellus fermentum in. Suspendisse id elit in urna luctus cursus vel eu urna. Vivamus luctus id augue vel congue. Donec nec lectus vel nunc tincidunt scelerisque. Sed vitae feugiat libero, vel rhoncus sem. Pellentesque quis risus non mauris efficitur finibus."
+                        android:padding="8dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:justificationMode="inter_word"/>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- First item: Text "Amenities" -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Amenities"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="8dp"/>
+
+                    <!-- Second item: Vertical linear layout with amenity groups -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Amenity Group 1 -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_wifi_icon"
+                                android:layout_gravity="center_vertical"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Wifi"
+                                android:fontFamily="@font/montserrat_regular"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="8dp"/>
+                        </LinearLayout>
+
+                        <!-- Amenity Group 2 -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_snowflake_icon"
+                                android:layout_gravity="center_vertical"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Air conditioning"
+                                android:fontFamily="@font/montserrat_regular"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="8dp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_bbq_icon"
+                                android:layout_gravity="center_vertical"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="BBQ"
+                                android:fontFamily="@font/montserrat_regular"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="8dp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_lake_icon"
+                                android:layout_gravity="center_vertical"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Lake view"
+                                android:fontFamily="@font/montserrat_regular"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="8dp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_paw_icon"
+                                android:layout_gravity="center_vertical"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Pet friendly"
+                                android:fontFamily="@font/montserrat_regular"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="8dp"/>
+                        </LinearLayout>
+
+                        <!-- Add more amenity groups as needed -->
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- First item: Text "Amenities" -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Location"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="8dp"/>
+
+                    <!-- Second item: Image with centerCrop -->
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                    android:src="@drawable/navigation_example"
+                    android:scaleType="centerCrop"/>
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- First item: Text "Amenities" -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reviews"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"/>
+
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="1">
+
+                    <!-- Repeat the following TableRow for each rating -->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:padding="8dp">
+
+                        <!-- Rating value -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="5 Stars"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/black"
+                            android:layout_marginEnd="8dp"/>
+
+                        <!-- Progress bar -->
+                        <ProgressBar
+                            android:layout_width="0dp"
+                            android:layout_height="10dp"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:progress="78"
+                        android:progressTint="#FFCC01"
+                        android:backgroundTint="#CCCCCC"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"/>
+
+                        <!-- Review count -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2396 Reviews"
+                        android:textSize="14sp"
+                            android:fontFamily="@font/montserrat_regular"
+                        android:textColor="#999999"/>
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:padding="8dp">
+
+                        <!-- Rating value -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4 Stars"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/black"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:layout_marginEnd="8dp"/>
+
+                        <!-- Progress bar -->
+                        <ProgressBar
+                            android:layout_width="0dp"
+                            android:layout_height="10dp"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:progress="17"
+                            android:progressTint="#FFCC01"
+                            android:backgroundTint="#CCCCCC"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"/>
+
+                        <!-- Review count -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="521 Reviews"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:textColor="#999999"/>
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:padding="8dp">
+
+                        <!-- Rating value -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3 Stars"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/black"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:layout_marginEnd="8dp"/>
+
+                        <!-- Progress bar -->
+                        <ProgressBar
+                            android:layout_width="0dp"
+                            android:layout_height="10dp"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:progress="4"
+                            android:progressTint="#FFCC01"
+                            android:backgroundTint="#CCCCCC"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"/>
+
+                        <!-- Review count -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="123 Reviews"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:textColor="#999999"/>
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:padding="8dp">
+
+                        <!-- Rating value -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2 Stars"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/black"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:layout_marginEnd="8dp"/>
+
+                        <!-- Progress bar -->
+                        <ProgressBar
+                            android:layout_width="0dp"
+                            android:layout_height="10dp"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:progress="1"
+                            android:progressTint="#FFCC01"
+                            android:backgroundTint="#CCCCCC"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"/>
+
+                        <!-- Review count -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="31 Reviews"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:textColor="#999999"/>
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:padding="8dp">
+
+                        <!-- Rating value -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1 Star"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/black"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:layout_marginEnd="8dp"/>
+
+                        <!-- Progress bar -->
+                        <ProgressBar
+                            android:layout_width="0dp"
+                            android:layout_height="10dp"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:progress="0"
+                            android:progressTint="#FFCC01"
+                            android:backgroundTint="#CCCCCC"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"/>
+
+                        <!-- Review count -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 Reviews"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:textColor="#999999"/>
+                    </TableRow>
+                    <!-- Repeat the TableRow for each rating -->
+                </TableLayout>
+
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- RatingBar -->
+                    <RatingBar
+
+                        android:id="@+id/smallRating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="?android:attr/ratingBarStyleIndicator"
+                        android:rating="3"
+                        android:numStars="5"
+                        android:isIndicator="false"
+                        android:progressTint="#FFCC01"
+
+                        />
+
+                    <!-- TextInputLayout with TextInputEditText for the comment -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:hint="Write a comment" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- MaterialButton for submitting the comment -->
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Submit"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:layout_gravity="end"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <com.example.odyssey.fragments.FragmentComment
+                        android:id="@+id/commentCard1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"/>
+                    <com.example.odyssey.fragments.FragmentComment
+                        android:id="@+id/commentCard2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"/>
+                    <com.example.odyssey.fragments.FragmentComment
+                        android:id="@+id/commentCard3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"/>
+                    <com.example.odyssey.fragments.FragmentComment
+                        android:id="@+id/commentCard4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"/>
+                    <com.example.odyssey.fragments.FragmentComment
+                        android:id="@+id/commentCard5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="15dp"
+            android:background="@drawable/top_border">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="$364"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:layout_marginEnd="3dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="night"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/clearAllText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="3 - 5 guests"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/details_complete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Complete"
+                style="@style/Widget.MaterialComponents.Button"/>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

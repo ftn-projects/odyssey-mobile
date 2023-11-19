@@ -1,25 +1,31 @@
 package com.example.odyssey.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatDelegate;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.odyssey.R;
+import com.google.android.material.carousel.MaskableFrameLayout;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
+ * Use the {@link AccommodationDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class AccommodationDetailsFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,7 +36,7 @@ public class HomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public HomeFragment() {
+    public AccommodationDetailsFragment() {
         // Required empty public constructor
     }
 
@@ -40,11 +46,11 @@ public class HomeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
+     * @return A new instance of fragment AccommodationDetailsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
+    public static AccommodationDetailsFragment newInstance(String param1, String param2) {
+        AccommodationDetailsFragment fragment = new AccommodationDetailsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -60,31 +66,24 @@ public class HomeFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        Log.i("(¬‿¬)", "HomeFragment onCreate()");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment;
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        // Inflate the updated layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_accommodation_details, container, false);
 
-        ImageButton showPopupButton = rootView.findViewById(R.id.filter_button);
-        showPopupButton.setOnClickListener(view -> showPopup());
-        AccommodationCard accommodationCard = rootView.findViewById(R.id.accommodationCard1);
-        accommodationCard.setOnClickListener(view -> {
-            AccommodationDetailsFragment accommodationDetailsFragment = new AccommodationDetailsFragment();
-            Navigation.findNavController(requireActivity(), R.id.fragment_container_main).navigate(R.id.nav_accommodation_details);
+        ArrayList<SlideModel> imageList = new ArrayList<>();
 
-        });
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        imageList.add(new SlideModel(R.drawable.accommodation5, ScaleTypes.CENTER_CROP));
+        imageList.add(new SlideModel(R.drawable.accommodation6, ScaleTypes.CENTER_CROP));
+        imageList.add(new SlideModel(R.drawable.accommodation7, ScaleTypes.CENTER_CROP));
 
+        ImageSlider imageSlider = view.findViewById(R.id.image_slider);
+        imageSlider.setImageList(imageList);
+        imageSlider.stopSliding();
 
-        return rootView;
-    }
-
-    private void showPopup() {
-        FilterPopupDialog dialog = new FilterPopupDialog();
-        dialog.show(requireActivity().getSupportFragmentManager(), "filterPopupDialog");
+        return view;
     }
 }
