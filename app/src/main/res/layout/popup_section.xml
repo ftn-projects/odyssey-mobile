@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/filterPopup"
-    android:padding="16dp"
     android:layout_margin="15dp"
 >
 
@@ -30,6 +29,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="Filters"
+                android:fontFamily="@font/montserrat_regular"
                 android:textColor="@color/black"
                 android:textSize="18sp"/>
 
@@ -63,7 +63,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <LinearLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -78,6 +79,7 @@
                         android:layout_height="wrap_content"
                         android:text="Date range"
                         android:textSize="18sp"
+                        android:fontFamily="@font/montserrat_bold"
                         android:textStyle="bold"/>
 
                     <!-- Second Element: LinearLayout with two TextViews - Starting and End dates -->
@@ -93,6 +95,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Starting date not selected"
+                            android:fontFamily="@font/montserrat_bold"
                             android:textSize="12sp"/>
 
                         <TextView
@@ -101,6 +104,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="End date not selected"
+                            android:fontFamily="@font/montserrat_regular"
                             android:textSize="12sp"/>
                     </LinearLayout>
 
@@ -110,6 +114,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Select date"
+                        android:fontFamily="@font/montserrat_regular"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
                 </LinearLayout>
                 <LinearLayout
@@ -121,6 +126,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Price range"
+                        android:fontFamily="@font/montserrat_regular"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
                     <com.google.android.material.slider.RangeSlider
@@ -142,6 +148,7 @@
                             android:layout_weight="1"
                             android:hint="Starting price"
                             app:expandedHintEnabled="false"
+                            android:fontFamily="@font/montserrat_regular"
                             >
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -149,6 +156,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="$0"
+                                android:fontFamily="@font/montserrat_regular"
                                 />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -164,6 +172,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:hint="Ending price"
+                            android:fontFamily="@font/montserrat_regular"
                             app:expandedHintEnabled="false">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -171,6 +180,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="$70"
+                                android:fontFamily="@font/montserrat_regular"
                                 />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -186,6 +196,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" Location"
+                        android:fontFamily="@font/montserrat_bold"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
                     <com.google.android.material.textfield.TextInputLayout
@@ -199,6 +210,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:simpleItems="@array/accommodation_locations"
+                            android:fontFamily="@font/montserrat_regular"
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -212,6 +224,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Amenities"
+                        android:fontFamily="@font/montserrat_bold"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
 
@@ -226,33 +239,34 @@
                                 android:id="@+id/checkbox1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat_regular"
                                 android:text="WiFi"/>
 
                             <CheckBox
                                 android:id="@+id/checkbox2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat_regular"
                                 android:text="TV"/>
                             <CheckBox
                                 android:id="@+id/checkbox3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat_regular"
                                 android:text="Lake view"/>
                             <CheckBox
                                 android:id="@+id/checkbox4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat_regular"
                                 android:text="BBQ"/>
                             <CheckBox
                                 android:id="@+id/checkbox5"
                                 android:layout_width="wrap_content"
+                                android:fontFamily="@font/montserrat_regular"
                                 android:layout_height="wrap_content"
                                 android:text="Beach"/>
-                            <CheckBox
-                                android:id="@+id/checkbox6"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Gym"/>
+
                         </LinearLayout>
                 </LinearLayout>
 
@@ -264,6 +278,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_bold"
                         android:text="Accommodation type"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
@@ -279,6 +294,7 @@
                             android:layout_height="wrap_content"
                             android:inputType="none"
                             app:simpleItems="@array/accommodation_types"
+                            android:fontFamily="@font/montserrat_regular"
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -293,6 +309,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Guests"
+                        android:fontFamily="@font/montserrat_bold"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
                     <com.google.android.material.textfield.TextInputLayout
@@ -308,6 +325,7 @@
                             android:id="@+id/NumberOfGuestsEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_regular"
                             android:inputType="number"
                             />
 
@@ -331,6 +349,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
+                android:fontFamily="@font/montserrat_regular"
                 android:text="@string/clear_filter"
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
@@ -338,6 +357,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/filter_apply_button"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="Apply"

@@ -68,4 +68,12 @@
         tools:layout="@layout/fragment_account">
     </fragment>
 
+    <fragment
+        android:id="@+id/nav_accommodation_details"
+        android:name="com.example.odyssey.fragments.AccommodationDetailsFragment"
+        android:label="Details"
+        tools:layout="@layout/fragment_accommodation_details">
+    </fragment>
+
+
 </navigation>
