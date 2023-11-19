@@ -20,7 +20,6 @@
             android:text="REGISTER"
             android:gravity="center"
             android:textSize="40sp"
-            android:textColor="@color/black"
             android:fontFamily="@font/montserrat_regular"
             android:layout_marginTop="70dp"
             android:layout_marginBottom="40dp"/>
@@ -45,7 +44,6 @@
                 android:layout_height="wrap_content"
                 android:text="Guest"
                 android:fontFamily="@font/montserrat_bold"
-                android:textColor="@color/white"
                 android:textSize="18sp"
                 />
 
@@ -61,7 +59,6 @@
                 android:text="Owner"
                 android:gravity="right|center"
                 android:fontFamily="@font/montserrat_bold"
-                android:textColor="@color/white"
                 android:textSize="18sp"
                 />
 
@@ -81,13 +78,10 @@
                 android:hint="Email"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:textColorHint="@color/zirko_siva"
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusBottomStart="15sp"
                 app:boxCornerRadiusTopEnd="15dp"
-                app:boxCornerRadiusTopStart="15dp"
-                app:boxStrokeColor="@color/black"
-                app:boxBackgroundColor="@color/white">
+                app:boxCornerRadiusTopStart="15dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -105,13 +99,10 @@
                 android:hint="First name"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:textColorHint="@color/zirko_siva"
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusBottomStart="15sp"
                 app:boxCornerRadiusTopEnd="15dp"
-                app:boxCornerRadiusTopStart="15dp"
-                app:boxStrokeColor="@color/black"
-                app:boxBackgroundColor="@color/white">
+                app:boxCornerRadiusTopStart="15dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -128,13 +119,10 @@
                 android:hint="Last name"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:textColorHint="@color/zirko_siva"
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusBottomStart="15sp"
                 app:boxCornerRadiusTopEnd="15dp"
-                app:boxCornerRadiusTopStart="15dp"
-                app:boxStrokeColor="@color/black"
-                app:boxBackgroundColor="@color/white">
+                app:boxCornerRadiusTopStart="15dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -151,13 +139,10 @@
                 android:hint="Address"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:textColorHint="@color/zirko_siva"
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusBottomStart="15sp"
                 app:boxCornerRadiusTopEnd="15dp"
-                app:boxCornerRadiusTopStart="15dp"
-                app:boxStrokeColor="@color/black"
-                app:boxBackgroundColor="@color/white">
+                app:boxCornerRadiusTopStart="15dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -174,13 +159,10 @@
                 android:hint="Phone number"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:textColorHint="@color/zirko_siva"
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusBottomStart="15sp"
                 app:boxCornerRadiusTopEnd="15dp"
-                app:boxCornerRadiusTopStart="15dp"
-                app:boxStrokeColor="@color/black"
-                app:boxBackgroundColor="@color/white">
+                app:boxCornerRadiusTopStart="15dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -198,14 +180,10 @@
                 android:hint="Password"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:textColorHint="@color/zirko_siva"
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusBottomStart="15sp"
                 app:boxCornerRadiusTopEnd="15dp"
-                app:boxCornerRadiusTopStart="15dp"
-                app:boxStrokeColor="@color/black"
-                app:boxBackgroundColor="@color/white"
-                >
+                app:boxCornerRadiusTopStart="15dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -222,14 +200,10 @@
                 android:hint="Confirm password"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:textColorHint="@color/zirko_siva"
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusBottomStart="15sp"
                 app:boxCornerRadiusTopEnd="15dp"
-                app:boxCornerRadiusTopStart="15dp"
-                app:boxStrokeColor="@color/black"
-                app:boxBackgroundColor="@color/white"
-                >
+                app:boxCornerRadiusTopStart="15dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -242,34 +216,33 @@
 
         <LinearLayout
             android:id="@+id/bottomLayoutRegister"
+            android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="40dp">
+            android:layout_marginBottom="40dp"
+            android:paddingStart="17dp"
+            android:paddingEnd="17dp">
+
             <Button
                 android:id="@+id/btnRegisterRegister"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:text="Register"
                 android:textSize="18sp"
-                android:backgroundTint="@color/atomic_tangerine"
-                android:textColor="@color/white"
                 android:fontFamily="@font/montserrat_bold"/>
 
-            <Space
-                android:layout_width="25dp"
-                android:layout_height="1dp" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
 
             <Button
                 android:id="@+id/btnCancel"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:text="Cancel"
                 android:textSize="18sp"
-                android:backgroundTint="@color/atomic_tangerine"
-                android:textColor="@color/white"
                 android:fontFamily="@font/montserrat_bold"
                 android:onClick="goToLogin"/>
         </LinearLayout>

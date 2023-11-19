@@ -60,7 +60,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="end">
+                        android:gravity="center_vertical">
 
                         <RatingBar
                             android:layout_width="wrap_content"
@@ -104,7 +104,6 @@
                         app:cardCornerRadius="28dp">
                         <ImageView
                             android:id="@+id/profileImageView"
-                            app:strokeColor="@color/black"
                             app:strokeWidth="1dp"
                             android:layout_width="56dp"
                             android:layout_height="56dp"
@@ -359,7 +358,6 @@
                             android:text="5 Stars"
                             android:fontFamily="@font/montserrat_regular"
                             android:textSize="18sp"
-                            android:textColor="@android:color/black"
                             android:layout_marginEnd="8dp"/>
 
                         <!-- Progress bar -->
@@ -378,9 +376,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="2396 Reviews"
-                        android:textSize="14sp"
-                            android:fontFamily="@font/montserrat_regular"
-                        android:textColor="#999999"/>
+                            android:textSize="14sp"
+                            android:fontFamily="@font/montserrat_regular" />
                     </TableRow>
                     <TableRow
                         android:layout_width="match_parent"
@@ -394,7 +391,6 @@
                             android:layout_height="wrap_content"
                             android:text="4 Stars"
                             android:textSize="18sp"
-                            android:textColor="@android:color/black"
                             android:fontFamily="@font/montserrat_regular"
                             android:layout_marginEnd="8dp"/>
 
@@ -415,8 +411,7 @@
                             android:layout_height="wrap_content"
                             android:text="521 Reviews"
                             android:textSize="14sp"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:textColor="#999999"/>
+                            android:fontFamily="@font/montserrat_regular" />
                     </TableRow>
                     <TableRow
                         android:layout_width="match_parent"
@@ -430,7 +425,6 @@
                             android:layout_height="wrap_content"
                             android:text="3 Stars"
                             android:textSize="18sp"
-                            android:textColor="@android:color/black"
                             android:fontFamily="@font/montserrat_regular"
                             android:layout_marginEnd="8dp"/>
 
@@ -451,8 +445,7 @@
                             android:layout_height="wrap_content"
                             android:text="123 Reviews"
                             android:textSize="14sp"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:textColor="#999999"/>
+                            android:fontFamily="@font/montserrat_regular" />
                     </TableRow>
                     <TableRow
                         android:layout_width="match_parent"
@@ -466,7 +459,6 @@
                             android:layout_height="wrap_content"
                             android:text="2 Stars"
                             android:textSize="18sp"
-                            android:textColor="@android:color/black"
                             android:fontFamily="@font/montserrat_regular"
                             android:layout_marginEnd="8dp"/>
 
@@ -487,8 +479,7 @@
                             android:layout_height="wrap_content"
                             android:text="31 Reviews"
                             android:textSize="14sp"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:textColor="#999999"/>
+                            android:fontFamily="@font/montserrat_regular" />
                     </TableRow>
                     <TableRow
                         android:layout_width="match_parent"
@@ -502,7 +493,6 @@
                             android:layout_height="wrap_content"
                             android:text="1 Star"
                             android:textSize="18sp"
-                            android:textColor="@android:color/black"
                             android:fontFamily="@font/montserrat_regular"
                             android:layout_marginEnd="8dp"/>
 
@@ -523,8 +513,7 @@
                             android:layout_height="wrap_content"
                             android:text="0 Reviews"
                             android:textSize="14sp"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:textColor="#999999"/>
+                            android:fontFamily="@font/montserrat_regular" />
                     </TableRow>
                     <!-- Repeat the TableRow for each rating -->
                 </TableLayout>
@@ -640,7 +629,6 @@
                         android:text="$364"
                         android:fontFamily="@font/montserrat_regular"
                         android:textStyle="bold"
-                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:layout_marginEnd="3dp"/>
                     <TextView
@@ -649,7 +637,6 @@
                         android:gravity="center_vertical"
                         android:text="night"
                         android:fontFamily="@font/montserrat_regular"
-                        android:textColor="@color/black"
                         android:textSize="16sp"/>
                 </LinearLayout>
                 <TextView
@@ -659,7 +646,6 @@
                     android:gravity="center_vertical"
                     android:text="3 - 5 guests"
                     android:fontFamily="@font/montserrat_regular"
-                    android:textColor="@color/black"
                     android:textSize="16sp"/>
             </LinearLayout>
             <com.google.android.material.button.MaterialButton

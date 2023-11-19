@@ -77,7 +77,6 @@ public class HomeFragment extends Fragment {
             Navigation.findNavController(requireActivity(), R.id.fragment_container_main).navigate(R.id.nav_accommodation_details);
 
         });
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
 
         return rootView;

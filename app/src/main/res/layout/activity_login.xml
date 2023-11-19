@@ -27,7 +27,6 @@
             android:text="LOGIN"
             android:gravity="center"
             android:textSize="40sp"
-            android:textColor="@color/black"
             android:fontFamily="@font/montserrat_regular"
             android:layout_marginBottom="100dp"/>
 
@@ -45,13 +44,10 @@
                 android:hint="Email"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:textColorHint="@color/zirko_siva"
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusBottomStart="15sp"
                 app:boxCornerRadiusTopEnd="15dp"
-                app:boxCornerRadiusTopStart="15dp"
-                app:boxStrokeColor="@color/black"
-                app:boxBackgroundColor="@color/white">
+                app:boxCornerRadiusTopStart="15dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -70,15 +66,11 @@
                 android:hint="Password"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:textColorHint="@color/zirko_siva"
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusBottomStart="15sp"
                 app:boxCornerRadiusTopEnd="15dp"
                 app:boxCornerRadiusTopStart="15dp"
-                app:boxStrokeColor="@color/black"
-                app:boxBackgroundColor="@color/white"
-                app:passwordToggleEnabled="true"
-                >
+                app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -93,33 +85,30 @@
                     android:id="@+id/bottomLayout"
                     android:layout_marginTop="150dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingStart="17dp"
+                    android:paddingEnd="17dp">
 
                     <Button
                         android:id="@+id/btnLogin"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
                         android:layout_height="60dp"
                         android:text="Login"
                         android:textSize="18sp"
-                        android:backgroundTint="@color/atomic_tangerine"
-                        android:textColor="@color/white"
                         android:fontFamily="@font/montserrat_bold"
                         android:onClick="goToHome"/>
 
-                    <Space
-                        android:layout_width="25dp"
-                        android:layout_height="1dp" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
 
                     <Button
                         android:id="@+id/btnRegister"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
                         android:layout_height="60dp"
                         android:text="Register"
                         android:textSize="18sp"
-                        android:backgroundTint="@color/atomic_tangerine"
-                        android:textColor="@color/white"
                         android:fontFamily="@font/montserrat_bold"
                         android:onClick="goToRegister"/>
                 </LinearLayout>
