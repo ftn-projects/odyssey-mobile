@@ -78,6 +78,7 @@ W
     <string name="confirm_password">Confirm password</string>
     <string name="deactivate_account">DEACTIVATE ACCOUNT</string>
     <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
 
     <string-array name="accommodation_types">
         <item>Home</item>

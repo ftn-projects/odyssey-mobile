@@ -2,14 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/nav_cancel_action"
-        android:title="@string/cancel"
-        android:icon="@drawable/ic_cancel"
-        app:showAsAction="ifRoom" />
-
-    <item android:id="@+id/nav_commit_action"
-        android:title="@string/submit"
-        android:icon="@drawable/ic_commit"
+    <item android:id="@+id/nav_edit_action"
+        android:title="@string/edit"
+        android:icon="@drawable/ic_edit"
         app:showAsAction="ifRoom" />
 
 </menu>

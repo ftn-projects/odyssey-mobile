@@ -3,26 +3,18 @@ package com.example.odyssey.fragments;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.transition.Visibility;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.odyssey.R;
-import com.example.odyssey.activities.MainActivity;
-import com.example.odyssey.databinding.ActivityMainBinding;
-import com.google.android.material.navigation.NavigationView;
-
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,25 +75,47 @@ public class AccountFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        initViewMode(menu, inflater);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    private void initViewMode(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.edit_menu, menu);
+        menu.findItem(R.id.nav_edit_action).setOnMenuItemClickListener(item -> {
+            Toast.makeText(requireActivity(), "EDITING", Toast.LENGTH_SHORT).show();
+            initEditMode(menu, inflater);
+            return true;
+        });
+        setEditingVisibility(View.GONE);
+    }
 
-        menu.findItem(R.id.nav_cancel_action).setOnMenuItemClickListener(item -> {
+    private void initEditMode(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.cancel_confirm_menu, menu);
+        menu.findItem(R.id.nav_cancel_action).setOnMenuItemClickListener(item1 -> {
             Toast.makeText(requireActivity(), "RESET CHANGES", Toast.LENGTH_SHORT).show();
 
-//          reset fields
+            // reset fields
 
-            Navigation.findNavController(requireActivity(), R.id.fragment_container_main).navigateUp();
+            initViewMode(menu, inflater);
             return true;
         });
-        menu.findItem(R.id.nav_commit_action).setOnMenuItemClickListener(item -> {
+        menu.findItem(R.id.nav_commit_action).setOnMenuItemClickListener(item2 -> {
             Toast.makeText(requireActivity(), "SUBMIT CHANGES", Toast.LENGTH_SHORT).show();
 
-//          collect data, send request...
+            // collect data, send request...
 
             Navigation.findNavController(requireActivity(), R.id.fragment_container_main).navigateUp();
             return true;
         });
-        super.onCreateOptionsMenu(menu, inflater);
+        setEditingVisibility(View.VISIBLE);
+    }
+
+    private void setEditingVisibility(int visibility) {
+        requireView().findViewById(R.id.btnEditImage).setVisibility(visibility);
+        requireView().findViewById(R.id.btnConfirmEmail).setVisibility(visibility);
+        requireView().findViewById(R.id.confirm_password_section).setVisibility(visibility);
+        requireView().findViewById(R.id.btnDeactivateOwn).setVisibility(visibility);
     }
 }

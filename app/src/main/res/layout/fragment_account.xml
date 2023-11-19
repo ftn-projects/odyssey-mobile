@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:paddingStart="30dp"
             android:paddingEnd="50dp"
             android:paddingVertical="20dp">
@@ -24,10 +24,12 @@
                 android:src="@drawable/profile_example"
                 android:contentDescription="@string/profile_picture" />
             <Button
+                android:id="@+id/btnEditImage"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="20dp"
+                android:visibility="gone"
                 android:text="@string/btn_edit_image"/>
         </LinearLayout>
 
@@ -184,6 +186,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:visibility="gone"
                 android:text="@string/btn_send_confirmation" />
         </LinearLayout>
 
@@ -218,11 +221,13 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/confirm_password_section"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:paddingHorizontal="30dp"
+            android:visibility="gone"
             android:paddingVertical="5dp">
             <TextView
                 android:layout_width="match_parent"
@@ -260,6 +265,7 @@
                 android:text="@string/deactivate_account"
                 android:backgroundTint="@color/deletion_red"
                 android:textColor="@color/white"
+                android:visibility="gone"
                 android:layout_marginBottom="10dp"/>
         </LinearLayout>
 
