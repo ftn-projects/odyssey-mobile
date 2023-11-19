@@ -1,0 +1,99 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp"
+    android:fontFamily="@font/montserrat_regular">
+
+    <!-- Horizontal Linear Layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/bottom_border"
+        android:paddingBottom="5dp">
+
+        <!-- Circular Profile Image -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="28dp">
+        <ImageView
+            android:id="@+id/profileImageView"
+            app:strokeColor="@color/black"
+            app:strokeWidth="1dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/user_stock_image"
+            android:layout_gravity="center_vertical"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Nested Horizontal Linear Layout -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- Text "Gradimir" -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Svetlanina bliznakinja"
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/montserrat_regular"/>
+
+            <!-- Text "5.0" -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5.0"
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/montserrat_regular"/>
+        </LinearLayout>
+
+        <!-- Flag Icon Image on the far right -->
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_flag_icon"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
+    <!-- Comment Texts and Date -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Amazing"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat_regular"/>
+
+    <TextView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:text="Excellent service, clean house. I don't have any complaints. I would recommend this place to anyone."
+    android:layout_marginTop="3dp"
+        android:justificationMode="inter_word"
+        android:fontFamily="@font/montserrat_regular"
+        android:layout_marginBottom="15dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="5 days ago"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:textColor="@color/zirko_siva"/>
+</LinearLayout>

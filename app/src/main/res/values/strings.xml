@@ -4,10 +4,10 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="clear_filter"><u>Clear all</u></string>
-
+    <string name="read_more"><u>Read more</u></string>
+    <string name="placeholder_date"><u>Dec 12-17</u></string>
     <string name="navigation_drawer_open">Navigation Drawer Open</string>
     <string name="navigation_drawer_close">Navigation Drawer Close</string>
-W
     <string name="home">Home</string>
     <string name="account">Account</string>
     <string name="search">Search</string>
