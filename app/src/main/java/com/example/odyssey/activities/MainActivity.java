@@ -52,11 +52,6 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_hamburger);
             actionBar.setHomeButtonEnabled(true);
         }
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
     }
 
     private void setupNavigation(NavigationView navView, DrawerLayout drawer, int menuId) {
