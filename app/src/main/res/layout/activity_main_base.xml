@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
+            app:titleTextColor="?attr/colorOnPrimary"
             app:theme="@style/Theme.Odyssey.NavigationColors"
             app:popupTheme="@style/Theme.Odyssey.PopupOverlay"
             app:layout_scrollFlags="scroll|enterAlways" />

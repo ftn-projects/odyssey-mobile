@@ -22,7 +22,6 @@
             app:cardCornerRadius="28dp">
         <ImageView
             android:id="@+id/profileImageView"
-            app:strokeColor="@color/black"
             app:strokeWidth="1dp"
             android:layout_width="56dp"
             android:layout_height="56dp"
@@ -94,6 +93,5 @@
         android:layout_height="wrap_content"
         android:text="5 days ago"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/montserrat_regular"
-        android:textColor="@color/zirko_siva"/>
+        android:fontFamily="@font/montserrat_regular"/>
 </LinearLayout>

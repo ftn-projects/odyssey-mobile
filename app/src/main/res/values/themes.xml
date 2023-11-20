@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.Odyssey" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+<<<<<<< HEAD
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/pink</item>
         <item name="colorPrimaryVariant">@color/pink</item>
@@ -11,8 +12,41 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/black</item>
+=======
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
+        <item name="colorCustomColor1">#356a22</item>
+        <item name="colorOnCustomColor1">#ffffff</item>
+        <item name="colorCustomColor1Container">#b5f399</item>
+        <item name="colorOnCustomColor1Container">#052100</item>
+        <item name="harmonizeCustomColor1">false</item>
+        <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
+>>>>>>> f687390e50cf45ceffd950ebf1da07e97420eef0
         <!-- Customize your theme here. -->
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/md_theme_light_onSecondaryContainer</item>
         <item name="android:fontFamily">sans-serif-medium</item>
 
         <!-- Action bar  -->
@@ -20,8 +54,6 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
-  
-        <item name="boxStrokeColor">@color/black</item>
     </style>
 
     <!-- Base application theme. -->
@@ -33,18 +65,13 @@
     <style name="Theme.Odyssey.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar" />
     <style name="Theme.Odyssey.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="Theme.Odyssey.NavigationColors" parent="">
-        <item name="colorControlNormal">@color/white</item>
-        <item name="titleTextColor">@color/white</item>
-        <item name="itemTextColor">@color/white</item>
+        <item name="colorControlNormal">?attr/colorOnPrimary</item>
+        <item name="titleTextColor">?attr/colorOnPrimary</item>
+        <item name="itemTextColor">?attr/colorOnPrimary</item>
     </style>
     <style name="Theme.Odyssey.TextInputLayout" parent="@style/Widget.Material3.TextInputEditText.OutlinedBox">
         <item name="boxCornerRadiusTopStart">15dp</item>
-        <item name="boxCornerRadiusBottomStart">15dp</item>
         <item name="boxCornerRadiusTopEnd">15dp</item>
-        <item name="boxCornerRadiusBottomEnd">15dp</item>
-        <item name="boxStrokeColor">@color/black</item>
-        <item name="boxBackgroundColor">?attr/colorOnPrimary</item>
-        <item name="android:textColorHint">@color/zirko_siva</item>
 
         <item name="android:paddingStart">0dp</item>
         <item name="android:paddingEnd">0dp</item>

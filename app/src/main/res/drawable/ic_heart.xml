@@ -9,7 +9,7 @@
     <path
         android:name="empty"
         android:pathData="@string/heart_empty_path"
-        android:fillColor="#e31b23" />
+        android:fillColor="?attr/colorError" />
 
     <clip-path
         android:name="clip"
@@ -18,6 +18,6 @@
     <path
         android:name="full"
         android:pathData="@string/heart_full_path"
-        android:fillColor="#e31b23" />
+        android:fillColor="?attr/colorError" />
 
 </vector>

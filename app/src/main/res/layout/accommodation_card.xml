@@ -47,7 +47,6 @@
                 android:fontFamily="@font/montserrat_semibold"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:textColor="@color/black"
                 android:layout_gravity="center_vertical" />
 
             <ImageView
@@ -68,6 +67,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
