@@ -15,8 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingStart="30dp"
-            android:paddingEnd="50dp"
+            android:paddingStart="47dp"
+            android:paddingEnd="47dp"
             android:paddingVertical="20dp">
             <ImageView
                 android:layout_width="100dp"
@@ -40,20 +40,16 @@
             android:orientation="vertical"
             android:paddingHorizontal="30dp"
             android:paddingVertical="5dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/name"
-                android:fontFamily="@font/cc_montserrat_bold"
-                android:textSize="12sp"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Theme.Odyssey.TextInputLayout"
+                android:hint="@string/name"
                 android:id="@+id/account_input_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
-                    style="@style/Theme.Odyssey.TextInput"
+                    android:id="@+id/field_input_name"
+                    style="@style/Theme.Odyssey.TextInputNotEditable"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_regular"
@@ -69,20 +65,16 @@
             android:orientation="vertical"
             android:paddingHorizontal="30dp"
             android:paddingVertical="5dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/surname"
-                android:fontFamily="@font/cc_montserrat_bold"
-                android:textSize="12sp"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Theme.Odyssey.TextInputLayout"
+                android:hint="@string/surname"
                 android:id="@+id/account_input_surname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
-                    style="@style/Theme.Odyssey.TextInput"
+                    style="@style/Theme.Odyssey.TextInputNotEditable"
+                    android:id="@+id/field_input_surname"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_regular"
@@ -98,20 +90,16 @@
             android:orientation="vertical"
             android:paddingHorizontal="30dp"
             android:paddingVertical="5dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/address"
-                android:fontFamily="@font/cc_montserrat_bold"
-                android:textSize="12sp"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Theme.Odyssey.TextInputLayout"
+                android:hint="@string/address"
                 android:id="@+id/account_input_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
-                    style="@style/Theme.Odyssey.TextInput"
+                    android:id="@+id/field_input_address"
+                    style="@style/Theme.Odyssey.TextInputNotEditable"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_regular"
@@ -127,20 +115,16 @@
             android:orientation="vertical"
             android:paddingHorizontal="30dp"
             android:paddingVertical="5dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/phone"
-                android:fontFamily="@font/cc_montserrat_bold"
-                android:textSize="12sp"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Theme.Odyssey.TextInputLayout"
+                android:hint="@string/phone"
                 android:id="@+id/account_input_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
-                    style="@style/Theme.Odyssey.TextInput"
+                    style="@style/Theme.Odyssey.TextInputNotEditable"
+                    android:id="@+id/field_input_phone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_regular"
@@ -156,20 +140,16 @@
             android:orientation="vertical"
             android:paddingHorizontal="30dp"
             android:paddingVertical="5dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/email"
-                android:fontFamily="@font/cc_montserrat_bold"
-                android:textSize="12sp"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Theme.Odyssey.TextInputLayout"
+                android:hint="@string/email"
                 android:id="@+id/account_input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
-                    style="@style/Theme.Odyssey.TextInput"
+                    style="@style/Theme.Odyssey.TextInputNotEditable"
+                    android:id="@+id/field_input_email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_regular"
@@ -182,7 +162,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:visibility="gone"
-                android:text="@string/btn_send_confirmation" />
+                android:text="@string/btn_send_confirmation"
+                android:layout_marginStart="17dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -192,20 +173,16 @@
             android:orientation="vertical"
             android:paddingHorizontal="30dp"
             android:paddingVertical="5dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/password"
-                android:fontFamily="@font/cc_montserrat_bold"
-                android:textSize="12sp"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Theme.Odyssey.TextInputLayout"
+                android:hint="@string/password"
                 android:id="@+id/account_input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
-                    style="@style/Theme.Odyssey.TextInput"
+                    style="@style/Theme.Odyssey.TextInputNotEditable"
+                    android:id="@+id/field_input_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_regular"
@@ -223,20 +200,14 @@
             android:paddingHorizontal="30dp"
             android:visibility="gone"
             android:paddingVertical="5dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/confirm_password"
-                android:fontFamily="@font/cc_montserrat_bold"
-                android:textSize="12sp"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Theme.Odyssey.TextInputLayout"
+                android:hint="@string/confirm_password"
                 android:id="@+id/account_input_confirm_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
-                    style="@style/Theme.Odyssey.TextInput"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_regular"
@@ -259,7 +230,8 @@
                 android:backgroundTint="?attr/colorError"
                 android:textColor="?attr/colorOnError"
                 android:visibility="gone"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="17dp"/>
         </LinearLayout>
 
     </LinearLayout>

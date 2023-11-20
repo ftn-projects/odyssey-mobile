@@ -1,5 +1,7 @@
 package com.example.odyssey.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.example.odyssey.R;
@@ -98,7 +101,7 @@ public class AccountFragment extends Fragment {
 
             // reset fields
 
-            initViewMode(menu, inflater);
+            Navigation.findNavController(requireActivity(), R.id.fragment_container_main).navigate(R.id.nav_account);
             return true;
         });
         menu.findItem(R.id.nav_commit_action).setOnMenuItemClickListener(item2 -> {
@@ -106,7 +109,7 @@ public class AccountFragment extends Fragment {
 
             // collect data, send request...
 
-            initViewMode(menu, inflater);
+            Navigation.findNavController(requireActivity(), R.id.fragment_container_main).navigate(R.id.nav_account);
             return true;
         });
         setEditingVisibility(View.VISIBLE);
@@ -117,5 +120,19 @@ public class AccountFragment extends Fragment {
         requireView().findViewById(R.id.btnConfirmEmail).setVisibility(visibility);
         requireView().findViewById(R.id.confirm_password_section).setVisibility(visibility);
         requireView().findViewById(R.id.btnDeactivateOwn).setVisibility(visibility);
+
+        boolean editable = visibility == View.VISIBLE;
+        requireView().findViewById(R.id.field_input_name).setFocusableInTouchMode(editable);
+        requireView().findViewById(R.id.field_input_surname).setFocusableInTouchMode(editable);
+        requireView().findViewById(R.id.field_input_address).setFocusableInTouchMode(editable);
+        requireView().findViewById(R.id.field_input_email).setFocusableInTouchMode(editable);
+        requireView().findViewById(R.id.field_input_phone).setFocusableInTouchMode(editable);
+        requireView().findViewById(R.id.field_input_password).setFocusableInTouchMode(editable);
+    }
+
+    public static void hideSoftKeyboard(Activity activity, View view)
+    {
+        InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
     }
 }

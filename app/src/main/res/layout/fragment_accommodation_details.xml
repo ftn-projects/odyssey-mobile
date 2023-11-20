@@ -212,7 +212,7 @@
                             <ImageView
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
-                                android:src="@drawable/ic_snowflake_icon"
+                                android:src="@drawable/ic_snowflake"
                                 android:layout_gravity="center_vertical"/>
 
                             <TextView
@@ -233,7 +233,7 @@
                             <ImageView
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
-                                android:src="@drawable/ic_bbq_icon"
+                                android:src="@drawable/ic_bbq"
                                 android:layout_gravity="center_vertical"/>
 
                             <TextView
@@ -254,13 +254,13 @@
                             <ImageView
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
-                                android:src="@drawable/ic_lake_icon"
+                                android:src="@drawable/ic_mountain"
                                 android:layout_gravity="center_vertical"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Lake view"
+                                android:text="Mountain view"
                                 android:fontFamily="@font/montserrat_regular"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginStart="8dp"/>
@@ -275,7 +275,7 @@
                             <ImageView
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
-                                android:src="@drawable/ic_paw_icon"
+                                android:src="@drawable/ic_paw"
                                 android:layout_gravity="center_vertical"/>
 
                             <TextView

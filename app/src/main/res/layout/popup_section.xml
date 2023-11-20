@@ -104,6 +104,7 @@
                             android:layout_weight="1"
                             android:text="End date not selected"
                             android:fontFamily="@font/montserrat_regular"
+                            android:gravity="end"
                             android:textSize="12sp"/>
                     </LinearLayout>
 
@@ -147,8 +148,7 @@
                             android:layout_weight="1"
                             android:hint="Starting price"
                             app:expandedHintEnabled="false"
-                            android:fontFamily="@font/montserrat_regular"
-                            >
+                            android:fontFamily="@font/montserrat_regular">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/priceStartFilterEditText"
@@ -316,17 +316,14 @@
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:hint="Number of guests"
-                        app:expandedHintEnabled="false"
-                        android:layout_marginTop="10dp"
-                        >
+                        android:layout_marginTop="10dp">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/NumberOfGuestsEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_regular"
-                            android:inputType="number"
-                            />
+                            android:inputType="number" />
 
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
