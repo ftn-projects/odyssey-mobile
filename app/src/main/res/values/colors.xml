@@ -17,6 +17,8 @@
     <color name="primary_color">#0FA3B1</color>
     <color name="primary_dark_color">#0C8694</color>
 
+    <color name="star_color">#ffe234</color>
+
     <!-- Generated Colors -->
     <color name="seed">#0FA3B1</color>
     <color name="md_theme_light_primary">#006972</color>

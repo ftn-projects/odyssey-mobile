@@ -10,9 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-
         <ScrollView
-
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -66,11 +64,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:rating="4.35"
-                        android:numStars="5"
-                        style="?android:attr/ratingBarStyleSmall"
-                        android:progressTint="#FFCC01"
-                        android:scaleX="0.8"
-                        android:scaleY="0.8"/>
+                            android:numStars="5"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:progressTint="@color/star_color"
+                            android:scaleX="0.8"
+                            android:scaleY="0.8"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -88,7 +86,6 @@
                         android:fontFamily="@font/montserrat_regular"
                         android:textSize="16sp"/>
                 </LinearLayout>
-
 
                 <LinearLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -366,10 +363,10 @@
                             android:layout_height="10dp"
                             style="?android:attr/progressBarStyleHorizontal"
                             android:progress="78"
-                        android:progressTint="#FFCC01"
-                        android:backgroundTint="#CCCCCC"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="8dp"/>
+                            android:progressTint="@color/star_color"
+                            android:backgroundTint="#CCCCCC"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"/>
 
                         <!-- Review count -->
                         <TextView
@@ -400,7 +397,7 @@
                             android:layout_height="10dp"
                             style="?android:attr/progressBarStyleHorizontal"
                             android:progress="17"
-                            android:progressTint="#FFCC01"
+                            android:progressTint="@color/star_color"
                             android:backgroundTint="#CCCCCC"
                             android:layout_weight="1"
                             android:layout_marginEnd="8dp"/>
@@ -434,7 +431,7 @@
                             android:layout_height="10dp"
                             style="?android:attr/progressBarStyleHorizontal"
                             android:progress="4"
-                            android:progressTint="#FFCC01"
+                            android:progressTint="@color/star_color"
                             android:backgroundTint="#CCCCCC"
                             android:layout_weight="1"
                             android:layout_marginEnd="8dp"/>
@@ -468,7 +465,7 @@
                             android:layout_height="10dp"
                             style="?android:attr/progressBarStyleHorizontal"
                             android:progress="1"
-                            android:progressTint="#FFCC01"
+                            android:progressTint="@color/star_color"
                             android:backgroundTint="#CCCCCC"
                             android:layout_weight="1"
                             android:layout_marginEnd="8dp"/>
@@ -502,7 +499,7 @@
                             android:layout_height="10dp"
                             style="?android:attr/progressBarStyleHorizontal"
                             android:progress="0"
-                            android:progressTint="#FFCC01"
+                            android:progressTint="@color/star_color"
                             android:backgroundTint="#CCCCCC"
                             android:layout_weight="1"
                             android:layout_marginEnd="8dp"/>
@@ -538,9 +535,7 @@
                         android:rating="3"
                         android:numStars="5"
                         android:isIndicator="false"
-                        android:progressTint="#FFCC01"
-
-                        />
+                        android:progressTint="@color/star_color"/>
 
                     <!-- TextInputLayout with TextInputEditText for the comment -->
                     <com.google.android.material.textfield.TextInputLayout
