@@ -59,86 +59,87 @@
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="The Willow"
-                android:textStyle="bold"
-                android:textSize="25sp"
-                android:gravity="start"
-                android:fontFamily="@font/montserrat_semibold"
-                android:textColor="@color/black"/>
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_gravity="center_vertical"
-                >
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_star_icon"
-                    android:layout_gravity="center_vertical"
-                    android:contentDescription="TODO" />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="4.35 (3072)"
-                android:textSize="20sp"
-                android:gravity="end"
-                android:fontFamily="@font/montserrat_regular"
+                android:gravity="center_vertical">
 
-                />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="The Willow"
+                    android:textStyle="bold"
+                    android:textSize="25sp"
+                    android:gravity="start"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:textColor="@color/black"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_star_icon"
+                        android:contentDescription="TODO" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4.35 (3072)"
+                        android:textSize="20sp"
+                        android:gravity="end"
+                        android:fontFamily="@font/montserrat_regular"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$346"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:layout_marginEnd="5dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="per night ·"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:layout_marginEnd="1dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$1730 total"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/montserrat_regular" />
             </LinearLayout>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$346"
-                android:textSize="20sp"
-                android:fontFamily="@font/montserrat_semibold"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:layout_marginEnd="5dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="per night ·"
-                android:textSize="15sp"
-                android:fontFamily="@font/montserrat_regular"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:layout_marginEnd="1dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$1730 total"
-                android:textSize="15sp"
-                android:fontFamily="@font/montserrat_regular"
-                android:textColor="#787575"/>
-        </LinearLayout>
-
     </LinearLayout>
+
+
+
 </LinearLayout>
