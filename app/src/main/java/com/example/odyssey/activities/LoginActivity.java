@@ -17,14 +17,11 @@ import com.google.android.material.textfield.TextInputLayout;
 public class LoginActivity extends AppCompatActivity {
     TextInputLayout passwordInput, emailInput;
     TextInputEditText passwordEdit, emailEdit;
-    Validation validation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        Button submit = findViewById(R.id.btnLogin);
 
         emailInput = findViewById(R.id.inputEmail);
         passwordInput = findViewById(R.id.inputPassword);
@@ -34,16 +31,6 @@ public class LoginActivity extends AppCompatActivity {
         passwordEdit.addTextChangedListener(new ValidationTextWatcher(passwordEdit));
         emailEdit.addTextChangedListener(new ValidationTextWatcher(emailEdit));
 
-        submit.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                if (!validation.validatePassword(passwordInput, passwordEdit, getWindow())) {
-                    return;
-                }
-                if (!validation.validateEmail(emailInput,emailEdit, getWindow())) {
-                    return;
-                }
-            }
-        });
     }
 
     public void goToRegister(View view) {
@@ -52,6 +39,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void goToHome(View view) {
+        if (!Validation.validatePassword(passwordInput, passwordEdit, getWindow())) {
+            return;
+        }
+        if (!Validation.validateEmail(emailInput,emailEdit, getWindow())) {
+            return;
+        }
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -68,8 +61,8 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            if(view.getId() == R.id.inputEditPassword) validation.validatePassword(passwordInput, passwordEdit, getWindow());
-            else if (view.getId() == R.id.inputEditEmail) validation.validateEmail(emailInput,emailEdit, getWindow());
+            if(view.getId() == R.id.inputEditPassword) Validation.validatePassword(passwordInput, passwordEdit, getWindow());
+            else if (view.getId() == R.id.inputEditEmail) Validation.validateEmail(emailInput,emailEdit, getWindow());
         }
     }
 

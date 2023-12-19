@@ -237,7 +237,7 @@
                 android:fontFamily="@font/montserrat_bold"/>
 
             <LinearLayout
-                android:layout_width="15dp"
+                android:layout_width="10dp"
                 android:layout_height="match_parent"/>
 
             <Button
