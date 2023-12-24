@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("(¬‿¬)", "HomeActivity onCreate()");
-        Log.d("da",System.getProperty("userToken"));
+        Log.d("da", System.getProperty("userToken"));
 
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
