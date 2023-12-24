@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -30,7 +31,8 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
-import com.example.odyssey.model.Amenity;
+import com.example.odyssey.model.accommodations.Accommodation;
+import com.example.odyssey.model.accommodations.Amenity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
@@ -50,14 +52,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FilterPopupDialog extends DialogFragment {
+public class FilterPopupDialog extends DialogFragment{
+
+    private FilterDialogListener filterDialogListener;
+    public void setFilterDialogListener(FilterDialogListener filterDialogListener) {
+        this.filterDialogListener = filterDialogListener;
+    }
 
     private ArrayList<Amenity> amenities = new ArrayList<>();
 
     private float startPrice;
     private float endPrice;
 
-    //private AccommodationType accommodationType;
+    Accommodation.Type type;
+
     public FilterPopupDialog() {
     }
 
@@ -79,10 +87,25 @@ public class FilterPopupDialog extends DialogFragment {
         RangeSlider rangeSlider = view.findViewById(R.id.priceRangeSliderFilter);
         TextView priceRangeStart = view.findViewById(R.id.priceStartFilterEditText);
         TextView priceRangeEnd = view.findViewById(R.id.priceEndFilterEditText);
+        AutoCompleteTextView typeFilter = view.findViewById(R.id.accommodationTypeFilter);
 
-        List<Float> values = rangeSlider.getValues();
-        priceRangeStart.setText(MessageFormat.format("{0}", NumberFormat.getCurrencyInstance().format(values.get(0))));
-        priceRangeEnd.setText(MessageFormat.format("{0}", NumberFormat.getCurrencyInstance().format(values.get(1))));
+        typeFilter.setOnItemClickListener((parent, view1, position, id) -> {
+            String selectedType = (String) parent.getItemAtPosition(position);
+            switch (selectedType) {
+                case "Apartment":
+                    type = Accommodation.Type.APARTMENT;
+                    break;
+                case "Room":
+                    type = Accommodation.Type.ROOM;
+                    break;
+                case "House":
+                    type = Accommodation.Type.HOUSE;
+                    break;
+                default:
+                    type = null;
+                    break;
+            }
+        });
 
         rangeSlider.addOnChangeListener(new RangeSlider.OnChangeListener() {
             @Override
@@ -95,9 +118,7 @@ public class FilterPopupDialog extends DialogFragment {
             }
         });
 
-
-
-
+        rangeSlider.setValues(0f, 1500f);
 
         MaterialButton closeButton = view.findViewById(R.id.filter_close_button);
         closeButton.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +132,7 @@ public class FilterPopupDialog extends DialogFragment {
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSelectedAmenities();
+                filterDialogListener.onFilterApplied(getSelectedAmenities(), startPrice, endPrice, type);
                 dismiss();
             }
         });
@@ -123,7 +144,7 @@ public class FilterPopupDialog extends DialogFragment {
     }
 
     private void getDataFromClient(){
-        Call<ArrayList<Amenity>> call = ClientUtils.productService.getAll();
+        Call<ArrayList<Amenity>> call = ClientUtils.amenityService.getAll();
         call.enqueue(new Callback<ArrayList<Amenity>>() {
             @Override
             public void onResponse(Call<ArrayList<Amenity>> call, Response<ArrayList<Amenity>> response) {
@@ -189,4 +210,8 @@ public class FilterPopupDialog extends DialogFragment {
         return selectedAmenities;
     }
 
+
+    public interface FilterDialogListener {
+        void onFilterApplied(List<String> selectedAmenities, float startPrice, float endPrice, Accommodation.Type type);
+    }
 }

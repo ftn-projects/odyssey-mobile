@@ -2,7 +2,6 @@ package com.example.odyssey.fragments;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -15,9 +14,11 @@ import android.widget.LinearLayout;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
-import com.example.odyssey.model.Amenity;
+import com.example.odyssey.model.accommodations.Accommodation;
+import com.example.odyssey.model.accommodations.Amenity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,7 +29,7 @@ import retrofit2.Response;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDialogListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,6 +72,7 @@ public class HomeFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+
         Log.i("(¬‿¬)", "HomeFragment onCreate()");
     }
 
@@ -99,17 +101,28 @@ public class HomeFragment extends Fragment {
 
 
 
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
     private void showPopup() {
         FilterPopupDialog dialog = new FilterPopupDialog();
+        dialog.setFilterDialogListener(this);
         dialog.show(requireActivity().getSupportFragmentManager(), "filterPopupDialog");
     }
 
     private void showSearchPopup(){
         SearchPopupDialog dialog = new SearchPopupDialog();
         dialog.show(requireActivity().getSupportFragmentManager(), "searchPopupDialog");
+    }
+
+    @Override
+    public void onFilterApplied(List<String> selectedAmenities, float startPrice, float endPrice, Accommodation.Type type){
+        Log.i("(¬‿¬)", "HomeFragment onFilterApplied()");
+        Log.i("(¬‿¬)", "HomeFragment onFilterApplied() selectedAmenities: " + selectedAmenities);
+        Log.i("(¬‿¬)", "HomeFragment onFilterApplied() startPrice: " + startPrice);
+        Log.i("(¬‿¬)", "HomeFragment onFilterApplied() endPrice: " + endPrice);
+        Log.i("(¬‿¬)", "HomeFragment onFilterApplied() type: " + type);
     }
 }
