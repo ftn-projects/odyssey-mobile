@@ -151,40 +151,9 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:id="@+id/amenities_container">
 
-                            <!-- Checkbox 1 -->
-                            <CheckBox
-                                android:id="@+id/checkbox1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:text="WiFi"/>
-
-                            <CheckBox
-                                android:id="@+id/checkbox2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:text="TV"/>
-                            <CheckBox
-                                android:id="@+id/checkbox3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:text="Lake view"/>
-                            <CheckBox
-                                android:id="@+id/checkbox4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:text="BBQ"/>
-                            <CheckBox
-                                android:id="@+id/checkbox5"
-                                android:layout_width="wrap_content"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:layout_height="wrap_content"
-                                android:text="Beach"/>
 
                         </LinearLayout>
                 </LinearLayout>

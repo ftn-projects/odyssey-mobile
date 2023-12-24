@@ -97,35 +97,11 @@ public class HomeFragment extends Fragment {
         return rootView;
     }
 
-    private void getDataFromClient(){
-        Call<ArrayList<Amenity>> call = ClientUtils.productService.getAll();
-        call.enqueue(new Callback<ArrayList<Amenity>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Amenity>> call, Response<ArrayList<Amenity>> response) {
-                if (response.code() == 200){
-                    Log.d("REZ","Meesage recieved");
-                    amenities = response.body();
 
-                    for (Amenity amenity: amenities){
-                        Log.d("REZ", amenity.getTitle());
-                    }
-
-                }else{
-                    Log.d("REZ","Meesage recieved: "+response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Amenity>> call, Throwable t) {
-                Log.d("REZ", t.getMessage() != null?t.getMessage():"error");
-            }
-        });
-    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getDataFromClient();
     }
     private void showPopup() {
         FilterPopupDialog dialog = new FilterPopupDialog();

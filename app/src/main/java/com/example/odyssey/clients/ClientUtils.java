@@ -1,6 +1,6 @@
 package com.example.odyssey.clients;
 
-import com.example.odyssey.PropertiesUtil;
+import com.example.odyssey.BuildConfig;
 
 import java.util.concurrent.TimeUnit;
 
@@ -10,7 +10,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 public class ClientUtils {
 
-    public static final String SERVICE_API_PATH = PropertiesUtil.getServerIp();
+    public static final String SERVICE_API_PATH = BuildConfig.SERVER_IP;
 
     /*
      * Ovo ce nam sluziti za debug, da vidimo da li zahtevi i odgovori idu
