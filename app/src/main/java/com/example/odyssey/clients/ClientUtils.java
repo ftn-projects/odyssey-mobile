@@ -1,5 +1,7 @@
 package com.example.odyssey.clients;
 
+import com.example.odyssey.PropertiesUtil;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -7,7 +9,8 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 public class ClientUtils {
-    public static final String SERVICE_API_PATH = "http://192.168.0.102:8080/api/v1/";
+
+    public static final String SERVICE_API_PATH = PropertiesUtil.getServerIp();
 
     /*
      * Ovo ce nam sluziti za debug, da vidimo da li zahtevi i odgovori idu
