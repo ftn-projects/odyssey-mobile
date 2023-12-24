@@ -1,4 +1,4 @@
-package com.example.odyssey.model;
+package com.example.odyssey.model.accommodations;
 
 public class Amenity {
     private Long id;
