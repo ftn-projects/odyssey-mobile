@@ -48,7 +48,7 @@
                 android:gravity="start"/>
 
             <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switchMaterialExample"
+                android:id="@+id/switchRole"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -73,7 +73,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Theme.Odyssey.TextInputLayoutLogin"
-                android:id="@+id/inputEmailRegister"
+                android:id="@+id/inputEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
@@ -81,6 +81,7 @@
                 app:layout_constraintRight_toRightOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputEditEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_regular"
@@ -98,6 +99,7 @@
                 app:layout_constraintRight_toRightOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputEditName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_regular"/>
@@ -114,6 +116,7 @@
                 app:layout_constraintRight_toRightOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputEditSurname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_regular"/>
@@ -130,6 +133,7 @@
                 app:layout_constraintRight_toRightOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputEditAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_regular"/>
@@ -146,6 +150,7 @@
                 app:layout_constraintRight_toRightOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputEditCity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_regular"/>
@@ -162,6 +167,7 @@
                 app:layout_constraintRight_toRightOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputEditCountry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_regular"/>
@@ -178,6 +184,7 @@
                 app:layout_constraintRight_toRightOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputEditPhoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_regular"
@@ -187,7 +194,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Theme.Odyssey.TextInputLayoutLogin"
-                android:id="@+id/inputPasswordRegister"
+                android:id="@+id/inputPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
@@ -195,6 +202,7 @@
                 app:layout_constraintRight_toRightOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputEditPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_regular"/>
@@ -203,7 +211,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Theme.Odyssey.TextInputLayoutLogin"
-                android:id="@+id/inputConfirmPasswordRegister"
+                android:id="@+id/inputConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Confirm password"
@@ -211,6 +219,7 @@
                 app:layout_constraintRight_toRightOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputEditConfirmPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_regular"/>
@@ -233,7 +242,8 @@
                 android:layout_height="60dp"
                 android:text="Register"
                 android:textSize="18sp"
-                android:fontFamily="@font/montserrat_bold"/>
+                android:fontFamily="@font/montserrat_bold"
+                android:onClick="register"/>
 
             <LinearLayout
                 android:layout_width="0dp"

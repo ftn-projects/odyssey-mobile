@@ -2,6 +2,7 @@ package com.example.odyssey.clients;
 
 import com.example.odyssey.model.Auth.AuthResponse;
 import com.example.odyssey.model.Auth.Login;
+import com.example.odyssey.model.Auth.Register;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -11,4 +12,6 @@ public interface AuthService {
     @POST("users/login")
     Call<AuthResponse> login(@Body Login login);
 
+    @POST("users/register")
+    Call<Register> register(@Body Register register);
 }
