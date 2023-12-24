@@ -52,14 +52,18 @@ public class LoginActivity extends AppCompatActivity {
         if (!Validation.validateEmail(emailInput,emailEdit, getWindow())) {
             return;
         }
+
         Login login = new Login(emailEdit.getText().toString(),passwordEdit.getText().toString());
         Call<AuthResponse> authResponse = ClientUtils.authService.login(login);
+        Intent intent = new Intent(this, MainActivity.class);
 
         authResponse.enqueue(new Callback<AuthResponse>() {
             @Override
             public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                 if(response.code()==200){
                     Log.d("REZ","Good");
+                    startActivity(intent);
+                    System.setProperty("userToken",response.body().getToken());
                 }else{
                     Log.d("REZ","Bad");
                 }
@@ -71,8 +75,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 
     private class ValidationTextWatcher implements TextWatcher {
