@@ -6,13 +6,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
 import com.example.odyssey.R;
+import com.example.odyssey.clients.ClientUtils;
+import com.example.odyssey.model.Auth.AuthResponse;
+import com.example.odyssey.model.Auth.Login;
 import com.example.odyssey.utils.Validation;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     TextInputLayout passwordInput, emailInput;
@@ -38,13 +45,32 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToHome(View view) {
+    public void login(View view) {
         if (!Validation.validatePassword(passwordInput, passwordEdit, getWindow())) {
             return;
         }
         if (!Validation.validateEmail(emailInput,emailEdit, getWindow())) {
             return;
         }
+        Login login = new Login(emailEdit.getText().toString(),passwordEdit.getText().toString());
+        Call<AuthResponse> authResponse = ClientUtils.authService.login(login);
+
+        authResponse.enqueue(new Callback<AuthResponse>() {
+            @Override
+            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
+                if(response.code()==200){
+                    Log.d("REZ","Good");
+                }else{
+                    Log.d("REZ","Bad");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AuthResponse> call, Throwable t) {
+                Log.d("REZ",t.getMessage() != null?t.getMessage():"error");
+            }
+        });
+
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

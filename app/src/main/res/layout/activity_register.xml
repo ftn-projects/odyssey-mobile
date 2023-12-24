@@ -229,21 +229,21 @@
 
             <Button
                 android:id="@+id/btnRegisterRegister"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:text="Register"
                 android:textSize="18sp"
                 android:fontFamily="@font/montserrat_bold"/>
 
             <LinearLayout
-                android:layout_width="10dp"
-                android:layout_height="match_parent"/>
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent">
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btnCancel"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:text="Cancel"
                 android:textSize="18sp"

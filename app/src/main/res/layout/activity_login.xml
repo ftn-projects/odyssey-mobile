@@ -79,26 +79,28 @@
                     android:id="@+id/bottomLayout"
                     android:layout_marginTop="150dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp">
 
                     <Button
                         android:id="@+id/btnLogin"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
                         android:layout_height="60dp"
                         android:text="Login"
                         android:textSize="18sp"
                         android:fontFamily="@font/montserrat_bold"
-                        android:onClick="goToHome"/>
+                        android:onClick="login"/>
 
                     <LinearLayout
-                        android:layout_width="10dp"
-                        android:layout_height="match_parent"/>
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent">
+                    </LinearLayout>
 
                     <Button
                         android:id="@+id/btnRegister"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
                         android:layout_height="60dp"
                         android:text="Register"
                         android:textSize="18sp"

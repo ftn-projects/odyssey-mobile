@@ -20,8 +20,8 @@ public class Validation {
             pass.setError("Password is required");
             requestFocus(password, window);
             return false;
-        }else if(password.getText().toString().length() < 6){
-            pass.setError("Password can't be less than 6 digits long");
+        }else if(password.getText().toString().length() < 4){
+            pass.setError("Password can't be less than 4 digits long");
             requestFocus(password, window);
             return false;
         }

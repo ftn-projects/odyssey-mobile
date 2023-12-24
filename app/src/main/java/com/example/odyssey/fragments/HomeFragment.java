@@ -2,7 +2,6 @@ package com.example.odyssey.fragments;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -92,7 +91,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getDataFromClient(){
-        Call<ArrayList<Amenity>> call = ClientUtils.productService.getAll();
+        Call<ArrayList<Amenity>> call = ClientUtils.amenityService.getAll();
         call.enqueue(new Callback<ArrayList<Amenity>>() {
             @Override
             public void onResponse(Call<ArrayList<Amenity>> call, Response<ArrayList<Amenity>> response) {

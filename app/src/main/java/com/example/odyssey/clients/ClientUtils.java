@@ -39,5 +39,6 @@ public class ClientUtils {
      * Definisemo konkretnu instancu servisa na intnerntu sa kojim
      * vrsimo komunikaciju
      * */
-    public static AmenityService productService = retrofit.create(AmenityService.class);
+    public static AmenityService amenityService = retrofit.create(AmenityService.class);
+    public static AuthService authService = retrofit.create(AuthService.class);
 }
