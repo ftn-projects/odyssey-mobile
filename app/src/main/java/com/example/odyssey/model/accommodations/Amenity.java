@@ -1,9 +1,5 @@
-package com.example.odyssey.model;
+package com.example.odyssey.model.accommodations;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 public class Amenity {
     private Long id;
     private String title;

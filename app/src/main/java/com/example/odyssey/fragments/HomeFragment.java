@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
-import com.example.odyssey.model.Amenity;
+import com.example.odyssey.model.accommodations.Amenity;
 
 import java.util.ArrayList;
 
