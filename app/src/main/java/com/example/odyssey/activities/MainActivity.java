@@ -21,6 +21,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.odyssey.BuildConfig;
 import com.example.odyssey.R;
 import com.example.odyssey.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("(¬‿¬)", "HomeActivity onCreate()");
+        Log.d("da",System.getProperty("userToken"));
 
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
