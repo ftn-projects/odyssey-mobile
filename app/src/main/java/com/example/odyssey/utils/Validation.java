@@ -29,6 +29,24 @@ public class Validation {
         return true;
     }
 
+    public static boolean validateConfirmedPassword(TextInputLayout pass, TextInputEditText password, TextInputEditText original, Window window){
+        if (password.getText().toString().trim().isEmpty()) {
+            pass.setError("Password is required");
+            requestFocus(password, window);
+            return false;
+        }else if(password.getText().toString().length() < 4){
+            pass.setError("Password can't be less than 4 digits long");
+            requestFocus(password, window);
+            return false;
+        }else if(!password.getText().toString().equals(original.getText().toString())){
+            pass.setError("Passwords must match");
+            requestFocus(password, window);
+            return false;
+        }
+        pass.setErrorEnabled(false);
+        return true;
+    }
+
     public static boolean validateEmail(TextInputLayout email, TextInputEditText editText, Window window) {
         String emailId = editText.getText().toString();
         if (emailId.trim().isEmpty()) {

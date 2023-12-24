@@ -2,13 +2,11 @@ package com.example.odyssey.model;
 
 public class Address {
     private String street;
-    private Integer number;
     private String city;
     private String country;
 
     public Address(String street, String city, String country) {
         this.street = street;
-        this.number = number;
         this.city = city;
         this.country = country;
     }
