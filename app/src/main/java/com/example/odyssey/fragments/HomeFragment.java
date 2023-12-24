@@ -2,7 +2,6 @@ package com.example.odyssey.fragments;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -11,8 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.example.odyssey.R;
+import com.example.odyssey.clients.ClientUtils;
+import com.example.odyssey.model.accommodations.Amenity;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +37,8 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private ArrayList<Amenity> amenities = new ArrayList<>();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -71,6 +81,11 @@ public class HomeFragment extends Fragment {
 
         ImageButton showPopupButton = rootView.findViewById(R.id.filter_button);
         showPopupButton.setOnClickListener(view -> showPopup());
+
+        LinearLayout searchContainerButton = rootView.findViewById(R.id.search_text_container);
+        searchContainerButton.setOnClickListener(view -> showSearchPopup());
+
+
         AccommodationCard accommodationCard = rootView.findViewById(R.id.accommodationCard1);
         accommodationCard.setOnClickListener(view -> {
             AccommodationDetailsFragment accommodationDetailsFragment = new AccommodationDetailsFragment();
@@ -78,12 +93,46 @@ public class HomeFragment extends Fragment {
 
         });
 
-
         return rootView;
     }
 
+    private void getDataFromClient(){
+        Call<ArrayList<Amenity>> call = ClientUtils.amenityService.getAll();
+        call.enqueue(new Callback<ArrayList<Amenity>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Amenity>> call, Response<ArrayList<Amenity>> response) {
+                if (response.code() == 200){
+                    Log.d("REZ","Meesage recieved");
+                    amenities = response.body();
+
+                    for (Amenity amenity: amenities){
+                        Log.d("REZ", amenity.getTitle());
+                    }
+
+                }else{
+                    Log.d("REZ","Meesage recieved: "+response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Amenity>> call, Throwable t) {
+                Log.d("REZ", t.getMessage() != null?t.getMessage():"error");
+            }
+        });
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getDataFromClient();
+    }
     private void showPopup() {
         FilterPopupDialog dialog = new FilterPopupDialog();
         dialog.show(requireActivity().getSupportFragmentManager(), "filterPopupDialog");
+    }
+
+    private void showSearchPopup(){
+        SearchPopupDialog dialog = new SearchPopupDialog();
+        dialog.show(requireActivity().getSupportFragmentManager(), "searchPopupDialog");
     }
 }
