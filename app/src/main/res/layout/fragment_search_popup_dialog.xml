@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/filterPopup"
+    android:id="@+id/searchPopup"
     android:layout_margin="15dp"
->
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="Filters"
+                android:text="Search"
                 android:fontFamily="@font/montserrat_regular"
                 android:textSize="18sp"/>
 
@@ -41,7 +41,7 @@
                 android:src="@drawable/ic_close_icon"
                 android:contentDescription="Close"/>
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/filter_close_button"
+                android:id="@+id/search_close_button"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_alignParentEnd="true"
@@ -64,131 +64,59 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp">
+
                 <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="25dp">
+                    android:layout_marginTop="15dp">
+
+                    <!-- First Element: TextView - Date range -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Price range"
-                        android:fontFamily="@font/montserrat_bold"
+                        android:text="Date range"
                         android:textSize="18sp"
+                        android:fontFamily="@font/montserrat_bold"
                         android:textStyle="bold"/>
-                    <com.google.android.material.slider.RangeSlider
-                        android:id="@+id/priceRangeSliderFilter"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:valueFrom="0.0"
-                        android:valueTo="100.0"
-                        app:values="@array/initial_slider_values" />
+
+                    <!-- Second Element: LinearLayout with two TextViews - Starting and End dates -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp">
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/priceStartFilter"
+                        <TextView
+                            android:id="@+id/startDateTextFilter"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:hint="Starting price"
-                            app:expandedHintEnabled="false"
-                            android:fontFamily="@font/montserrat_regular">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/priceStartFilterEditText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="$0"
-                                android:fontFamily="@font/montserrat_regular"
-                                />
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <!-- Add a small gap between the TextInputLayouts -->
-                        <Space
-                            android:layout_width="8dp"
-                            android:layout_height="match_parent" />
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/priceEndFilter"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:hint="Ending price"
+                            android:text="Starting date not selected"
                             android:fontFamily="@font/montserrat_regular"
-                            app:expandedHintEnabled="false">
+                            android:textSize="12sp"/>
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/priceEndFilterEditText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="$70"
-                                android:fontFamily="@font/montserrat_regular"
-                                />
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="25dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Amenities"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/endDateTextFilter"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:layout_weight="1"
+                            android:text="End date not selected"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:gravity="end"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
 
-                            <!-- Checkbox 1 -->
-                            <CheckBox
-                                android:id="@+id/checkbox1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:text="WiFi"/>
-
-                            <CheckBox
-                                android:id="@+id/checkbox2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:text="TV"/>
-                            <CheckBox
-                                android:id="@+id/checkbox3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:text="Lake view"/>
-                            <CheckBox
-                                android:id="@+id/checkbox4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:text="BBQ"/>
-                            <CheckBox
-                                android:id="@+id/checkbox5"
-                                android:layout_width="wrap_content"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:layout_height="wrap_content"
-                                android:text="Beach"/>
-
-                        </LinearLayout>
+                    <!-- Third Element: MaterialButton - Select date -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/selectDateButtonFilter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Select date"
+                        android:fontFamily="@font/montserrat_regular"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -197,29 +125,55 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text=" Location"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Accommodation type"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/menu"
+                        android:id="@+id/locationMenu"
                         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Type">
+                        android:hint="Location">
 
                         <AutoCompleteTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="none"
-                            app:simpleItems="@array/accommodation_types"
+                            app:simpleItems="@array/accommodation_locations"
                             android:fontFamily="@font/montserrat_regular"
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="25dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Guests"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/NumberOfGuestsFilter"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Number of guests"
+                        android:layout_marginTop="10dp">
 
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/NumberOfGuestsEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:inputType="number" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
             </LinearLayout>
 
 
@@ -243,7 +197,7 @@
                 android:textSize="16sp"/>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/filter_apply_button"
+                android:id="@+id/search_apply_button"
                 android:layout_width="wrap_content"
                 android:fontFamily="@font/montserrat_regular"
                 android:layout_height="wrap_content"

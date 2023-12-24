@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
@@ -81,6 +82,11 @@ public class HomeFragment extends Fragment {
 
         ImageButton showPopupButton = rootView.findViewById(R.id.filter_button);
         showPopupButton.setOnClickListener(view -> showPopup());
+
+        LinearLayout searchContainerButton = rootView.findViewById(R.id.search_text_container);
+        searchContainerButton.setOnClickListener(view -> showSearchPopup());
+
+
         AccommodationCard accommodationCard = rootView.findViewById(R.id.accommodationCard1);
         accommodationCard.setOnClickListener(view -> {
             AccommodationDetailsFragment accommodationDetailsFragment = new AccommodationDetailsFragment();
@@ -124,5 +130,10 @@ public class HomeFragment extends Fragment {
     private void showPopup() {
         FilterPopupDialog dialog = new FilterPopupDialog();
         dialog.show(requireActivity().getSupportFragmentManager(), "filterPopupDialog");
+    }
+
+    private void showSearchPopup(){
+        SearchPopupDialog dialog = new SearchPopupDialog();
+        dialog.show(requireActivity().getSupportFragmentManager(), "searchPopupDialog");
     }
 }
