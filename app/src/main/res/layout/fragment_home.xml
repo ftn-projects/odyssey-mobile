@@ -19,27 +19,68 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textField"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Search accommodations"
-                app:startIconDrawable="@drawable/search_icon"
-                app:startIconContentDescription="Search bar"
-                android:layout_weight = "1"
-                android:layout_marginEnd="15dp"
-                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@drawable/search_button_background"
+                android:padding="5dp"
+                android:layout_marginRight="15dp"
                 >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
+                <ImageButton
+                    android:layout_weight="0"
+                    android:id="@+id/search_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_search"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="Filter"
+                    android:gravity="fill_vertical|center_horizontal"
+                    app:tint="?attr/colorOnSecondaryContainer" />
+ />
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Any location"
+                        android:layout_marginBottom="3dp">
 
-                    />
+                    </TextView>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Any date"
+                            android:layout_marginRight="5dp"
+                            android:textColor="@color/zirko_siva"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="·"
+                            android:layout_marginRight="5dp"
+                            android:textColor="@color/zirko_siva"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Any guests"
+                            android:textColor="@color/zirko_siva"/>
 
-            </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
 
 
                 <ImageButton
