@@ -30,13 +30,13 @@ public class MainActivity extends AppCompatActivity {
 
     private NavController navController;
     private AppBarConfiguration appBarConfiguration;
-    private String role = "GUEST"; // edit to change role
+    private String role = null; // edit to change role
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("(¬‿¬)", "HomeActivity onCreate()");
-        Log.d("da", System.getProperty("userToken"));
+//        Log.d("da", System.getProperty("userToken"));
 
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -60,14 +60,25 @@ public class MainActivity extends AppCompatActivity {
         navView.getMenu().clear();
         navView.inflateMenu(menuId);
 
-        navView.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(item -> {
-            Toast.makeText(MainActivity.this, "LOGOUT", Toast.LENGTH_SHORT).show();
+        if (role != null) {
+            navView.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(item -> {
+                Toast.makeText(MainActivity.this, "LOGOUT", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-            return true;
-        });
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            });
+        } else {
+            navView.getMenu().findItem(R.id.nav_login).setOnMenuItemClickListener(item -> {
+                Toast.makeText(MainActivity.this, "LOGIN", Toast.LENGTH_SHORT).show();
+//
+//                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//                startActivity(intent);
+//                finish();
+                return true;
+            });
+        }
 
         navController = Navigation.findNavController(this, R.id.fragment_container_main);
         appBarConfiguration = new AppBarConfiguration
@@ -80,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private int getMenuId(String role) {
+        if (role == null) return R.menu.drawer_unauth_menu;
+
         switch (role) {
             case "GUEST":
                 return R.menu.drawer_guest_menu;
