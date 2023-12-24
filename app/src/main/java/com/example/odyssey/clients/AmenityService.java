@@ -18,4 +18,6 @@ public interface AmenityService {
     @GET("accommodations/amenities")
     Call<ArrayList<Amenity>> getAll();
 
+
+
 }

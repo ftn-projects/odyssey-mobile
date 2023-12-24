@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/search_button_background"
-                android:padding="5dp"
+
                 android:layout_marginRight="15dp"
                 >
                 <ImageButton
@@ -44,6 +44,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:id="@+id/search_text_container"
+                    android:padding="5dp"
                     >
                     <TextView
                         android:layout_width="wrap_content"

@@ -129,21 +129,13 @@
                         android:fontFamily="@font/montserrat_bold"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/locationMenu"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/locationInput"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Location">
-
-                        <AutoCompleteTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:simpleItems="@array/accommodation_locations"
-                            android:fontFamily="@font/montserrat_regular"
-                            />
-
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:hint="Location"
+                        android:fontFamily="@font/montserrat_regular"
+                        />
                 </LinearLayout>
 
                 <LinearLayout

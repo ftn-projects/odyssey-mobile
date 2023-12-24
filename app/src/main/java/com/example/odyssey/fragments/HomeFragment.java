@@ -18,6 +18,7 @@ import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.accommodations.Amenity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -29,7 +30,7 @@ import retrofit2.Response;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDialogListener{
+public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDialogListener, SearchPopupDialog.SearchDialogListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,7 +41,16 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
     private String mParam1;
     private String mParam2;
 
-    private ArrayList<Amenity> amenities = new ArrayList<>();
+    private Accommodation.Type type;
+    private float startPrice;
+    private float endPrice;
+    private List<Amenity> amenities = new ArrayList<>();
+    private Date startDate;
+    private Date endDate;
+    private String location;
+    private Integer numberOfGuests;
+
+    private ArrayList<Accommodation> accommodations = new ArrayList<>();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -73,6 +83,7 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
         }
 
 
+
         Log.i("(¬‿¬)", "HomeFragment onCreate()");
     }
 
@@ -87,6 +98,9 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
 
         LinearLayout searchContainerButton = rootView.findViewById(R.id.search_text_container);
         searchContainerButton.setOnClickListener(view -> showSearchPopup());
+
+        ImageButton searchButton = rootView.findViewById(R.id.search_button);
+        searchButton.setOnClickListener(view -> getAccommodations());
 
 
         AccommodationCard accommodationCard = rootView.findViewById(R.id.accommodationCard1);
@@ -114,15 +128,55 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
 
     private void showSearchPopup(){
         SearchPopupDialog dialog = new SearchPopupDialog();
+        dialog.setSearchDialogListener(this);
         dialog.show(requireActivity().getSupportFragmentManager(), "searchPopupDialog");
     }
 
     @Override
-    public void onFilterApplied(List<String> selectedAmenities, float startPrice, float endPrice, Accommodation.Type type){
+    public void onFilterApplied(List<Amenity> selectedAmenities, float startPrice, float endPrice, Accommodation.Type type){
+        this.amenities = selectedAmenities;
+        this.startPrice = startPrice;
+        this.endPrice = endPrice;
+        this.type = type;
         Log.i("(¬‿¬)", "HomeFragment onFilterApplied()");
-        Log.i("(¬‿¬)", "HomeFragment onFilterApplied() selectedAmenities: " + selectedAmenities);
-        Log.i("(¬‿¬)", "HomeFragment onFilterApplied() startPrice: " + startPrice);
-        Log.i("(¬‿¬)", "HomeFragment onFilterApplied() endPrice: " + endPrice);
-        Log.i("(¬‿¬)", "HomeFragment onFilterApplied() type: " + type);
+        Log.i("(¬‿¬)", "HomeFragment onFilterApplied() selectedAmenities: " + this.amenities);
+        Log.i("(¬‿¬)", "HomeFragment onFilterApplied() startPrice: " + this.startPrice);
+        Log.i("(¬‿¬)", "HomeFragment onFilterApplied() endPrice: " + this.endPrice);
+        Log.i("(¬‿¬)", "HomeFragment onFilterApplied() type: " + this.type);
+    }
+
+    @Override
+    public void onSearchApplied(Date startDate, Date endDate, String location, Integer numberOfGuests) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.location = location;
+        this.numberOfGuests = numberOfGuests;
+        Log.i("(¬‿¬)", "HomeFragment onSearchApplied()");
+        Log.i("(¬‿¬)", "HomeFragment onSearchApplied() startDate: " + this.startDate);
+        Log.i("(¬‿¬)", "HomeFragment onSearchApplied() endDate: " + this.endDate);
+        Log.i("(¬‿¬)", "HomeFragment onSearchApplied() location: " + this.location);
+        Log.i("(¬‿¬)", "HomeFragment onSearchApplied() numberOfGuests: " + this.numberOfGuests);
+    }
+
+    public void getAccommodations(){
+        Call<ArrayList<Accommodation>> call = ClientUtils.accommodationService.getAll();
+        call.enqueue(new Callback<ArrayList<Accommodation>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Accommodation>> call, Response<ArrayList<Accommodation>> response) {
+                if(response.code()==200){
+                    accommodations = response.body();
+                    for(Accommodation accommodation: accommodations){
+                        Log.d("REZ",accommodation.getTitle());
+                    }
+                }else{
+                    Log.d("REZ","Bad");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Accommodation>> call, Throwable t) {
+                Log.d("REZ",t.getMessage() != null?t.getMessage():"error");
+            }
+        });
     }
 }

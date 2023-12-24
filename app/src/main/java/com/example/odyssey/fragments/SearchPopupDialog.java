@@ -8,19 +8,26 @@ import androidx.core.util.Pair;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.odyssey.R;
+import com.example.odyssey.model.accommodations.Accommodation;
+import com.example.odyssey.model.accommodations.Amenity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -31,6 +38,15 @@ import java.util.Objects;
  */
 public class SearchPopupDialog  extends DialogFragment {
 
+    private Date startDate;
+    private Date endDate;
+    private String location;
+    private Integer numberOfGuests;
+
+    private SearchPopupDialog.SearchDialogListener searchDialogListener;
+    public void setSearchDialogListener(SearchPopupDialog.SearchDialogListener searchDialogListener) {
+        this.searchDialogListener = searchDialogListener;
+    }
     public SearchPopupDialog() {
         // Required empty public constructor
     }
@@ -52,6 +68,11 @@ public class SearchPopupDialog  extends DialogFragment {
         MaterialButton button = view.findViewById(R.id.selectDateButtonFilter);
         TextView startingDate = view.findViewById(R.id.startDateTextFilter);
         TextView endingDate = view.findViewById(R.id.endDateTextFilter);
+        TextInputEditText locationInput = view.findViewById(R.id.locationInput);
+        TextInputEditText numberOfGuestsInput = view.findViewById(R.id.NumberOfGuestsEditText);
+        MaterialButton closeButton = view.findViewById(R.id.search_close_button);
+        MaterialButton applyButton = view.findViewById(R.id.search_apply_button);
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,8 +84,10 @@ public class SearchPopupDialog  extends DialogFragment {
                 materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
                     @Override
                     public void onPositiveButtonClick(Pair<Long, Long> selection) {
-                        String date1 = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date(selection.first));
-                        String date2 = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date(selection.second));
+                        startDate = new Date(selection.first);
+                        endDate = new Date(selection.second);
+                        String date1 = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(startDate);
+                        String date2 = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(endDate);
 
                         startingDate.setText(MessageFormat.format("Selected Starting Date: {0}", date1));
                         endingDate.setText(MessageFormat.format("Selected Ending Date: {0}", date2));
@@ -75,9 +98,48 @@ public class SearchPopupDialog  extends DialogFragment {
             }
         });
 
+        locationInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                location = s.toString().trim();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        numberOfGuestsInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                try {
+                    numberOfGuests = Integer.parseInt(s.toString().trim());
+                }
+                catch (NumberFormatException e){
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
 
-        MaterialButton closeButton = view.findViewById(R.id.search_close_button);
+
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,15 +147,20 @@ public class SearchPopupDialog  extends DialogFragment {
             }
         });
 
-        MaterialButton applyButton = view.findViewById(R.id.search_apply_button);
+
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss(); // Dismiss the dialog
+                searchDialogListener.onSearchApplied(startDate, endDate, location, numberOfGuests);
+                dismiss();
             }
         });
 
 
+    }
+
+    public interface SearchDialogListener {
+        void onSearchApplied(Date startDate, Date endDate, String location, Integer numberOfGuests);
     }
 
 }

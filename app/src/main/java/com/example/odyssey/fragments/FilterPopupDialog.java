@@ -174,6 +174,7 @@ public class FilterPopupDialog extends DialogFragment{
                 CheckBox checkBox = new CheckBox(requireContext());
                 checkBox.setId(View.generateViewId());
                 checkBox.setText(amenity.getTitle());
+                checkBox.setTag(amenity);
 
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -191,8 +192,8 @@ public class FilterPopupDialog extends DialogFragment{
         }
     }
 
-    private List<String> getSelectedAmenities() {
-        List<String> selectedAmenities = new ArrayList<>();
+    private List<Amenity> getSelectedAmenities() {
+        List<Amenity> selectedAmenities = new ArrayList<>();
 
         LinearLayout amenitiesContainer = requireView().findViewById(R.id.amenities_container);
 
@@ -201,7 +202,7 @@ public class FilterPopupDialog extends DialogFragment{
             if (childView instanceof CheckBox) {
                 CheckBox checkBox = (CheckBox) childView;
                 if (checkBox.isChecked()) {
-                    selectedAmenities.add(checkBox.getText().toString());
+                    selectedAmenities.add((Amenity) checkBox.getTag());
                     Log.d("REZ", "Selected amenity: " + checkBox.getText().toString());
                 }
             }
@@ -212,6 +213,6 @@ public class FilterPopupDialog extends DialogFragment{
 
 
     public interface FilterDialogListener {
-        void onFilterApplied(List<String> selectedAmenities, float startPrice, float endPrice, Accommodation.Type type);
+        void onFilterApplied(List<Amenity> selectedAmenities, float startPrice, float endPrice, Accommodation.Type type);
     }
 }
