@@ -13,6 +13,14 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.example.odyssey.R;
+import com.example.odyssey.clients.ClientUtils;
+import com.example.odyssey.model.Amenity;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +37,8 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private ArrayList<Amenity> amenities = new ArrayList<>();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -78,10 +88,39 @@ public class HomeFragment extends Fragment {
 
         });
 
-
         return rootView;
     }
 
+    private void getDataFromClient(){
+        Call<ArrayList<Amenity>> call = ClientUtils.productService.getAll();
+        call.enqueue(new Callback<ArrayList<Amenity>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Amenity>> call, Response<ArrayList<Amenity>> response) {
+                if (response.code() == 200){
+                    Log.d("REZ","Meesage recieved");
+                    amenities = response.body();
+
+                    for (Amenity amenity: amenities){
+                        Log.d("REZ", amenity.getTitle());
+                    }
+
+                }else{
+                    Log.d("REZ","Meesage recieved: "+response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Amenity>> call, Throwable t) {
+                Log.d("REZ", t.getMessage() != null?t.getMessage():"error");
+            }
+        });
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getDataFromClient();
+    }
     private void showPopup() {
         FilterPopupDialog dialog = new FilterPopupDialog();
         dialog.show(requireActivity().getSupportFragmentManager(), "filterPopupDialog");
