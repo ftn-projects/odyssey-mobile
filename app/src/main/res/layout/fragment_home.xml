@@ -34,7 +34,6 @@
                     android:layout_height="match_parent"
                     android:padding="15dp"
                     android:src="@drawable/ic_search"
-                    android:background="transparent"
                     android:layout_gravity="center_vertical"
                     android:contentDescription="Filter"
                     android:gravity="fill_vertical|center_horizontal"
