@@ -7,7 +7,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 public class ClientUtils {
-    public static final String SERVICE_API_PATH = "http://10.0.2.2:8080/api/v1/";
+    public static final String SERVICE_API_PATH = "http://192.168.0.102:8080/api/v1/";
 
     /*
      * Ovo ce nam sluziti za debug, da vidimo da li zahtevi i odgovori idu
