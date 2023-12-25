@@ -1,12 +1,13 @@
 package com.example.odyssey.model;
 
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimeSlot {
+public class TimeSlot implements Serializable {
     private LocalDateTime start;
     private LocalDateTime end;
 

@@ -1,8 +1,15 @@
 package com.example.odyssey.model.accommodations;
 
-public class Amenity {
+import java.io.Serializable;
+
+public class Amenity implements Serializable {
     private Long id;
     private String title;
+
+    public Amenity(Long id, String title) {
+        this.id = id;
+        this.title = title;
+    }
 
     public Long getId() {
         return id;

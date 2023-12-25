@@ -29,6 +29,20 @@ public class Validation {
         return true;
     }
 
+    public static boolean validateNumber(TextInputLayout input, TextInputEditText edit, Window window){
+        if (edit.getText().toString().trim().isEmpty()) {
+            input.setError("Input is required");
+            requestFocus(edit, window);
+            return false;
+        }else if(Integer.parseInt(edit.getText().toString())<=0){
+            input.setError("Number must be natural");
+            requestFocus(edit, window);
+            return false;
+        }
+        input.setErrorEnabled(false);
+        return true;
+    }
+
     public static boolean validateConfirmedPassword(TextInputLayout pass, TextInputEditText password, TextInputEditText original, Window window){
         if (password.getText().toString().trim().isEmpty()) {
             pass.setError("Password is required");
