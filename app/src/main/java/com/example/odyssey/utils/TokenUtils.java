@@ -3,16 +3,12 @@ package com.example.odyssey.utils;
 import android.util.Base64;
 import android.util.Log;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
 
 public class TokenUtils {
     private static final String TOKEN_PROPERTY_KEY = "odyssey_token";
@@ -25,8 +21,12 @@ public class TokenUtils {
         System.setProperty(TOKEN_PROPERTY_KEY, token);
     }
 
-    public static Token getToken() {
-        String token = System.getProperty(TOKEN_PROPERTY_KEY);
+    public static String getToken() {
+        return System.getProperty(TOKEN_PROPERTY_KEY);
+    }
+
+    public static Token decodeToken() {
+        String token = getToken();
         if (token == null) return new Token();
 
         try {
@@ -50,15 +50,15 @@ public class TokenUtils {
     }
 
     public static String getRole() {
-        return getToken().getRole();
+        return decodeToken().getRole();
     }
 
     public static String getEmail() {
-        return getToken().getEmail();
+        return decodeToken().getEmail();
     }
 
     public static Long getId() {
-        return getToken().getId();
+        return decodeToken().getId();
     }
 
     public static class Token {
