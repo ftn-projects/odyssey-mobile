@@ -18,6 +18,8 @@ public interface UserService {
     @GET("users/{id}")
     Call<User> findById(@Path("id") Long id);
 
+
+
     @PUT("users")
     Call<AuthResponse> update(@Body User user);
 }

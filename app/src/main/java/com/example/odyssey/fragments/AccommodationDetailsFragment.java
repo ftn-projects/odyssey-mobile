@@ -88,6 +88,9 @@ public class AccommodationDetailsFragment extends Fragment {
         else
             ratingSmall.setText("0.0");
 
+        ImageView hostImage = view.findViewById(R.id.hostImageView);
+        String imagePath = ClientUtils.SERVICE_API_PATH + "users/image/" + accommodation.getHost().getId();
+        Glide.with(getContext()).load(imagePath).into(hostImage);
         TextView hostName = view.findViewById(R.id.details_host_name);
         hostName.setText("Hosted by " + accommodation.getHost().getName());
 
