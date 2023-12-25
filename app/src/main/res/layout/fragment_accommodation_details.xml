@@ -28,7 +28,16 @@
                 app:iss_auto_cycle="true"
                 app:iss_period="1000"
                 app:iss_delay="1000"
-                app:iss_text_align="CENTER"/>
+                app:iss_text_align="CENTER">
+
+                    <TextView
+                        android:id="@+id/details_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Home in Novi Sad, Serbia"
+                        android:textSize="16sp" />
+                </com.denzcoskun.imageslider.ImageSlider>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -43,6 +52,7 @@
 
                     <!-- Accommodation Name -->
                     <TextView
+                        android:id="@+id/details_title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -71,6 +81,7 @@
                             android:scaleY="0.8"/>
 
                         <TextView
+                            android:id="@+id/details_raintg_small"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_regular"
@@ -79,12 +90,7 @@
                     </LinearLayout>
 
                 </LinearLayout>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Home in Novi Sad, Serbia"
-                        android:fontFamily="@font/montserrat_regular"
-                        android:textSize="16sp"/>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -112,6 +118,7 @@
 
                     <!-- Second item: Text "Hosted by Gradimir" -->
                     <TextView
+                        android:id="@+id/details_host_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Hosted by Svetlana"
@@ -140,8 +147,8 @@
                         android:fontFamily="@font/montserrat_bold"
                         android:paddingBottom="8dp"/>
 
-                    <!-- Second item: Lorem Ipsum text -->
                     <TextView
+                        android:id="@+id/details_about"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin cursus efficitur augue, vel semper turpis semper a. Integer cursus accumsan nisi, vel varius tellus fermentum in. Suspendisse id elit in urna luctus cursus vel eu urna. Vivamus luctus id augue vel congue. Donec nec lectus vel nunc tincidunt scelerisque. Sed vitae feugiat libero, vel rhoncus sem. Pellentesque quis risus non mauris efficitur finibus."
@@ -173,118 +180,11 @@
 
                     <!-- Second item: Vertical linear layout with amenity groups -->
                     <LinearLayout
+                        android:id="@+id/details_amenities_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <!-- Amenity Group 1 -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="8dp">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_wifi_icon"
-                                android:layout_gravity="center_vertical"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Wifi"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="8dp"/>
-                        </LinearLayout>
-
-                        <!-- Amenity Group 2 -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="8dp">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_snowflake"
-                                android:layout_gravity="center_vertical"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Air conditioning"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="8dp"/>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="8dp">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_bbq"
-                                android:layout_gravity="center_vertical"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="BBQ"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="8dp"/>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="8dp">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_mountain"
-                                android:layout_gravity="center_vertical"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Mountain view"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="8dp"/>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="8dp">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_paw"
-                                android:layout_gravity="center_vertical"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Pet friendly"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="8dp"/>
-                        </LinearLayout>
-
-                        <!-- Add more amenity groups as needed -->
 
                     </LinearLayout>
 

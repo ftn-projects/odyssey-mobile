@@ -116,6 +116,7 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
 //        });
 
         this.rootView = rootView;
+        getAccommodations();
         return rootView;
     }
 
@@ -144,11 +145,6 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
         this.startPrice = startPrice;
         this.endPrice = endPrice;
         this.type = type;
-        Log.i("(¬‿¬)", "HomeFragment onFilterApplied()");
-        Log.i("(¬‿¬)", "HomeFragment onFilterApplied() selectedAmenities: " + this.amenities);
-        Log.i("(¬‿¬)", "HomeFragment onFilterApplied() startPrice: " + this.startPrice);
-        Log.i("(¬‿¬)", "HomeFragment onFilterApplied() endPrice: " + this.endPrice);
-        Log.i("(¬‿¬)", "HomeFragment onFilterApplied() type: " + this.type);
     }
 
     @Override
@@ -157,11 +153,6 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
         this.endDate = endDate;
         this.location = location;
         this.numberOfGuests = numberOfGuests;
-        Log.i("(¬‿¬)", "HomeFragment onSearchApplied()");
-        Log.i("(¬‿¬)", "HomeFragment onSearchApplied() startDate: " + this.startDate);
-        Log.i("(¬‿¬)", "HomeFragment onSearchApplied() endDate: " + this.endDate);
-        Log.i("(¬‿¬)", "HomeFragment onSearchApplied() location: " + this.location);
-        Log.i("(¬‿¬)", "HomeFragment onSearchApplied() numberOfGuests: " + this.numberOfGuests);
         fillSearchButton();
     }
 
@@ -216,9 +207,13 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
     private void addAccommodationCardFragment(Accommodation accommodation) {
         AccommodationCardFragment cardFragment = new AccommodationCardFragment(getContext());
         cardFragment.setAccommodation(accommodation);
+        cardFragment.setOnClickListener(view -> {
+            Bundle args = new Bundle();
+            args.putSerializable("Accommodation",accommodation);
+            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_details,args);
 
-        // Now you can add cardFragment to your layout container
-        // For example, if you have a LinearLayout container:
+        });
+
         LinearLayout accommodationContainer = this.rootView.findViewById(R.id.accommodation_cards_container);
         accommodationContainer.addView(cardFragment);
     }

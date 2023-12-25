@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.navigation.Navigation;
+
 import com.bumptech.glide.Glide;
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
@@ -150,6 +152,7 @@ public class AccommodationCardFragment extends LinearLayout {
                 animateHeartFill();
             }
         });
+
     }
 
     private void animateHeartFill() {
