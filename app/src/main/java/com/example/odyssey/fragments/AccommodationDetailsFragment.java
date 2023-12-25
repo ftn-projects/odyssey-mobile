@@ -2,6 +2,8 @@ package com.example.odyssey.fragments;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
@@ -42,8 +44,16 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.osmdroid.api.IMapController;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -71,14 +81,22 @@ public class AccommodationDetailsFragment extends Fragment {
     private Date endDate;
     private Integer numberOfGuests;
 
+    LinearLayout map;
 
+    MapView mapView;
+
+    IMapController controller;
 
 
     private Set<Amenity> amenities = new HashSet<>();
 
     private Handler handler = new Handler(Looper.getMainLooper());
 
+    MyLocationNewOverlay mMyLocationOverlay;
+
     View rootView;
+
+    Marker pickedLocationMarker;
 
     public AccommodationDetailsFragment() {
         // Required empty public constructor
@@ -229,6 +247,51 @@ public class AccommodationDetailsFragment extends Fragment {
                 sendReservation();
             }
         });
+
+        map = view.findViewById(R.id.mapGoesHereDetails);
+        org.osmdroid.config.Configuration.getInstance().setUserAgentValue(requireActivity().getPackageName());
+
+        mapView = view.findViewById(R.id.osmmapDetails);
+        mapView.setTileSource(TileSourceFactory.MAPNIK);
+
+        mapView.setMultiTouchControls(true);
+
+        controller = mapView.getController();
+        controller.setZoom(10.0);
+
+        mMyLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(requireActivity()), mapView);
+        mMyLocationOverlay.enableMyLocation();
+        mMyLocationOverlay.enableFollowLocation();
+        mMyLocationOverlay.setDrawAccuracyEnabled(true);
+
+        GeoPoint startPoint = new GeoPoint(45.25167, 19.83694); //gde te postavi kad otvori mapu
+        controller.setCenter(startPoint);
+
+        mapView.getOverlays().add(mMyLocationOverlay);
+
+        pickedLocationMarker = new Marker(mapView);
+
+        List<Address> addresses = null;
+
+        Geocoder geocoder = new Geocoder(requireContext(), Locale.getDefault());
+        try {
+            addresses = geocoder.getFromLocationName(accommodation.getAddress().getStreet() + " ," + accommodation.getAddress().getCity() + " ," + accommodation.getAddress().getCountry(), 1);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Address address = addresses.get(0);
+
+        // Use the latitude and longitude
+
+        double latitude = address.getLatitude();
+        double longitude = address.getLongitude();
+        GeoPoint startPointNew = new GeoPoint(latitude, longitude); //gde te postavi kad otvori mapu
+        controller.setCenter(startPointNew);
+        Log.e("REZ", "Latitude: " + latitude + ", Longitude: " + longitude);
+        pickedLocationMarker.setPosition(new GeoPoint(latitude,longitude));
+        pickedLocationMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        mapView.getOverlays().add(pickedLocationMarker);
+
         return view;
     }
 

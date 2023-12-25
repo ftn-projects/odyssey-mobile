@@ -209,11 +209,17 @@
                         android:textSize="16sp" />
 
                     <!-- Second item: Image with centerCrop -->
-                    <ImageView
+                    <LinearLayout
+                        android:id="@+id/mapGoesHereDetails"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                    android:src="@drawable/navigation_example"
-                    android:scaleType="centerCrop"/>
+                        android:layout_weight="1">
+
+                        <org.osmdroid.views.MapView
+                            android:id="@+id/osmmapDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
                 </LinearLayout>
 
 
