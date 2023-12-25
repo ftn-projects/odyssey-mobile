@@ -105,7 +105,7 @@ public class CreateAccommodationSlots extends Fragment {
             Bundle args = new Bundle();
             args.putSerializable("Request",accommodation);
             args.putStringArrayList("Images", images);
-            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_amenities,args);
+            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_map,args);
         });
 
         return v;

@@ -2,7 +2,9 @@ package com.example.odyssey.model.accommodations;
 
 import com.example.odyssey.model.TimeSlot;
 
-public class AvailabilitySlot {
+import java.io.Serializable;
+
+public class AvailabilitySlot implements Serializable {
     private Double price;
     private TimeSlot timeSlot;
 
