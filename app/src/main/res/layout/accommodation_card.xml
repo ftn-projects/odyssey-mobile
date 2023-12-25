@@ -4,18 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:layout_marginBottom="25dp">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageView"
+            android:id="@+id/cardImageView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/accommodation5"
             app:layout_constraintDimensionRatio="4:4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -38,6 +38,7 @@
                 android:contentDescription="TODO" />
 
             <TextView
+                android:id="@+id/locationTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -75,6 +76,7 @@
                 android:gravity="center_vertical">
 
                 <TextView
+                    android:id="@+id/accommodationTitleTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -98,9 +100,10 @@
                         app:tint="@color/star_color"/>
 
                     <TextView
+                        android:id="@+id/accommodationRatingTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="4.35 (3072)"
+                        android:text="4.35"
                         android:textSize="20sp"
                         android:gravity="end"
                         android:fontFamily="@font/montserrat_regular"/>
@@ -108,33 +111,74 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/cardPricingSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="5dp">
-
+            <LinearLayout
+                android:id="@+id/cardPricePerPricing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$346"
+                    android:text="$"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/montserrat_semibold" />
+                <TextView
+                    android:id="@+id/perPricingPriceNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="346"
                     android:textSize="20sp"
                     android:fontFamily="@font/montserrat_semibold"
                     android:layout_marginEnd="5dp"/>
 
                 <TextView
+                    android:id="@+id/perPricingType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="per night ·"
+                    android:text="per night"
                     android:textSize="15sp"
                     android:fontFamily="@font/montserrat_regular"
                     android:layout_marginEnd="1dp"/>
+                </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/cardPriceTotalPricing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" · "
+                        android:textSize="15sp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:layout_marginEnd="1dp"
+                        android:layout_gravity="bottom"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/montserrat_regular" />
+                <TextView
+                    android:id="@+id/totalPricePricingNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1730"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/montserrat_regular" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$1730 total"
+                    android:text=" total"
                     android:textSize="15sp"
                     android:fontFamily="@font/montserrat_regular" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

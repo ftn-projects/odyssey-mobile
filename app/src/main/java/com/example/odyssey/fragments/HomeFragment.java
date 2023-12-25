@@ -7,18 +7,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.accommodations.Amenity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,8 +29,8 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDialogListener, SearchPopupDialog.SearchDialogListener {
     private Accommodation.Type type;
-    private float startPrice;
-    private float endPrice;
+    private Float startPrice;
+    private Float endPrice;
     private List<Amenity> amenities = new ArrayList<>();
     private Date startDate;
     private Date endDate;
@@ -36,13 +38,13 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
     private Integer numberOfGuests;
 
     private ArrayList<Accommodation> accommodations = new ArrayList<>();
+    private View rootView;
 
     public HomeFragment() {
     }
 
     public static HomeFragment newInstance() {
-        HomeFragment fragment = new HomeFragment();
-        return fragment;
+        return new HomeFragment();
     }
 
     @Override
@@ -67,13 +69,14 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
         searchButton.setOnClickListener(view -> getAccommodations());
 
 
-        AccommodationCard accommodationCard = rootView.findViewById(R.id.accommodationCard1);
-        accommodationCard.setOnClickListener(view -> {
-            AccommodationDetailsFragment accommodationDetailsFragment = new AccommodationDetailsFragment();
-            Navigation.findNavController(requireActivity(), R.id.fragment_container_main).navigate(R.id.nav_accommodation_details);
+//        AccommodationCard accommodationCard = rootView.findViewById(R.id.accommodationCard1);
+//        accommodationCard.setOnClickListener(view -> {
+//            AccommodationDetailsFragment accommodationDetailsFragment = new AccommodationDetailsFragment();
+//            Navigation.findNavController(requireActivity(), R.id.fragment_container_main).navigate(R.id.nav_accommodation_details);
+//
+//        });
 
-        });
-
+        this.rootView = rootView;
         return rootView;
     }
 
@@ -119,17 +122,44 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
         Log.i("(¬‿¬)", "HomeFragment onSearchApplied() endDate: " + this.endDate);
         Log.i("(¬‿¬)", "HomeFragment onSearchApplied() location: " + this.location);
         Log.i("(¬‿¬)", "HomeFragment onSearchApplied() numberOfGuests: " + this.numberOfGuests);
+        fillSearchButton();
     }
 
     public void getAccommodations() {
-        Call<ArrayList<Accommodation>> call = ClientUtils.accommodationService.getAll();
+        Long startDateTime = startDate != null ? startDate.getTime() : null;
+        Long endDateTime = endDate != null ? endDate.getTime() : null;
+
+        // Convert type to String
+        String accommodationType = type != null ? type.toString() : null;
+
+        // Create a list of amenity IDs
+        List<Long> amenityIds = new ArrayList<>();
+        for (Amenity amenity : amenities) {
+            amenityIds.add(amenity.getId());
+        }
+
+        Log.e("REZ", "getAccommodations: " + startDateTime + " " + endDateTime + " " + accommodationType + " " + startPrice + " " + endPrice + " " + amenityIds + " " + location + " " + numberOfGuests);
+        Call<ArrayList<Accommodation>> call = ClientUtils.accommodationService.getAll(
+                accommodationType,
+                startPrice,
+                endPrice,
+                amenityIds,
+                startDateTime,
+                endDateTime,
+                location,
+                numberOfGuests
+        );
         call.enqueue(new Callback<ArrayList<Accommodation>>() {
             @Override
             public void onResponse(Call<ArrayList<Accommodation>> call, Response<ArrayList<Accommodation>> response) {
-                if (response.code() == 200) {
+                if(response.code()==200){
+                    LinearLayout accommodationContainer = rootView.findViewById(R.id.accommodation_cards_container);
+                    accommodationContainer.removeAllViews();
                     accommodations = response.body();
-                    for (Accommodation accommodation : accommodations) {
-                        Log.d("REZ", accommodation.getTitle());
+                    for(Accommodation accommodation: accommodations){
+
+                        Log.d("REZ",accommodation.getTitle());
+                        addAccommodationCardFragment(accommodation);
                     }
                 } else {
                     Log.d("REZ", "Bad");
@@ -141,5 +171,46 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
                 Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
             }
         });
+    }
+
+    private void addAccommodationCardFragment(Accommodation accommodation) {
+        AccommodationCardFragment cardFragment = new AccommodationCardFragment(getContext());
+        cardFragment.setAccommodation(accommodation);
+
+        // Now you can add cardFragment to your layout container
+        // For example, if you have a LinearLayout container:
+        LinearLayout accommodationContainer = this.rootView.findViewById(R.id.accommodation_cards_container);
+        accommodationContainer.addView(cardFragment);
+    }
+
+    private void fillSearchButton(){
+        TextView searchButtonLocation = rootView.findViewById(R.id.searchButtonLocation);
+        if(this.location != null){
+            searchButtonLocation.setText(this.location);
+        }
+        else{
+            searchButtonLocation.setText("Anywhere");
+        }
+
+        TextView searchButtonDates = rootView.findViewById(R.id.searchButtonDates);
+        if(this.startDate != null && this.endDate != null){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("d. MMM", Locale.getDefault());
+            String formattedStartDate = dateFormat.format(this.startDate);
+            String formattedEndDate = dateFormat.format(this.endDate);
+
+            String formattedDateRange = formattedStartDate + " - " + formattedEndDate;
+            searchButtonDates.setText(formattedDateRange);
+        }
+        else{
+            searchButtonDates.setText("Anytime");
+        }
+
+        TextView searchButtonGuests = rootView.findViewById(R.id.searchButtonGuests);
+        if(this.numberOfGuests != null){
+            searchButtonGuests.setText(this.numberOfGuests.toString() + " guests");
+        }
+        else{
+            searchButtonGuests.setText("Anyone");
+        }
     }
 }

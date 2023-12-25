@@ -41,7 +41,7 @@ public class ClientUtils {
             .create();
     public static Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(SERVICE_API_PATH)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(getClient())
             .build();
 
@@ -53,4 +53,5 @@ public class ClientUtils {
     public static AuthService authService = retrofit.create(AuthService.class);
     public static UserService userService = retrofit.create(UserService.class);
     public static AccommodationService accommodationService = retrofit.create(AccommodationService.class);
+
 }
