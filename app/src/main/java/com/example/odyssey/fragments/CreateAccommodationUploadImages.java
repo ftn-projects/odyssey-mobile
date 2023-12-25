@@ -46,7 +46,7 @@ public class CreateAccommodationUploadImages extends Fragment {
     Button backBtn;
     View v;
 
-    ArrayList<String> images;
+    ArrayList<String> images =new ArrayList<>();
     private AccommodationRequest accommodation;
 
     public CreateAccommodationUploadImages() {
@@ -85,8 +85,8 @@ public class CreateAccommodationUploadImages extends Fragment {
         nextBtn.setOnClickListener(v -> {
             Bundle args = new Bundle();
             args.putSerializable("Request",accommodation);
-            args.putStringArrayList("Image", images);
-            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_details,args);
+            args.putStringArrayList("Images", images);
+            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_slots,args);
         });
         backBtn.setOnClickListener(c -> Navigation.findNavController(requireActivity(), R.id.fragment_container_main).navigate(R.id.nav_accommodation_create_amenities));
         return v;

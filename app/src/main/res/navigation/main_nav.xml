@@ -110,5 +110,11 @@
         tools:layout="@layout/fragment_create_accommodation_upload_images">
     </fragment>
 
+    <fragment
+        android:id="@+id/nav_accommodation_create_slots"
+        android:name="com.example.odyssey.fragments.CreateAccommodationSlots"
+        android:label="Create Accommodation"
+        tools:layout="@layout/fragment_create_accommodation_slots">
+    </fragment>
 
 </navigation>
