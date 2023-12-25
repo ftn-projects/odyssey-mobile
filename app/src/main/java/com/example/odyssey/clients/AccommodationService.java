@@ -1,7 +1,6 @@
 package com.example.odyssey.clients;
 
 import com.example.odyssey.model.accommodations.Accommodation;
-import com.example.odyssey.model.accommodations.Amenity;
 
 import java.util.ArrayList;
 import java.util.List;

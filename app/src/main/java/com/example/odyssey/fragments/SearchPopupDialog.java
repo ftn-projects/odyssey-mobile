@@ -1,24 +1,19 @@
 package com.example.odyssey.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.util.Pair;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.util.Pair;
+import androidx.fragment.app.DialogFragment;
+
 import com.example.odyssey.R;
-import com.example.odyssey.model.accommodations.Accommodation;
-import com.example.odyssey.model.accommodations.Amenity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
@@ -27,15 +22,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchPopupDialog#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SearchPopupDialog  extends DialogFragment {
 
     private Date startDate;

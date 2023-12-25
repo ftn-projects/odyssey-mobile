@@ -1,5 +1,6 @@
 package com.example.odyssey.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -13,8 +14,10 @@ import android.view.View;
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.model.Address;
+import com.example.odyssey.model.Auth.AuthResponse;
 import com.example.odyssey.model.Auth.Register;
 import com.example.odyssey.model.User;
+import com.example.odyssey.utils.TokenUtils;
 import com.example.odyssey.utils.Validation;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
@@ -82,64 +85,76 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void register(View view){
+    public void register(View view) {
         if (!Validation.validatePassword(passwordInput, passwordEdit, getWindow()) ||
-                !Validation.validateEmail(emailInput,emailEdit, getWindow()) ||
-                !Validation.validatePhone(phoneNumberInput,phoneNumberEdit, getWindow()) ||
-                !Validation.validateText(nameInput,nameEdit,getWindow()) ||
-                !Validation.validateText(surnameInput,surnameEdit,getWindow()) ||
-                !Validation.validateLettersAndNumber(addressInput,addressEdit,getWindow()) ||
-                !Validation.validateText(cityInput,cityEdit,getWindow()) ||
-                !Validation.validateText(countryInput,countryEdit,getWindow()) ||
-                !Validation.validateConfirmedPassword(confirmInput,confirmEdit,passwordEdit, getWindow())) {
+                !Validation.validateEmail(emailInput, emailEdit, getWindow()) ||
+                !Validation.validatePhone(phoneNumberInput, phoneNumberEdit, getWindow()) ||
+                !Validation.validateText(nameInput, nameEdit, getWindow()) ||
+                !Validation.validateText(surnameInput, surnameEdit, getWindow()) ||
+                !Validation.validateLettersAndNumber(addressInput, addressEdit, getWindow()) ||
+                !Validation.validateText(cityInput, cityEdit, getWindow()) ||
+                !Validation.validateText(countryInput, countryEdit, getWindow()) ||
+                !Validation.validateConfirmedPassword(confirmInput, confirmEdit, passwordEdit, getWindow())) {
             return;
         }
-        String role = roleSwitch.isChecked()? "HOST":"GUEST";
+        String role = roleSwitch.isChecked() ? "HOST" : "GUEST";
 
-        Address address = new Address(addressEdit.getText().toString(),cityEdit.getText().toString(), countryEdit.getText().toString());
-        Register register = new Register(-1L,emailEdit.getText().toString(), nameEdit.getText().toString(), surnameEdit.getText().toString(),
-                phoneNumberEdit.getText().toString(), address ,new User.Settings(), "",passwordEdit.getText().toString(),role);
+        Address address = new Address(addressEdit.getText().toString(), cityEdit.getText().toString(), countryEdit.getText().toString());
+        Register register = new Register(-1L, emailEdit.getText().toString(), nameEdit.getText().toString(), surnameEdit.getText().toString(),
+                phoneNumberEdit.getText().toString(), address, new User.Settings(), "", passwordEdit.getText().toString(), role);
         Call<Register> registerResponse = ClientUtils.authService.register(register);
 
         registerResponse.enqueue(new Callback<Register>() {
             @Override
             public void onResponse(Call<Register> call, Response<Register> response) {
-                if(response.code()==201){
-                    Log.d("REZ","Good");
-                }else{
-                    Log.d("UWU",response.code() + " " + response.message());
-                    Log.d("REZ","Bad");
+                if (response.code() == 201) {
+                    Log.d("REZ", "Good");
+                } else {
+                    Log.d("UWU", response.code() + " " + response.message());
+                    Log.d("REZ", "Bad");
                 }
             }
 
             @Override
             public void onFailure(Call<Register> call, Throwable t) {
-                Log.d("REZ",t.getMessage() != null?t.getMessage():"error");
+                Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
             }
         });
     }
 
     private class ValidationTextWatcher implements TextWatcher {
         private final View view;
+
         private ValidationTextWatcher(View view) {
             this.view = view;
         }
+
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         }
+
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         }
 
         @Override
         public void afterTextChanged(Editable editable) {
-            if(view.getId() == R.id.inputEditPassword) Validation.validatePassword(passwordInput, passwordEdit, getWindow());
-            else if (view.getId() == R.id.inputEditEmail) Validation.validateEmail(emailInput,emailEdit, getWindow());
-            else if (view.getId() == R.id.inputEditName) Validation.validateText(nameInput,nameEdit,getWindow());
-            else if (view.getId() == R.id.inputEditSurname) Validation.validateText(surnameInput,surnameEdit,getWindow());
-            else if (view.getId() == R.id.inputEditAddress) Validation.validateLettersAndNumber(addressInput,addressEdit,getWindow());
-            else if (view.getId() == R.id.inputEditCity) Validation.validateText(cityInput,cityEdit,getWindow());
-            else if (view.getId() == R.id.inputEditCountry) Validation.validateText(countryInput,countryEdit,getWindow());
-            else if (view.getId() == R.id.inputEditPhoneNumber) Validation.validatePhone(phoneNumberInput,phoneNumberEdit,getWindow());
-            else if (view.getId() == R.id.inputEditConfirmPassword) Validation.validateConfirmedPassword(confirmInput,confirmEdit,passwordEdit,getWindow());
+            if (view.getId() == R.id.inputEditPassword)
+                Validation.validatePassword(passwordInput, passwordEdit, getWindow());
+            else if (view.getId() == R.id.inputEditEmail)
+                Validation.validateEmail(emailInput, emailEdit, getWindow());
+            else if (view.getId() == R.id.inputEditName)
+                Validation.validateText(nameInput, nameEdit, getWindow());
+            else if (view.getId() == R.id.inputEditSurname)
+                Validation.validateText(surnameInput, surnameEdit, getWindow());
+            else if (view.getId() == R.id.inputEditAddress)
+                Validation.validateLettersAndNumber(addressInput, addressEdit, getWindow());
+            else if (view.getId() == R.id.inputEditCity)
+                Validation.validateText(cityInput, cityEdit, getWindow());
+            else if (view.getId() == R.id.inputEditCountry)
+                Validation.validateText(countryInput, countryEdit, getWindow());
+            else if (view.getId() == R.id.inputEditPhoneNumber)
+                Validation.validatePhone(phoneNumberInput, phoneNumberEdit, getWindow());
+            else if (view.getId() == R.id.inputEditConfirmPassword)
+                Validation.validateConfirmedPassword(confirmInput, confirmEdit, passwordEdit, getWindow());
         }
     }
 }
