@@ -26,6 +26,14 @@ public interface AccommodationService {
     @GET("accommodations/{id}")
     Call<Accommodation> getOne(@Path("id") Long id);
 
+    @GET("accommodations/{id}/totalPrice")
+    Call<Accommodation> getAccommodationWithPrice(
+            @Path("id") Long id,
+            @Query("dateStart") Long startDate,
+            @Query("dateEnd") Long endDate,
+            @Query("guestNumber") Integer numberOfGuests
+    );
+
     @GET("accommodations/{id}/images")
     Call<ArrayList<String>> getImages(@Path("id") Long id);
 

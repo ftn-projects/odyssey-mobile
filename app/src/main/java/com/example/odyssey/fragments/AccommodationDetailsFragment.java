@@ -8,18 +8,25 @@ import com.bumptech.glide.Glide;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 
 import androidx.core.content.res.ResourcesCompat;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
@@ -28,11 +35,23 @@ import com.example.odyssey.clients.AmenityIconMapper;
 import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.accommodations.Amenity;
+import com.example.odyssey.utils.TokenUtils;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.carousel.MaskableFrameLayout;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.textfield.TextInputEditText;
 
+import org.w3c.dom.Text;
+
+import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import retrofit2.Call;
@@ -45,10 +64,19 @@ import retrofit2.Response;
  * create an instance of this fragment.
  */
 public class AccommodationDetailsFragment extends Fragment {
-
     private Accommodation accommodation;
+    private LinearLayout reservationInputSection;
+    private ImageButton toggleReservationButton;
+    private Date startDate;
+    private Date endDate;
+    private Integer numberOfGuests;
+
+
+
 
     private Set<Amenity> amenities = new HashSet<>();
+
+    private Handler handler = new Handler(Looper.getMainLooper());
 
     View rootView;
 
@@ -77,12 +105,24 @@ public class AccommodationDetailsFragment extends Fragment {
         this.rootView = view;
         accommodation = (Accommodation) getArguments().getSerializable("Accommodation");
         amenities = accommodation.getAmenities();
+        reservationInputSection = view.findViewById(R.id.details_reservation_input_section);
+        toggleReservationButton = view.findViewById(R.id.toggle_reservation_button);
+        TextView minMaxGuests = view.findViewById(R.id.MinMaxGuests);
+
+        minMaxGuests.setText(+ accommodation.getMinGuests() + " - " + accommodation.getMaxGuests() + " guests");
+        toggleReservationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleReservationInput();
+            }
+        });
+
         TextView accommodationTitle = view.findViewById(R.id.details_title);
         loadImages();
         addAmenities(amenities);
         accommodationTitle.setText(accommodation.getTitle());
 
-        TextView ratingSmall = view.findViewById(R.id.details_raintg_small);
+        TextView ratingSmall = view.findViewById(R.id.details_rating_small);
         if(accommodation.getAverageRating()!=null)
             ratingSmall.setText(accommodation.getAverageRating().toString());
         else
@@ -110,9 +150,85 @@ public class AccommodationDetailsFragment extends Fragment {
                 accommodationType = null;
                 break;
         }
-        detailsAddress.setText(accommodationType + " in " + accommodation.getAddress().getCity() + ", " + accommodation.getAddress().getCountry());
+        detailsAddress.setText(accommodationType + " in " + accommodation.getAddress().getStreet() + ", " + accommodation.getAddress().getCity() + ", " + accommodation.getAddress().getCountry());
         TextView detailsDescription = view.findViewById(R.id.details_about);
         detailsDescription.setText(accommodation.getDescription());
+
+        MaterialButton dateButton = view.findViewById(R.id.selectDateButtonReservation);
+        TextView startingDate = view.findViewById(R.id.startDateTextReservation);
+        TextView endingDate = view.findViewById(R.id.endDateTextReservation);
+        TextView pricingType = view.findViewById(R.id.reservationPricingType);
+        switch (accommodation.getPricing()) {
+            case PER_NIGHT:
+                pricingType.setText("per night");
+                break;
+            case PER_PERSON:
+                pricingType.setText("per person");
+                break;
+            default:
+                pricingType.setText("Wtf?");
+                break;
+        }
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MaterialDatePicker<Pair<Long, Long>> materialDatePicker = MaterialDatePicker.Builder.dateRangePicker().setSelection(new Pair<>(
+                        MaterialDatePicker.thisMonthInUtcMilliseconds(),
+                        MaterialDatePicker.todayInUtcMilliseconds()
+                )).build();
+                materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
+                    @Override
+                    public void onPositiveButtonClick(Pair<Long, Long> selection) {
+                        startDate = new Date(selection.first);
+                        endDate = new Date(selection.second);
+                        String date1 = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(startDate);
+                        String date2 = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(endDate);
+
+                        startingDate.setText(MessageFormat.format("Selected Starting Date: {0}", date1));
+                        endingDate.setText(MessageFormat.format("Selected Ending Date: {0}", date2));
+                        loadAccommodation(accommodation.getId(), startDate, endDate, numberOfGuests);
+                    }
+                });
+
+                materialDatePicker.show(getChildFragmentManager(), "tag");
+            }
+        });
+
+        TextInputEditText numberOfGuestsInput = view.findViewById(R.id.NumberOfGuestsEditTextReservation);
+        numberOfGuestsInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    numberOfGuests = Integer.parseInt(s.toString().trim());
+
+                    handler.removeCallbacks(requestRunnable);
+
+                    handler.postDelayed(requestRunnable, 1000);
+                }
+                catch(NumberFormatException ex){
+                    numberOfGuests = null;
+                    Log.e(">.<", "Oopsie haha how did this get here :(");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        loadAccommodation(accommodation.getId(), startDate, endDate, numberOfGuests);
+        MaterialButton sendReservationButton = view.findViewById(R.id.details_complete_button);
+        sendReservationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendReservation();
+            }
+        });
         return view;
     }
 
@@ -160,6 +276,32 @@ public class AccommodationDetailsFragment extends Fragment {
         });
     }
 
+    public void loadAccommodation(Long accommodationId, Date startDate, Date endDate, Integer numberOfGuests){
+        Long startDateLong = startDate != null ? startDate.getTime() : null;
+        Long endDateLong = endDate != null ? endDate.getTime() : null;
+        Call<Accommodation> call = ClientUtils.accommodationService.getAccommodationWithPrice(accommodationId, startDateLong, endDateLong, numberOfGuests);
+        call.enqueue(new Callback<Accommodation>() {
+            @Override
+            public void onResponse(Call<Accommodation> call, Response<Accommodation> response) {
+                if(response.code()==200){
+                    Accommodation accommodationResult = response.body();
+                    if(accommodationResult!=null){
+                        accommodation = accommodationResult;
+                        fillReservationData();
+
+                    }
+                }else{
+                    Log.d("REZ","Bad");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Accommodation> call, Throwable t) {
+                Log.d("REZ",t.getMessage() != null?t.getMessage():"error");
+            }
+        });
+    }
+
     public void addAmenities(Set<Amenity> amenities) {
         LinearLayout amenitiesContainer = rootView.findViewById(R.id.details_amenities_container);
 
@@ -200,4 +342,74 @@ public class AccommodationDetailsFragment extends Fragment {
             amenitiesContainer.addView(amenityGroupLayout);
         }
     }
+    private void toggleReservationInput() {
+        if (reservationInputSection.getVisibility() == View.VISIBLE) {
+            reservationInputSection.setVisibility(View.GONE);
+            toggleReservationButton.setImageResource(R.drawable.ic_arrow_up_icon);
+        } else {
+            reservationInputSection.setVisibility(View.VISIBLE);
+            toggleReservationButton.setImageResource(R.drawable.ic_arrow_down_icon);
+        }
+    }
+
+    private void fillReservationData(){
+        LinearLayout pricingSection = rootView.findViewById(R.id.reservationPerPricingSection);
+        TextView pricingCurrency = rootView.findViewById(R.id.perPricingCurrency);
+        TextView pricingAmount = rootView.findViewById(R.id.perPricingAmount);
+        TextView pricingTypeView = rootView.findViewById(R.id.reservationPricingType);
+        TextView totalPrice = rootView.findViewById(R.id.reservationTotalPrice);
+        TextView guestAmount = rootView.findViewById(R.id.reservationGuestAmount);
+        if(accommodation.getDefaultPrice() == null || accommodation.getDefaultPrice() < 0) {
+            pricingCurrency.setVisibility(View.GONE);
+            pricingAmount.setText("Price not available");
+            pricingTypeView.setVisibility(View.GONE);
+        }
+        else{
+            pricingCurrency.setVisibility(View.VISIBLE);
+            pricingAmount.setText(accommodation.getDefaultPrice().toString());
+            pricingTypeView.setVisibility(View.VISIBLE);
+        }
+
+        if(accommodation.getTotalPrice()==null || accommodation.getTotalPrice()<0){
+            totalPrice.setVisibility(View.GONE);
+        }
+        else{
+            totalPrice.setVisibility(View.VISIBLE);
+            totalPrice.setText("$" + accommodation.getTotalPrice().toString() + " Total");
+        }
+
+        if(numberOfGuests == null || numberOfGuests < 0){
+            guestAmount.setText("No guests");
+        }
+        else{
+            guestAmount.setText(numberOfGuests.toString() + " guests");
+        }
+
+
+    }
+
+    private void sendReservation(){
+        if(startDate == null || endDate == null || numberOfGuests == null || numberOfGuests <= 0){
+            Toast.makeText(requireActivity(), "Invalid input data", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(TokenUtils.getId() == null || TokenUtils.getRole().equals("USER")){
+            Toast.makeText(requireActivity(), "You must be logged in as a user to make a reservation", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Toast.makeText(requireActivity(), "Reservation sent successfully", Toast.LENGTH_LONG).show();
+
+    }
+
+    private Runnable requestRunnable = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                loadAccommodation(accommodation.getId(), startDate, endDate, numberOfGuests);
+            } catch (NumberFormatException e) {
+                Log.e("OOPS", "Error >.<");
+            }
+        }
+    };
 }

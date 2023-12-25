@@ -30,19 +30,13 @@
                 app:iss_delay="1000"
                 app:iss_text_align="CENTER">
 
-                    <TextView
-                        android:id="@+id/details_address"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_regular"
-                        android:text="Home in Novi Sad, Serbia"
-                        android:textSize="16sp" />
                 </com.denzcoskun.imageslider.ImageSlider>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp">
                 <LinearLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
@@ -81,7 +75,7 @@
                             android:scaleY="0.8"/>
 
                         <TextView
-                            android:id="@+id/details_raintg_small"
+                            android:id="@+id/details_rating_small"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_regular"
@@ -206,6 +200,13 @@
                         android:fontFamily="@font/montserrat_bold"
                         android:paddingTop="16dp"
                         android:paddingBottom="8dp"/>
+                    <TextView
+                        android:id="@+id/details_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Home in Novi Sad, Serbia"
+                        android:textSize="16sp" />
 
                     <!-- Second item: Image with centerCrop -->
                     <ImageView
@@ -501,45 +502,198 @@
 
 
 
+        <LinearLayout
+        android:id="@+id/details_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
+        android:background="@drawable/top_border"
+        android:orientation="vertical">
+            <ImageButton
+                android:id="@+id/toggle_reservation_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_border"
+                android:src="@drawable/ic_arrow_up_icon"
+                android:padding="10dp"
+                />
+            <LinearLayout
+                android:id="@+id/details_reservation_input_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:visibility="gone"
 
+                >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp">
+
+                <!-- First Element: TextView - Date range -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date range"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:textStyle="bold"/>
+
+                <!-- Second Element: LinearLayout with two TextViews - Starting and End dates -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:id="@+id/startDateTextReservation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Starting date not selected"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:id="@+id/endDateTextReservation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="End date not selected"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:gravity="end"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <!-- Third Element: MaterialButton - Select date -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/selectDateButtonReservation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Select date"
+                    android:fontFamily="@font/montserrat_regular"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Guests"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/MinMaxGuests"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:textSize="18sp"
+                    android:text="2-5 guests"
+                    />
+            </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/NumberOfGuestsReservation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Number of guests"
+                android:layout_marginTop="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/NumberOfGuestsEditTextReservation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+            </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="15dp"
-            android:background="@drawable/top_border">
+            >
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
                 <LinearLayout
+                    android:id="@+id/reservationPerPricingSection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <TextView
+                        android:id="@+id/perPricingCurrency"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="$364"
+                        android:text="$"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+                    <TextView
+                        android:id="@+id/perPricingAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="364"
                         android:fontFamily="@font/montserrat_regular"
                         android:textStyle="bold"
                         android:textSize="16sp"
                         android:layout_marginEnd="3dp"/>
                     <TextView
+                        android:id="@+id/reservationPricingType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:text="night"
                         android:fontFamily="@font/montserrat_regular"
                         android:textSize="16sp"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/reservationTotalPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="$364 total"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:layout_marginEnd="3dp"/>
                 </LinearLayout>
                 <TextView
-                    android:id="@+id/clearAllText"
+                    android:id="@+id/reservationGuestAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:text="3 - 5 guests"
+                    android:text="5 guests"
                     android:fontFamily="@font/montserrat_regular"
                     android:textSize="16sp"/>
             </LinearLayout>
@@ -549,8 +703,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:fontFamily="@font/montserrat_regular"
+                android:layout_gravity="center"
                 android:text="Complete"
                 style="@style/Widget.MaterialComponents.Button"/>
         </LinearLayout>
+    </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
