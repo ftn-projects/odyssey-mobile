@@ -4,45 +4,49 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.MenuProvider;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.odyssey.BuildConfig;
 import com.example.odyssey.R;
 import com.example.odyssey.databinding.ActivityMainBinding;
+import com.example.odyssey.utils.TokenUtils;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
     private NavController navController;
     private AppBarConfiguration appBarConfiguration;
-    private String role = "HOST"; // edit to change role
+    private String role = TokenUtils.getRole(); // edit to change role
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("(¬‿¬)", "HomeActivity onCreate()");
-//        Log.d("da", System.getProperty("userToken"));
 
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setupActionBar(binding.activityHomeBase.toolbar, binding.mainDrawerLayout);
         setupNavigation(binding.mainNavView, binding.mainDrawerLayout, getMenuId(role));
+    }
+
+    private void restart() {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
+
+    private void initRole() {
+        role = TokenUtils.getRole();
     }
 
     private void setupActionBar(Toolbar toolbar, DrawerLayout drawer) {
@@ -62,20 +66,15 @@ public class MainActivity extends AppCompatActivity {
 
         if (role != null) {
             navView.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(item -> {
-                Toast.makeText(MainActivity.this, "LOGOUT", Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                TokenUtils.removeToken();
+                restart();
                 return true;
             });
         } else {
             navView.getMenu().findItem(R.id.nav_login).setOnMenuItemClickListener(item -> {
-                Toast.makeText(MainActivity.this, "LOGIN", Toast.LENGTH_SHORT).show();
-//
-//                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-//                startActivity(intent);
-//                finish();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
                 return true;
             });
         }
@@ -107,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // menu.clear();  if there are menus for specific fragments inside toolbar
-        getMenuInflater().inflate(R.menu.home_menu, menu);
+        if (role != null)
+            getMenuInflater().inflate(R.menu.home_auth_menu, menu);
         return true;
     }
 

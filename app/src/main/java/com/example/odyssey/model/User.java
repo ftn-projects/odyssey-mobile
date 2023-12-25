@@ -15,6 +15,9 @@ public class User {
         private Boolean HostNotification_On = true;
     }
 
+    public User() {
+    }
+
     public User(Long id, String email, String name, String surname, String phone, Address address, Settings settings, String bio) {
         this.id = id;
         this.email = email;

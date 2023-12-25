@@ -24,7 +24,7 @@
                 android:src="@drawable/profile_example"
                 android:contentDescription="@string/profile_picture" />
             <Button
-                android:id="@+id/btnEditImage"
+                android:id="@+id/btnUpdateImage"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -44,7 +44,6 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Theme.Odyssey.TextInputLayout"
                 android:hint="@string/name"
-                android:id="@+id/account_input_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
@@ -53,7 +52,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_regular"
-                    android:text="@string/example_name"
                     android:inputType="textPersonName"/>
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -69,7 +67,6 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Theme.Odyssey.TextInputLayout"
                 android:hint="@string/surname"
-                android:id="@+id/account_input_surname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
@@ -78,7 +75,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_regular"
-                    android:text="@string/example_surname"
                     android:inputType="textPersonName"/>
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -93,17 +89,61 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Theme.Odyssey.TextInputLayout"
-                android:hint="@string/address"
-                android:id="@+id/account_input_address"
+                android:hint="@string/street"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/field_input_address"
+                    android:id="@+id/field_input_street"
                     style="@style/Theme.Odyssey.TextInputNotEditable"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_regular"
-                    android:text="@string/example_address"
+                    android:inputType="textPostalAddress"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="5dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Theme.Odyssey.TextInputLayout"
+                android:hint="@string/city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/field_input_city"
+                    style="@style/Theme.Odyssey.TextInputNotEditable"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:inputType="textPostalAddress"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="5dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Theme.Odyssey.TextInputLayout"
+                android:hint="@string/country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/field_input_country"
+                    style="@style/Theme.Odyssey.TextInputNotEditable"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/montserrat_regular"
                     android:inputType="textPostalAddress"/>
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -119,7 +159,6 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Theme.Odyssey.TextInputLayout"
                 android:hint="@string/phone"
-                android:id="@+id/account_input_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
@@ -128,7 +167,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_regular"
-                    android:text="@string/example_phone"
                     android:inputType="phone"/>
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -144,7 +182,6 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Theme.Odyssey.TextInputLayout"
                 android:hint="@string/email"
-                android:id="@+id/account_input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
@@ -153,16 +190,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_regular"
-                    android:text="@string/example_email"
                     android:inputType="textEmailAddress"/>
             </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="5dp">
             <Button
-                android:id="@+id/btnConfirmEmail"
-                android:layout_width="wrap_content"
+                android:id="@+id/btnUpdateDetails"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:text="@string/update_details"
                 android:visibility="gone"
-                android:text="@string/btn_send_confirmation"
+                android:layout_marginBottom="10dp"
                 android:layout_marginStart="17dp"/>
         </LinearLayout>
 
@@ -176,38 +221,56 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Theme.Odyssey.TextInputLayout"
-                android:hint="@string/password"
-                android:id="@+id/account_input_password"
+                android:hint="@string/old_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
                     style="@style/Theme.Odyssey.TextInputNotEditable"
-                    android:id="@+id/field_input_password"
+                    android:id="@+id/field_input_old_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_regular"
-                    android:text="@string/example_name_surname"
                     android:inputType="textPassword"/>
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/confirm_password_section"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:paddingHorizontal="30dp"
-            android:visibility="gone"
+            android:paddingVertical="5dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Theme.Odyssey.TextInputLayout"
+                android:hint="@string/new_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/field_input_new_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:inputType="textPassword"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingHorizontal="30dp"
             android:paddingVertical="5dp">
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Theme.Odyssey.TextInputLayout"
                 android:hint="@string/confirm_password"
-                android:id="@+id/account_input_confirm_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/field_input_confirm_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_regular"
@@ -223,8 +286,25 @@
             android:paddingHorizontal="30dp"
             android:paddingVertical="5dp">
             <Button
-                android:id="@+id/btnDeactivateOwn"
-                android:layout_width="wrap_content"
+                android:id="@+id/btnUpdatePassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update password"
+                android:visibility="gone"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="17dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="5dp">
+            <Button
+                android:id="@+id/btnDeactivate"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/deactivate_account"
                 android:backgroundTint="?attr/colorError"

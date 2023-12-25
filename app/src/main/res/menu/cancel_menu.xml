@@ -7,9 +7,4 @@
         android:icon="@drawable/ic_cancel"
         app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/nav_commit_action"
-        android:title="@string/submit"
-        android:icon="@drawable/ic_commit"
-        app:showAsAction="ifRoom" />
-
 </menu>

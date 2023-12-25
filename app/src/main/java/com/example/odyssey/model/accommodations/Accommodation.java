@@ -3,10 +3,11 @@ package com.example.odyssey.model.accommodations;
 import com.example.odyssey.model.Address;
 import com.example.odyssey.model.User;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Accommodation {
+public class Accommodation implements Serializable {
     private Long id;
     private String title;
     private String description;
