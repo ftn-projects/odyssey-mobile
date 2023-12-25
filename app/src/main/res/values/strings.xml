@@ -91,9 +91,17 @@
     <string name="old_password">Old password</string>
 
     <string-array name="accommodation_types">
+        <item>Home</item>
         <item>Apartment</item>
-        <item>Room</item>
         <item>House</item>
+    </string-array>
+    <string-array name="price_types">
+        <item>Per night</item>
+        <item>Per person</item>
+    </string-array>
+    <string-array name="confirmation_types">
+        <item>Automatic</item>
+        <item>Manual</item>
     </string-array>
     <string-array name="accommodation_locations">
         <item>New York, USA</item>
