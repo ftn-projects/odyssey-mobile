@@ -32,12 +32,17 @@
             app:iconGravity="start"
             android:text="Upload images" />
 
-        <LinearLayout
-            android:id="@+id/plsRadi"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/plsRadi"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+            </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"

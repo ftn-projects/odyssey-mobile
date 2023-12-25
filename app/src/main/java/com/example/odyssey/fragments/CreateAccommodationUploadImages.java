@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import com.example.odyssey.utils.ImageAdapter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class CreateAccommodationUploadImages extends Fragment {
     private static final String ARG_PARAM1 = "param1";
@@ -42,11 +44,9 @@ public class CreateAccommodationUploadImages extends Fragment {
     Button selectImageButton;
     Button nextBtn;
     Button backBtn;
-
-    RecyclerView recyclerView;
     View v;
-    ImageAdapter adapter;
 
+    ArrayList<String> images;
     private AccommodationRequest accommodation;
 
     public CreateAccommodationUploadImages() {
@@ -79,15 +79,15 @@ public class CreateAccommodationUploadImages extends Fragment {
 
         nextBtn = v.findViewById(R.id.buttonNext);
         backBtn = v.findViewById(R.id.buttonBack);
-     //   recyclerView = v.findViewById(R.id.recyclerView);
-        //adapter = new ImageAdapter(requireContext(), new ArrayList<>());
-        //LinearLayoutManager manager = new LinearLayoutManager(requireContext());
-        //recyclerView.setLayoutManager(manager);
-        //recyclerView.setHasFixedSize(true);
-        //recyclerView.setAdapter(adapter);
+
         selectImageButton = v.findViewById(R.id.buttonUpload);
         selectImageButton.setOnClickListener(c -> imageChooser());
-        nextBtn.setOnClickListener(c -> Navigation.findNavController(requireActivity(), R.id.fragment_container_main).navigate(R.id.nav_accommodation_create_details));
+        nextBtn.setOnClickListener(v -> {
+            Bundle args = new Bundle();
+            args.putSerializable("Request",accommodation);
+            args.putStringArrayList("Image", images);
+            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_details,args);
+        });
         backBtn.setOnClickListener(c -> Navigation.findNavController(requireActivity(), R.id.fragment_container_main).navigate(R.id.nav_accommodation_create_amenities));
         return v;
     }
@@ -101,43 +101,19 @@ public class CreateAccommodationUploadImages extends Fragment {
         launchSomeOtherActivity.launch(i);
     }
 
-    ActivityResultLauncher<Intent> launchSomeActivity
-            = registerForActivityResult(
-            new ActivityResultContracts
-                    .StartActivityForResult(),
-            result -> {
-                if (result.getResultCode()
-                        == Activity.RESULT_OK) {
-                    Intent data = result.getData();
-                    if (data != null
-                            && data.getData() != null) {
-                        ClipData clipData = data.getClipData();
-                        List<Uri> uris = new ArrayList<>();
-
-                        for (int i = 0; i < clipData.getItemCount(); i++) {
-                            Uri image = clipData.getItemAt(i).getUri();
-                            uris.add(image);
-                        }
-                        adapter.setImageUrls(uris);
-                        adapter.notifyDataSetChanged();
-                    }
-                }
-            });
         ActivityResultLauncher<Intent> launchSomeOtherActivity = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
-
                         // Check if the data is not null and contains images
                         if (data != null && data.getClipData() != null) {
                             ClipData clipData = data.getClipData();
-
                             // Iterate through selected images
                             for (int i = 0; i < clipData.getItemCount(); i++) {
                                 ClipData.Item item = clipData.getItemAt(i);
                                 Uri imageUri = item.getUri();
-
+                                images.add(imageUri.getPath());
                                 // Create an ImageView dynamically
                                 ImageView imageView = new ImageView(requireContext());
                                 imageView.setLayoutParams(new LinearLayout.LayoutParams(
@@ -148,6 +124,16 @@ public class CreateAccommodationUploadImages extends Fragment {
                                 LinearLayout linearLayout = v.findViewById(R.id.plsRadi);
                                 linearLayout.addView(imageView);
                             }
+                        } else if (data != null && data.getData()!=null) {
+                            ImageView imageView = new ImageView(requireContext());
+                            imageView.setLayoutParams(new LinearLayout.LayoutParams(
+                                    ViewGroup.LayoutParams.MATCH_PARENT,
+                                    ViewGroup.LayoutParams.WRAP_CONTENT));
+                            imageView.setImageURI(data.getData());
+                            images.add(data.getData().getPath());
+                            // Add the ImageView to the LinearLayout
+                            LinearLayout linearLayout = v.findViewById(R.id.plsRadi);
+                            linearLayout.addView(imageView);
                         }
                     }
                 });
