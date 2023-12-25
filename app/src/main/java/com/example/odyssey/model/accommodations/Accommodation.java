@@ -27,6 +27,11 @@ public class Accommodation {
     public enum Type {APARTMENT, ROOM, HOUSE}
     public enum PricingType {PER_PERSON, PER_NIGHT}
 
+    public static PricingType getPricingType(String string){
+        if(string.equals("PER PERSON")) return PricingType.PER_PERSON;
+        return PricingType.PER_NIGHT;
+    }
+
     public Accommodation(Long id, String title, String description, Type type, Address address, PricingType pricing, Set<Amenity> amenities, User host, Double defaultPrice, Boolean automaticApproval, Long cancellationDue, Set<AvailabilitySlot> availableSlots, Integer minGuests, Integer maxGuests, Double totalPrice, Double averageRating) {
         this.id = id;
         this.title = title;

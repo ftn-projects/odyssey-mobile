@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private NavController navController;
     private AppBarConfiguration appBarConfiguration;
-    private String role = null; // edit to change role
+    private String role = "HOST"; // edit to change role
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

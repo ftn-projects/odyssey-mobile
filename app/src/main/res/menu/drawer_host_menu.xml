@@ -24,19 +24,24 @@
             android:icon="@drawable/ic_accommodation"
             android:orderInCategory="4" />
 
+        <item android:id="@+id/nav_accommodation_create_details"
+            android:title="Create accommodation"
+            android:icon="@drawable/ic_accommodation"
+            android:orderInCategory="5" />
+
         <item android:id="@+id/nav_host_notifications"
             android:title="@string/notifications"
             android:icon="@drawable/ic_notification"
-            android:orderInCategory="5" />
+            android:orderInCategory="6" />
 
         <item android:id="@+id/nav_host_stats"
             android:title="@string/host_stats"
             android:icon="@drawable/ic_stats"
-            android:orderInCategory="6" />
+            android:orderInCategory="7" />
 
         <item android:id="@+id/nav_logout"
             android:title="@string/logout"
             android:icon="@drawable/ic_logout"
-            android:orderInCategory="7" />
+            android:orderInCategory="8" />
     </group>
 </menu>

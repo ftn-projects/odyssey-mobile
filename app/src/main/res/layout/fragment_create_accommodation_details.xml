@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.CreateAccommodationDetails">
 
         <LinearLayout
             android:layout_width="350dp"
-            android:layout_height="680dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginTop="80dp"
             android:layout_gravity="center">
 
             <TextView
@@ -17,7 +19,9 @@
                 android:layout_height="wrap_content"
                 android:textSize="32sp"
                 android:layout_gravity="center"
-                android:text="Details" />
+                android:text="Details"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="15dp"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Theme.Odyssey.TextInputLayout"
@@ -27,6 +31,7 @@
                 android:hint="Title">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputEditTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_regular"
@@ -42,6 +47,7 @@
                 android:hint="Description">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputEditDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_regular"
@@ -63,6 +69,7 @@
                     android:hint="Min guests">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputEditMinGuests"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_regular"
@@ -79,6 +86,7 @@
                     android:hint="Max guests">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputEditMaxGuests"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_regular"
@@ -88,7 +96,6 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/dropdownAccommodationType"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,100 +103,91 @@
                 android:hint="Accommodation type">
 
                 <AutoCompleteTextView
+                    android:id="@+id/dropdownAccommodationType"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:inputType="none"
                     app:simpleItems="@array/accommodation_types"
                     android:fontFamily="@font/montserrat_regular"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Theme.Odyssey.TextInputLayout"
+                android:id="@+id/inputPrice"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start">
+                android:hint="Price">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Theme.Odyssey.TextInputLayout"
-                    android:id="@+id/inputPrice"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputEditPrice"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Price">
+                    android:fontFamily="@font/montserrat_regular"
+                    android:inputType="number"/>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_regular"
-                        android:inputType="numberDecimal"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Theme.Odyssey.TextInputLayout"
-                    android:id="@+id/inputCancel"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="Cancellation days">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_regular"
-                        android:inputType="number"/>
-
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Theme.Odyssey.TextInputLayout"
+                android:id="@+id/inputCancel"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start">
+                android:hint="Cancellation days">
 
-                <com.google.android.material.textfield.TextInputLayout
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputEditCancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:inputType="number"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:hint="Price type">
+
+                <AutoCompleteTextView
                     android:id="@+id/dropdownPriceType"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:hint="Price type">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none"
+                    app:simpleItems="@array/price_types"
+                    android:fontFamily="@font/montserrat_regular"/>
 
-                    <AutoCompleteTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:simpleItems="@array/price_types"
-                        android:fontFamily="@font/montserrat_regular"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-                </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:hint="Confirmation type">
 
-                <com.google.android.material.textfield.TextInputLayout
+                <AutoCompleteTextView
                     android:id="@+id/dropdownConfirmationType"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:hint="Confirmation type">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none"
+                    app:simpleItems="@array/confirmation_types"
+                    android:fontFamily="@font/montserrat_regular"/>
 
-                    <AutoCompleteTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:simpleItems="@array/confirmation_types"
-                        android:fontFamily="@font/montserrat_regular"/>
-
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/buttonNext"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:text="Next"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="15dp"
-                android:layout_gravity="end"/>
+                android:layout_marginBottom="30dp"
+                android:layout_gravity="end" />
 
         </LinearLayout>
 
-</FrameLayout>
+</ScrollView>

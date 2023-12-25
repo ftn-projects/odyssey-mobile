@@ -84,7 +84,7 @@
     <string-array name="accommodation_types">
         <item>Home</item>
         <item>Apartment</item>
-        <item>Hotel</item>
+        <item>House</item>
     </string-array>
     <string-array name="price_types">
         <item>Per night</item>
