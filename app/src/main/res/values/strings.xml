@@ -24,7 +24,7 @@
     <string name="example_name">Petar</string>
     <string name="example_surname">Petrović</string>
     <string name="example_email">petar.petrovic@gmail.com</string>
-    <string name="example_address">Bulevar Oslobođenja 45, Novi Sad</string>
+    <string name="example_street">Bulevar Oslobođenja 45</string>
     <string name="example_phone">(+381) 65 2034 175</string>
 
     <string name="lorem_ipsum">
@@ -80,6 +80,15 @@
     <string name="cancel">Cancel</string>
     <string name="edit">Edit</string>
     <string name="notifications">Notifications</string>
+    <string name="update_details">Update details</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="street">Street</string>
+    <string name="example_city">Novi Sad</string>
+    <string name="example_country">Serbia</string>
+    <string name="hidden_password">***********</string>
+    <string name="new_password">New password</string>
+    <string name="old_password">Old password</string>
 
     <string-array name="accommodation_types">
         <item>Apartment</item>
