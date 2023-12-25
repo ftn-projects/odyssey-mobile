@@ -3,7 +3,7 @@
     <item android:gravity="bottom">
         <shape>
             <size android:height="1dp" />
-            <solid android:color="?attr/colorOnPrimaryContainer" />
+            <solid android:color="@color/zirko_30" />
         </shape>
     </item>
 </layer-list>

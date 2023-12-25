@@ -25,6 +25,8 @@ public interface UserService {
     @GET("users/{id}")
     Call<User> findById(@Path("id") Long id);
 
+
+
     @PUT("users")
     Call<User> update(@Body User user);
 
