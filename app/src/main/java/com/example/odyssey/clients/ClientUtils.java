@@ -1,7 +1,12 @@
 package com.example.odyssey.clients;
 
 import com.example.odyssey.BuildConfig;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -30,6 +35,10 @@ public class ClientUtils {
     /*
      * Prvo je potrebno da definisemo retrofit instancu preko koje ce komunikacija ici
      * */
+    static Gson gson = new GsonBuilder()
+            .registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>)
+                    (json, typeOfT, context) -> LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
+            .create();
     public static Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(SERVICE_API_PATH)
             .addConverterFactory(GsonConverterFactory.create())
@@ -43,4 +52,5 @@ public class ClientUtils {
     public static AmenityService amenityService = retrofit.create(AmenityService.class);
     public static AuthService authService = retrofit.create(AuthService.class);
     public static UserService userService = retrofit.create(UserService.class);
+    public static AccommodationService accommodationService = retrofit.create(AccommodationService.class);
 }

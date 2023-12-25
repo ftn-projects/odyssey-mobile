@@ -82,9 +82,9 @@
     <string name="notifications">Notifications</string>
 
     <string-array name="accommodation_types">
-        <item>Home</item>
         <item>Apartment</item>
-        <item>Hotel</item>
+        <item>Room</item>
+        <item>House</item>
     </string-array>
     <string-array name="accommodation_locations">
         <item>New York, USA</item>

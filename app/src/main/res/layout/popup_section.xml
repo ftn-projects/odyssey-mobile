@@ -81,7 +81,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:valueFrom="0.0"
-                        android:valueTo="100.0"
+                        android:valueTo="1500.0"
                         app:values="@array/initial_slider_values" />
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -151,40 +151,9 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:id="@+id/amenities_container">
 
-                            <!-- Checkbox 1 -->
-                            <CheckBox
-                                android:id="@+id/checkbox1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:text="WiFi"/>
-
-                            <CheckBox
-                                android:id="@+id/checkbox2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:text="TV"/>
-                            <CheckBox
-                                android:id="@+id/checkbox3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:text="Lake view"/>
-                            <CheckBox
-                                android:id="@+id/checkbox4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:text="BBQ"/>
-                            <CheckBox
-                                android:id="@+id/checkbox5"
-                                android:layout_width="wrap_content"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:layout_height="wrap_content"
-                                android:text="Beach"/>
 
                         </LinearLayout>
                 </LinearLayout>
@@ -211,6 +180,7 @@
                         <AutoCompleteTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:id="@+id/accommodationTypeFilter"
                             android:inputType="none"
                             app:simpleItems="@array/accommodation_types"
                             android:fontFamily="@font/montserrat_regular"
