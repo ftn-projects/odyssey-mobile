@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
@@ -143,13 +144,13 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
         call.enqueue(new Callback<ArrayList<Accommodation>>() {
             @Override
             public void onResponse(Call<ArrayList<Accommodation>> call, Response<ArrayList<Accommodation>> response) {
-                if(response.code()==200){
+                if (response.code() == 200) {
                     LinearLayout accommodationContainer = rootView.findViewById(R.id.accommodation_cards_container);
                     accommodationContainer.removeAllViews();
                     accommodations = response.body();
-                    for(Accommodation accommodation: accommodations){
+                    for (Accommodation accommodation : accommodations) {
 
-                        Log.d("REZ",accommodation.getTitle());
+                        Log.d("REZ", accommodation.getTitle());
                         addAccommodationCardFragment(accommodation);
                     }
                 } else {
@@ -169,42 +170,38 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
         cardFragment.setAccommodation(accommodation);
         cardFragment.setOnClickListener(view -> {
             Bundle args = new Bundle();
-            args.putSerializable("Accommodation",accommodation);
-            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_details,args);
-
+            args.putSerializable("Accommodation", accommodation);
+            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_details, args);
         });
 
         LinearLayout accommodationContainer = this.rootView.findViewById(R.id.accommodation_cards_container);
         accommodationContainer.addView(cardFragment);
     }
 
-    private void fillSearchButton(){
+    private void fillSearchButton() {
         TextView searchButtonLocation = rootView.findViewById(R.id.searchButtonLocation);
-        if(this.location != null){
+        if (this.location != null) {
             searchButtonLocation.setText(this.location);
-        }
-        else{
+        } else {
             searchButtonLocation.setText("Anywhere");
         }
 
         TextView searchButtonDates = rootView.findViewById(R.id.searchButtonDates);
-        if(this.startDate != null && this.endDate != null){
+        if (this.startDate != null && this.endDate != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("d. MMM", Locale.getDefault());
             String formattedStartDate = dateFormat.format(this.startDate);
             String formattedEndDate = dateFormat.format(this.endDate);
 
             String formattedDateRange = formattedStartDate + " - " + formattedEndDate;
             searchButtonDates.setText(formattedDateRange);
-        }
-        else{
+        } else {
             searchButtonDates.setText("Anytime");
         }
 
         TextView searchButtonGuests = rootView.findViewById(R.id.searchButtonGuests);
-        if(this.numberOfGuests != null){
+        if (this.numberOfGuests != null) {
             searchButtonGuests.setText(this.numberOfGuests.toString() + " guests");
-        }
-        else{
+        } else {
             searchButtonGuests.setText("Anyone");
         }
     }

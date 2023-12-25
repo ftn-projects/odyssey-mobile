@@ -29,6 +29,11 @@
             android:icon="@drawable/ic_accommodation"
             android:orderInCategory="5" />
 
+        <item android:id="@+id/nav_accommodation_update_details"
+            android:title="Update accommodation"
+            android:icon="@drawable/ic_accommodation"
+            android:orderInCategory="5" />
+
         <item android:id="@+id/nav_host_notifications"
             android:title="@string/notifications"
             android:icon="@drawable/ic_notification"
