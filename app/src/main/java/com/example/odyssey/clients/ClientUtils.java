@@ -53,5 +53,6 @@ public class ClientUtils {
     public static AuthService authService = retrofit.create(AuthService.class);
     public static UserService userService = retrofit.create(UserService.class);
     public static AccommodationService accommodationService = retrofit.create(AccommodationService.class);
+    public static ReviewService reviewService = retrofit.create(ReviewService.class);
 
 }
