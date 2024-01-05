@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
@@ -85,6 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     public void register(View view) {
         if (!Validation.validatePassword(passwordInput, passwordEdit, getWindow()) ||
                 !Validation.validateEmail(emailInput, emailEdit, getWindow()) ||
@@ -108,7 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Register> call, Response<Register> response) {
                 if (response.code() == 201) {
-                    Log.d("REZ", "Good");
+                    Toast.makeText(getBaseContext(), "Registration success", Toast.LENGTH_LONG).show();
                 } else {
                     Log.d("UWU", response.code() + " " + response.message());
                     Log.d("REZ", "Bad");
@@ -120,6 +122,9 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
             }
         });
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     private class ValidationTextWatcher implements TextWatcher {

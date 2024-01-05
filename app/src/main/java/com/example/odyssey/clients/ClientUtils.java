@@ -1,6 +1,7 @@
 package com.example.odyssey.clients;
 
 import com.example.odyssey.BuildConfig;
+import com.example.odyssey.model.accommodations.AccommodationRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
@@ -54,5 +55,6 @@ public class ClientUtils {
     public static UserService userService = retrofit.create(UserService.class);
     public static AccommodationService accommodationService = retrofit.create(AccommodationService.class);
     public static ReviewService reviewService = retrofit.create(ReviewService.class);
+    public static AccommodationRequestService accommodationRequestService = retrofit.create(AccommodationRequestService.class);
 
 }

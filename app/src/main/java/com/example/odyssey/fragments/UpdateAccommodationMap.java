@@ -3,11 +3,6 @@ package com.example.odyssey.fragments;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
-import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +11,15 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import com.example.odyssey.R;
+import com.example.odyssey.clients.ClientUtils;
+import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.accommodations.AccommodationRequest;
+import com.example.odyssey.model.accommodations.AvailabilitySlot;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.events.MapEventsReceiver;
@@ -37,7 +39,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class CreateAccommodationMap extends Fragment implements MapListener {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class UpdateAccommodationMap extends Fragment implements MapListener {
     private AccommodationRequest accommodation;
     ArrayList<String> images = new ArrayList<>();
     View v;
@@ -49,12 +55,12 @@ public class CreateAccommodationMap extends Fragment implements MapListener {
     MyLocationNewOverlay mMyLocationOverlay;
     Marker pickedLocationMarker;
     boolean isLocationPicked = false;
-    public CreateAccommodationMap() {
+    public UpdateAccommodationMap() {
 
     }
 
-    public static CreateAccommodationMap newInstance(String param1, String param2) {
-        return new CreateAccommodationMap();
+    public static UpdateAccommodationMap newInstance(String param1, String param2) {
+        return new UpdateAccommodationMap();
     }
 
     @Override
@@ -150,7 +156,56 @@ public class CreateAccommodationMap extends Fragment implements MapListener {
             }
         });
 
+        loadAccommodationRequest();
         return v;
+    }
+
+    private void loadAccommodationRequest() {
+        Long id = 2L;
+        ClientUtils.accommodationService.getOne(id).enqueue(new Callback<Accommodation>() {
+            @Override
+            public void onResponse(@NonNull Call<Accommodation> call, @NonNull Response<Accommodation> response) {
+                if (!response.isSuccessful()) {
+                    Log.e("ACCOMMODATION REQUEST", response.message() != null ? response.message() : "error");
+                    return;
+                }
+                updateFormWithData(response.body());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Accommodation> call, @NonNull Throwable t) {
+                Log.e("ACCOMMODATION REQUEST", t.getMessage() != null ? t.getMessage() : "error");
+            }
+        });
+    }
+
+    private void updateFormWithData(Accommodation accommodation) {
+        com.example.odyssey.model.Address address = new com.example.odyssey.model.Address(
+                accommodation.getAddress().getStreet(), accommodation.getAddress().getCity(), accommodation.getAddress().getCountry()
+        );
+        this.accommodation.setNewAddress(address);
+
+        Geocoder geocoder = new Geocoder(requireContext(), Locale.getDefault());
+        GeoPoint p;
+
+        String result = null;
+        try {
+            List<Address> addressList = geocoder.getFromLocationName(
+                    address.getStreet() + ", " + address.getCity() + ", " + address.getCountry(),
+                    1
+            );
+            if (addressList != null && addressList.size() > 0) {
+                Address first = addressList.get(0);
+                p = new GeoPoint(first.getLatitude(), first.getLongitude());
+                first.getLongitude();
+
+                pickedLocationMarker.setPosition(new GeoPoint(p.getLatitude(),p.getLongitude()));
+                pickedLocationMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                mapView.getOverlays().add(pickedLocationMarker);
+            }
+        } catch (IOException e) {
+            Log.e("TAG", "Unable connect to Geocoder", e);
+        }
     }
 
     @Override

@@ -34,8 +34,22 @@ public class Validation {
             input.setError("Input is required");
             requestFocus(edit, window);
             return false;
-        }else if(Integer.parseInt(edit.getText().toString())<=0){
-            input.setError("Number must be natural");
+        }else if(Integer.parseInt(edit.getText().toString())<0){
+            input.setError("Number must be non negative");
+            requestFocus(edit, window);
+            return false;
+        }
+        input.setErrorEnabled(false);
+        return true;
+    }
+
+    public static boolean validateDouble(TextInputLayout input, TextInputEditText edit, Window window){
+        if (edit.getText().toString().trim().isEmpty()) {
+            input.setError("Input is required");
+            requestFocus(edit, window);
+            return false;
+        }else if(Double.parseDouble(edit.getText().toString())<=0){
+            input.setError("Number must be real");
             requestFocus(edit, window);
             return false;
         }
@@ -85,9 +99,9 @@ public class Validation {
             requestFocus(inputText, window);
             return false;
         }else{
-            boolean isValid = text.matches("[a-zA-ZŠšĐđŽžĆćČč]+");
+            boolean isValid = text.matches("[a-zA-ZŠšĐđŽžĆćČč 123456789.-_]+");
             if(!isValid){
-                inputText.setError("Input must contain only letters");
+                inputText.setError("Input must contain only alphanumeric characters");
                 requestFocus(editText,window);
                 return false;
             } else { inputText.setErrorEnabled(false); }

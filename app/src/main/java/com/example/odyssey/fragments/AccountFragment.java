@@ -131,7 +131,7 @@ public class AccountFragment extends Fragment {
     }
 
     private void setEditingVisibility(int visibility) {
-        updateImageButton.setVisibility(visibility);
+//        updateImageButton.setVisibility(visibility);
         updateDetailsButton.setVisibility(visibility);
         updatePasswordButton.setVisibility(visibility);
         deactivateAccountButton.setVisibility(visibility);
@@ -204,7 +204,7 @@ public class AccountFragment extends Fragment {
         String path = null;
         try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
             if (cursor != null) {
-                int nameIndex = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
                 if (cursor.moveToFirst()) {
                     path = cursor.getString(nameIndex);
                 }
