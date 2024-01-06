@@ -37,6 +37,7 @@ import com.example.odyssey.clients.AmenityIconMapper;
 import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.accommodations.Amenity;
+import com.example.odyssey.model.reviews.AccommodationReview;
 import com.example.odyssey.utils.TokenUtils;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.carousel.MaskableFrameLayout;
@@ -82,8 +83,9 @@ public class AccommodationDetailsFragment extends Fragment {
     private Integer numberOfGuests;
 
     LinearLayout map;
-
     MapView mapView;
+    private LinearLayout reviewsContainer;
+
 
     IMapController controller;
 
@@ -125,6 +127,7 @@ public class AccommodationDetailsFragment extends Fragment {
         amenities = accommodation.getAmenities();
         reservationInputSection = view.findViewById(R.id.details_reservation_input_section);
         toggleReservationButton = view.findViewById(R.id.toggle_reservation_button);
+        reviewsContainer = view.findViewById(R.id.accommodation_details_reviews_container);
         TextView minMaxGuests = view.findViewById(R.id.MinMaxGuests);
 
         minMaxGuests.setText(+ accommodation.getMinGuests() + " - " + accommodation.getMaxGuests() + " guests");
@@ -187,6 +190,8 @@ public class AccommodationDetailsFragment extends Fragment {
                 pricingType.setText("Wtf?");
                 break;
         }
+
+        loadReviews();
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -463,6 +468,46 @@ public class AccommodationDetailsFragment extends Fragment {
 
         Toast.makeText(requireActivity(), "Reservation sent successfully", Toast.LENGTH_LONG).show();
 
+    }
+
+    private void loadReviews(){
+        Call<ArrayList<AccommodationReview>> call = ClientUtils.reviewService.getAllAccommodationReviews(accommodation.getId(), null, null);
+        call.enqueue(new Callback<ArrayList<AccommodationReview>>() {
+            @Override
+            public void onResponse(Call<ArrayList<AccommodationReview>> call, Response<ArrayList<AccommodationReview>> response) {
+                if(response.code()==200){
+                    ArrayList<AccommodationReview> reviews = response.body();
+                    if(reviews!=null){
+                        populateReviews(reviews);
+                    }
+                }else{
+                    Log.d("REZ","Bad");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<AccommodationReview>> call, Throwable t) {
+                Log.d("REZ",t.getMessage() != null?t.getMessage():"error");
+            }
+        });
+    }
+
+    private void populateReviews(List<AccommodationReview> reviews){
+        reviewsContainer.removeAllViews();
+
+        for (AccommodationReview review : reviews) {
+            AccommodationReviewCard reviewCardFragment = new AccommodationReviewCard();
+
+            // Pass the review as an argument to the fragment
+            Bundle args = new Bundle();
+            args.putSerializable("accommodationReview", review);
+            reviewCardFragment.setArguments(args);
+
+            // Add the fragment to the reviewsContainer
+            getChildFragmentManager().beginTransaction()
+                    .add(reviewsContainer.getId(), reviewCardFragment)
+                    .commit();
+        }
     }
 
     private Runnable requestRunnable = new Runnable() {

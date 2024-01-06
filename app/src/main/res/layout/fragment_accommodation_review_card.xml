@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="15dp"
+    android:layout_marginTop="25dp"
     android:fontFamily="@font/montserrat_regular">
 
     <!-- Horizontal Linear Layout -->
@@ -21,7 +22,7 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="28dp">
         <ImageView
-            android:id="@+id/profileImageView"
+            android:id="@+id/accommodation_review_profile_image"
             app:strokeWidth="1dp"
             android:layout_width="56dp"
             android:layout_height="56dp"
@@ -40,6 +41,7 @@
 
             <!-- Text "Gradimir" -->
             <TextView
+                android:id="@+id/accommodation_review_username"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -51,6 +53,7 @@
 
             <!-- Text "5.0" -->
             <TextView
+                android:id="@+id/accommodation_review_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5.0"
@@ -69,26 +72,28 @@
     </LinearLayout>
 
     <!-- Comment Texts and Date -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Amazing"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/montserrat_regular"/>
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Amazing"-->
+<!--        android:textSize="18sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:fontFamily="@font/montserrat_regular"/>-->
 
     <TextView
+        android:id="@+id/accommodation_review_comment"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="1"
     android:text="Excellent service, clean house. I don't have any complaints. I would recommend this place to anyone."
-    android:layout_marginTop="3dp"
+    android:layout_marginTop="8dp"
         android:justificationMode="inter_word"
         android:fontFamily="@font/montserrat_regular"
-        android:layout_marginBottom="15dp"/>
+        android:layout_marginBottom="15dp" />
 
     <TextView
+        android:id="@+id/accommodation_review_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="5 days ago"

@@ -470,34 +470,10 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/accommodation_details_reviews_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <com.example.odyssey.fragments.FragmentComment
-                        android:id="@+id/commentCard1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="25dp"/>
-                    <com.example.odyssey.fragments.FragmentComment
-                        android:id="@+id/commentCard2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="25dp"/>
-                    <com.example.odyssey.fragments.FragmentComment
-                        android:id="@+id/commentCard3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="25dp"/>
-                    <com.example.odyssey.fragments.FragmentComment
-                        android:id="@+id/commentCard4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="25dp"/>
-                    <com.example.odyssey.fragments.FragmentComment
-                        android:id="@+id/commentCard5"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="25dp"/>
                 </LinearLayout>
             </LinearLayout>
 
