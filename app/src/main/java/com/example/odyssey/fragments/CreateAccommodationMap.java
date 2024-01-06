@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +17,8 @@ import android.widget.Toast;
 
 import com.example.odyssey.R;
 import com.example.odyssey.model.accommodations.AccommodationRequest;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.events.MapEventsReceiver;
@@ -48,6 +49,9 @@ public class CreateAccommodationMap extends Fragment implements MapListener {
     IMapController controller;
     MyLocationNewOverlay mMyLocationOverlay;
     Marker pickedLocationMarker;
+
+    TextInputLayout addressInput, cityInput, countryInput;
+    TextInputEditText addressEdit, cityEdit, countryEdit;
     boolean isLocationPicked = false;
     public CreateAccommodationMap() {
 
@@ -69,6 +73,12 @@ public class CreateAccommodationMap extends Fragment implements MapListener {
         images = getArguments().getStringArrayList("Images");
         v = inflater.inflate(R.layout.fragment_create_accommodation_map, container, false);
         map = v.findViewById(R.id.mapGoesHere);
+        addressInput = v.findViewById(R.id.inputAddress);
+        addressEdit = v.findViewById(R.id.inputEditAddress);
+        cityInput = v.findViewById(R.id.inputCity);
+        cityEdit = v.findViewById(R.id.inputEditCity);
+        countryInput = v.findViewById(R.id.inputCountry);
+        countryEdit = v.findViewById(R.id.inputEditCountry);
 
         org.osmdroid.config.Configuration.getInstance().setUserAgentValue(requireActivity().getPackageName());
 
@@ -77,7 +87,7 @@ public class CreateAccommodationMap extends Fragment implements MapListener {
         mapView.setMultiTouchControls(true);
 
         controller = mapView.getController();
-        controller.setZoom(10.0);
+        controller.setZoom(20.0);
 
         mMyLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(requireActivity()), mapView);
         mMyLocationOverlay.enableMyLocation();
@@ -115,14 +125,14 @@ public class CreateAccommodationMap extends Fragment implements MapListener {
                     sb.append(address.getSubThoroughfare()).append("\n");
                     sb.append(address.getThoroughfare()).append("\n");
                     sb.append(address.getCountryName());
-                    result = sb.toString();
+
+                    addressEdit.setText(street);
+                    cityEdit.setText(city);
+                    countryEdit.setText(country);
                 }
             } catch (IOException e) {
                 Log.e("TAG", "Unable connect to Geocoder", e);
             }
-            Log.d("HELP", result);
-
-            Toast.makeText(requireContext(),street + ", " + city + ", "  + country ,Toast.LENGTH_LONG).show();
 
             accommodation.setNewAddress(new com.example.odyssey.model.Address(street, city, country));
 

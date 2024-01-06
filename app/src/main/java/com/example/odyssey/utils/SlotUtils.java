@@ -11,17 +11,15 @@ import java.util.List;
 public class SlotUtils {
     public static Collection<AvailabilitySlot> splitSlots(AvailabilitySlot first, AvailabilitySlot second) {
         Collection<AvailabilitySlot> spliced = new ArrayList<>();
-        spliced.add(second);
-        if (first.getTimeSlot().getStart().isBefore(second.getTimeSlot().getStart())) {
-            if (second.getTimeSlot().getEnd().isBefore(first.getTimeSlot().getEnd())) {
-                spliced.add(new AvailabilitySlot(first.getPrice(), new TimeSlot(first.getTimeSlot().getStart(), second.getTimeSlot().getStart().minusDays(1))));
-                spliced.add(new AvailabilitySlot(first.getPrice(), new TimeSlot(second.getTimeSlot().getEnd().plusDays(1), first.getTimeSlot().getEnd())));
-            } else
-                spliced.add(new AvailabilitySlot(first.getPrice(), new TimeSlot(first.getTimeSlot().getStart(), second.getTimeSlot().getStart().minusDays(1))));
-        } else {
-            if (!second.getTimeSlot().getEnd().isAfter(first.getTimeSlot().getEnd()))
-                spliced.add(new AvailabilitySlot(first.getPrice(), new TimeSlot(second.getTimeSlot().getEnd().plusDays(1), first.getTimeSlot().getEnd())));
-        }
+        Double price = first.getPrice();
+        TimeSlot firstSlot = first.getTimeSlot(), secondSlot = second.getTimeSlot();
+
+        if (firstSlot.getStart().isBefore(secondSlot.getStart()))
+            spliced.add(new AvailabilitySlot(price, new TimeSlot(firstSlot.getStart(), secondSlot.getStart().minusDays(1))));
+
+        if (secondSlot.getEnd().isBefore(firstSlot.getEnd()))
+            spliced.add(new AvailabilitySlot(price, new TimeSlot(secondSlot.getEnd().plusDays(1), firstSlot.getEnd())));
+
         return spliced;
     }
 

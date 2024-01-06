@@ -93,6 +93,44 @@
             android:layout_marginEnd="15dp"
             android:text="ADD"/>
 
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@color/zirko_30"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/startDate"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Start date"
+                android:fontFamily="@font/montserrat_regular">
+            </TextView>
+            <TextView
+                android:id="@+id/endDate"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="End date"
+                android:fontFamily="@font/montserrat_regular">
+            </TextView>
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Price"
+                android:fontFamily="@font/montserrat_regular">
+            </TextView>
+
+
+        </LinearLayout>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -105,41 +143,6 @@
                 android:orientation="vertical"
                 android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_marginTop="15dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@color/zirko_30"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:id="@+id/startDate"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:text="Start date"
-                        android:fontFamily="@font/montserrat_regular">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/endDate"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:text="End date"
-                        android:fontFamily="@font/montserrat_regular">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/price"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:text="Price"
-                        android:fontFamily="@font/montserrat_regular">
-                    </TextView>
-
-
-                </LinearLayout>
             </LinearLayout>
         </ScrollView>
 
