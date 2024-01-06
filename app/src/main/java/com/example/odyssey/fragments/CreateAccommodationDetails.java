@@ -41,7 +41,9 @@ public class CreateAccommodationDetails extends Fragment {
     AutoCompleteTextView accommodationType, priceType, confirmationType;
     Button nextBtn;
 
-    public CreateAccommodationDetails() {}
+    public CreateAccommodationDetails() {
+    }
+
     public static CreateAccommodationDetails newInstance(String param1, String param2) {
         CreateAccommodationDetails fragment = new CreateAccommodationDetails();
         Bundle args = new Bundle();
@@ -99,12 +101,12 @@ public class CreateAccommodationDetails extends Fragment {
             String price = priceType.getText().toString();
             String acc = accommodationType.getText().toString();
             String confirm = confirmationType.getText().toString();
-            if(!Validation.validateText(inputTitle, editTitle, requireActivity().getWindow()) ||
-            !Validation.validateText(inputDescription,editDescription, requireActivity().getWindow()) ||
-            !Validation.validateNumber(inputMax,editMax, requireActivity().getWindow()) ||
-            !Validation.validateNumber(inputMin,editMin, requireActivity().getWindow()) ||
-            !Validation.validateNumber(inputPrice,editPrice, requireActivity().getWindow()) ||
-            !Validation.validateNumber(inputCancel,editCancel, requireActivity().getWindow()) || price.equals("") || acc.equals("") || confirm.equals("")){
+            if (!Validation.validateText(inputTitle, editTitle, requireActivity().getWindow()) ||
+                    !Validation.validateText(inputDescription, editDescription, requireActivity().getWindow()) ||
+                    !Validation.validateNumber(inputMax, editMax, requireActivity().getWindow()) ||
+                    !Validation.validateNumber(inputMin, editMin, requireActivity().getWindow()) ||
+                    !Validation.validateNumber(inputPrice, editPrice, requireActivity().getWindow()) ||
+                    !Validation.validateNumber(inputCancel, editCancel, requireActivity().getWindow()) || price.equals("") || acc.equals("") || confirm.equals("")) {
                 return;
             }
 
@@ -116,8 +118,8 @@ public class CreateAccommodationDetails extends Fragment {
                     null, null);
 
             Bundle args = new Bundle();
-            args.putSerializable("Request",accommodation);
-            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_amenities,args);
+            args.putSerializable("Request", accommodation);
+            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_amenities, args);
         });
 
         return v;
@@ -125,22 +127,31 @@ public class CreateAccommodationDetails extends Fragment {
 
     private class ValidationTextWatcher implements TextWatcher {
         private final View view;
+
         private ValidationTextWatcher(View view) {
             this.view = view;
         }
+
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         }
+
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         }
 
         @Override
         public void afterTextChanged(Editable editable) {
-            if(view.getId() == R.id.inputEditTitle) Validation.validateText(inputTitle, editTitle, requireActivity().getWindow());
-            else if (view.getId() == R.id.inputEditDescription) Validation.validateText(inputDescription,editDescription, requireActivity().getWindow());
-            else if (view.getId() == R.id.inputEditMaxGuests) Validation.validateNumber(inputMax,editMax, requireActivity().getWindow());
-            else if (view.getId() == R.id.inputEditMinGuests) Validation.validateNumber(inputMin,editMin, requireActivity().getWindow());
-            else if (view.getId() == R.id.inputEditPrice) Validation.validateNumber(inputPrice,editPrice, requireActivity().getWindow());
-            else if (view.getId() == R.id.inputEditCancel) Validation.validateNumber(inputCancel,editCancel, requireActivity().getWindow());
+            if (view.getId() == R.id.inputEditTitle)
+                Validation.validateText(inputTitle, editTitle, requireActivity().getWindow());
+            else if (view.getId() == R.id.inputEditDescription)
+                Validation.validateText(inputDescription, editDescription, requireActivity().getWindow());
+            else if (view.getId() == R.id.inputEditMaxGuests)
+                Validation.validateNumber(inputMax, editMax, requireActivity().getWindow());
+            else if (view.getId() == R.id.inputEditMinGuests)
+                Validation.validateNumber(inputMin, editMin, requireActivity().getWindow());
+            else if (view.getId() == R.id.inputEditPrice)
+                Validation.validateNumber(inputPrice, editPrice, requireActivity().getWindow());
+            else if (view.getId() == R.id.inputEditCancel)
+                Validation.validateNumber(inputCancel, editCancel, requireActivity().getWindow());
         }
     }
 

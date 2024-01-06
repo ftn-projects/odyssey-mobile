@@ -28,10 +28,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class CreateAccommodationSlots extends Fragment {
 
@@ -40,11 +44,13 @@ public class CreateAccommodationSlots extends Fragment {
     MaterialButton dateBtn;
     TextInputLayout priceInput;
     TextInputEditText priceEdit, startEdit, endEdit;
-    String date1,date2;
+    String date1, date2;
     private AccommodationRequest accommodation;
     ArrayList<String> images = new ArrayList<>();
+
     public CreateAccommodationSlots() {
     }
+
     public static CreateAccommodationSlots newInstance(String param1, String param2) {
         CreateAccommodationSlots fragment = new CreateAccommodationSlots();
         return fragment;
@@ -93,61 +99,68 @@ public class CreateAccommodationSlots extends Fragment {
                 AvailabilitySlot slot = new AvailabilitySlot(Double.parseDouble(priceEdit.getText().toString()),
                         new TimeSlot(starting, ending));
                 LinearLayout layout = v.findViewById(R.id.plsRadiOpet);
-                int count = layout.getChildCount();
+                layout.removeAllViews();
 
-                for(int i=1;i<count;i++){
-                    layout.removeView(layout.getChildAt(i));
-                }
+                addSlot(slot);
 
-                if(addSlots(slot)) accommodation.getNewAvailableSlots().add(slot);
-
-                for(AvailabilitySlot s: accommodation.getNewAvailableSlots()){
+                for (AvailabilitySlot s : accommodation.getNewAvailableSlots()) {
                     AvailabilitySlots slots = new AvailabilitySlots(requireContext());
                     slots.setSlot(s);
                     layout.addView(slots);
                 }
-
-            }
-            catch(DateTimeParseException e){
+                priceEdit.setText("");
+            } catch (DateTimeParseException e) {
                 e.printStackTrace();
             }
         });
 
         nextBtn.setOnClickListener(c -> {
             Bundle args = new Bundle();
-            args.putSerializable("Request",accommodation);
+            args.putSerializable("Request", accommodation);
             args.putStringArrayList("Images", images);
-            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_map,args);
+            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_map, args);
         });
 
         return v;
     }
 
-    private boolean addSlots(AvailabilitySlot slot){
-        boolean add = true;
-        Set<AvailabilitySlot> slotsToRemove = new HashSet<>();
+    private void addSlot(AvailabilitySlot slot) {
+        Set<AvailabilitySlot> newSlots = new HashSet<>();
+        Set<AvailabilitySlot> overlapping = accommodation.getNewAvailableSlots().stream()
+                .filter(s -> s.getTimeSlot().overlaps(slot.getTimeSlot()))
+                .collect(Collectors.toSet());
 
-        for (AvailabilitySlot s : new HashSet<>(accommodation.getNewAvailableSlots())) {
-            if (s.getTimeSlot().overlaps(slot.getTimeSlot())) {
-                add = false;
+        overlapping.forEach(s -> newSlots.addAll(SlotUtils.splitSlots(s, slot)));
 
-                if (s.getTimeSlot().equals(slot.getTimeSlot())) {
-                    slotsToRemove.add(s);
-                    accommodation.getNewAvailableSlots().add(slot);
-                } else {
-                    if (s.getPrice().equals(slot.getPrice())) {
-                        slotsToRemove.add(s);
-                        accommodation.getNewAvailableSlots().add(SlotUtils.joinSlots(s, slot));
-                    } else {
-                        slotsToRemove.add(s);
-                        for (AvailabilitySlot a : SlotUtils.splitSlots(s, slot))
-                            accommodation.getNewAvailableSlots().add(a);
-                    }
-                }
+        accommodation.getNewAvailableSlots().removeAll(overlapping);
+        accommodation.getNewAvailableSlots().addAll(newSlots);
+        accommodation.getNewAvailableSlots().add(slot);
+
+        newSlots.clear();
+        List<AvailabilitySlot> toBeJoined = new ArrayList<>();
+        for (AvailabilitySlot s : sorted(accommodation.getNewAvailableSlots())) {
+            if (!toBeJoined.isEmpty() && !isSuccessive(toBeJoined.get(toBeJoined.size() - 1), s)) {
+                newSlots.add(SlotUtils.joinSlots(toBeJoined));
+                toBeJoined.clear();
             }
+            toBeJoined.add(s);
         }
 
-        accommodation.getNewAvailableSlots().removeAll(slotsToRemove);
-        return add;
+        if (!toBeJoined.isEmpty())
+            newSlots.add(SlotUtils.joinSlots(toBeJoined));
+
+        accommodation.getNewAvailableSlots().clear();
+        accommodation.getNewAvailableSlots().addAll(sorted(newSlots));
+    }
+
+    private boolean isSuccessive(AvailabilitySlot first, AvailabilitySlot second) {
+        return first.getPrice().equals(second.getPrice()) &&
+                first.getTimeSlot().getEnd().plusDays(1).equals(second.getTimeSlot().getStart());
+    }
+
+    private List<AvailabilitySlot> sorted(Collection<AvailabilitySlot> slots) {
+        return slots.stream().sorted(
+                (s1, s2) -> s1.getTimeSlot().getStart().compareTo(s2.getTimeSlot().getStart())
+        ).collect(Collectors.toList());
     }
 }
