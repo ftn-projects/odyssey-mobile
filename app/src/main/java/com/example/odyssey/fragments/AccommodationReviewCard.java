@@ -75,18 +75,13 @@ public class AccommodationReviewCard extends Fragment {
 
         LocalDateTime submissionDate = accommodationReview.getSubmissionDate();
 
-
         CharSequence relativeTime = DateUtils.getRelativeTimeSpanString(
-                submissionDate.toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli(),
+                submissionDate.toInstant(ZoneOffset.ofHoursMinutes(1,0)).toEpochMilli(),
                 System.currentTimeMillis(),
                 DateUtils.SECOND_IN_MILLIS,
                 DateUtils.FORMAT_ABBREV_RELATIVE
         );
-
         dateTextView.setText(relativeTime);
-
-
-
         return view;
     }
 

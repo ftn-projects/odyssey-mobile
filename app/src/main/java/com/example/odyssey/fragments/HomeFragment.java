@@ -16,6 +16,7 @@ import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.accommodations.Amenity;
+import com.example.odyssey.model.accommodations.AvailabilitySlot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -149,8 +150,6 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
                     accommodationContainer.removeAllViews();
                     accommodations = response.body();
                     for (Accommodation accommodation : accommodations) {
-
-                        Log.d("REZ", accommodation.getTitle());
                         addAccommodationCardFragment(accommodation);
                     }
                 } else {

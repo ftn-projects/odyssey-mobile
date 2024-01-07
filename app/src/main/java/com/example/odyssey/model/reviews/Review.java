@@ -2,9 +2,10 @@ package com.example.odyssey.model.reviews;
 
 import com.example.odyssey.model.User;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Review {
+public class Review implements Serializable {
     private Long id;
     private Double rating;
     private String comment;

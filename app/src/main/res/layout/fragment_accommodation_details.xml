@@ -435,7 +435,7 @@
                     <!-- RatingBar -->
                     <RatingBar
 
-                        android:id="@+id/smallRating"
+                        android:id="@+id/accommodation_review_rating_bar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="?android:attr/ratingBarStyleIndicator"
@@ -451,6 +451,7 @@
                         android:layout_marginTop="8dp">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/accommodation_review_comment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_regular"
@@ -460,6 +461,7 @@
 
                     <!-- MaterialButton for submitting the comment -->
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/accommodation_review_submit_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Submit"

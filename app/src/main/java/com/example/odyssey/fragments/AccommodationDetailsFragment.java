@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.bumptech.glide.Glide;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
@@ -27,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,8 +37,10 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.odyssey.R;
 import com.example.odyssey.clients.AmenityIconMapper;
 import com.example.odyssey.clients.ClientUtils;
+import com.example.odyssey.model.User;
 import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.accommodations.Amenity;
+import com.example.odyssey.model.accommodations.AvailabilitySlot;
 import com.example.odyssey.model.reviews.AccommodationReview;
 import com.example.odyssey.utils.TokenUtils;
 import com.google.android.material.button.MaterialButton;
@@ -44,6 +48,7 @@ import com.google.android.material.carousel.MaskableFrameLayout;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -58,6 +63,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -65,6 +71,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -84,27 +91,22 @@ public class AccommodationDetailsFragment extends Fragment {
 
     LinearLayout map;
     MapView mapView;
+    RatingBar ratingBar;
+    MaterialButton sendReviewButton;
+    TextInputEditText reviewCommentInput;
     private LinearLayout reviewsContainer;
-
-
     IMapController controller;
-
-
     private Set<Amenity> amenities = new HashSet<>();
-
     private Handler handler = new Handler(Looper.getMainLooper());
-
     MyLocationNewOverlay mMyLocationOverlay;
-
     View rootView;
-
     Marker pickedLocationMarker;
-
     public AccommodationDetailsFragment() {
         // Required empty public constructor
     }
 
     private List<String> imageUrls = new ArrayList<>();
+    private User loggedUser;
 
     public static AccommodationDetailsFragment newInstance() {
         AccommodationDetailsFragment fragment = new AccommodationDetailsFragment();
@@ -123,10 +125,23 @@ public class AccommodationDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_accommodation_details, container, false);
         this.rootView = view;
+        getCurrentUser();
         accommodation = (Accommodation) getArguments().getSerializable("Accommodation");
+
         amenities = accommodation.getAmenities();
         reservationInputSection = view.findViewById(R.id.details_reservation_input_section);
         toggleReservationButton = view.findViewById(R.id.toggle_reservation_button);
+        ratingBar = view.findViewById(R.id.accommodation_review_rating_bar);
+        reviewCommentInput = view.findViewById(R.id.accommodation_review_comment);
+        sendReviewButton = view.findViewById(R.id.accommodation_review_submit_button);
+
+        sendReviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitReview();
+            }
+        });
+
         reviewsContainer = view.findViewById(R.id.accommodation_details_reviews_container);
         TextView minMaxGuests = view.findViewById(R.id.MinMaxGuests);
 
@@ -510,6 +525,81 @@ public class AccommodationDetailsFragment extends Fragment {
         }
     }
 
+    public boolean isReviewDataValid(Double rating){
+        if(rating == null || rating < 0 || rating > 5){
+            return false;
+        }
+        return true;
+    }
+
+    public void submitReview(){
+        Double rating = (double) ratingBar.getRating();
+        String comment = reviewCommentInput.getText().toString().trim();
+        if(TokenUtils.getId() == null || !TokenUtils.getRole().equals("GUEST")){
+            Toast.makeText(requireActivity(), "You must be logged in as a guest to make a review", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(!isReviewDataValid(rating)){
+            Toast.makeText(requireActivity(), "Invalid rating", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (loggedUser == null) {
+            Toast.makeText(requireActivity(), "Unable to get user data", Toast.LENGTH_LONG).show();
+            return;
+        }
+        Log.e("REZ", "Logged user: " + loggedUser.getName());
+        Log.e("REZ", "Current date: " + LocalDateTime.now());
+        LocalDateTime currentDate;
+
+        AccommodationReview review = new AccommodationReview(null, rating, comment, LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS), loggedUser, AccommodationReview.Status.REQUESTED, accommodation);
+        sendReview(review);
+    }
+    public void sendReview(AccommodationReview review){
+        for (AvailabilitySlot availabilitySlot : accommodation.getAvailableSlots()) {
+            Log.e("REZ", availabilitySlot.getTimeSlot().getStart().toString());
+        }
+        Gson gson = new Gson();
+        String jsonPayload = gson.toJson(accommodation);
+        Log.e("ReviewTag", "Sending JSON: " + jsonPayload);
+        Call<ResponseBody> createReviewCall = ClientUtils.reviewService.create(review);
+        createReviewCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(requireActivity(), "Successfully created a review!", Toast.LENGTH_LONG).show();
+                    loadReviews();
+                } else {
+                    Toast.makeText(requireActivity(), "Unexpected error while creating a review", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(requireActivity(), "Unable to connect to the server", Toast.LENGTH_LONG).show();
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void getCurrentUser(){
+        Call<User> getUserCall = ClientUtils.userService.findById(TokenUtils.getId());
+        getUserCall.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    loggedUser = response.body();
+                } else {
+                    loggedUser = null;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                loggedUser = null;
+                t.printStackTrace();
+            }
+        });
+    }
     private Runnable requestRunnable = new Runnable() {
         @Override
         public void run() {
@@ -520,4 +610,5 @@ public class AccommodationDetailsFragment extends Fragment {
             }
         }
     };
+
 }
