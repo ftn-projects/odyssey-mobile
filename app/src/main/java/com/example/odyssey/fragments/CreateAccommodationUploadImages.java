@@ -77,13 +77,19 @@ public class CreateAccommodationUploadImages extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_create_accommodation_upload_images, container, false);
-        accommodation = (AccommodationRequest) getArguments().getSerializable("Request");
+
+        if(getArguments()!= null && getArguments().getSerializable("Request") != null)
+            accommodation = (AccommodationRequest) getArguments().getSerializable("Request");
+
+        if(getArguments()!= null && getArguments().getStringArrayList("Images") != null)
+            images = getArguments().getStringArrayList("Images");
 
         nextBtn = v.findViewById(R.id.buttonNext);
         backBtn = v.findViewById(R.id.buttonBack);
 
         selectImageButton = v.findViewById(R.id.buttonUpload);
         selectImageButton.setOnClickListener(c -> imageChooser());
+
         nextBtn.setOnClickListener(v -> {
             Bundle args = new Bundle();
             for(int i:removed) images.remove(i);
@@ -91,7 +97,13 @@ public class CreateAccommodationUploadImages extends Fragment {
             args.putStringArrayList("Images", images);
             Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_slots,args);
         });
-        backBtn.setOnClickListener(c -> Navigation.findNavController(requireActivity(), R.id.fragment_container_main).navigate(R.id.nav_accommodation_create_amenities));
+
+        backBtn.setOnClickListener(c -> {
+            Bundle args = new Bundle();
+            args.putSerializable("Request",accommodation);
+            args.putStringArrayList("Images", images);
+            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_amenities, args);
+        });
         return v;
     }
 

@@ -1,8 +1,5 @@
 package com.example.odyssey.fragments;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,11 +8,8 @@ import androidx.navigation.Navigation;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
@@ -27,6 +21,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.HashSet;
+import java.util.ArrayList;
 
 public class CreateAccommodationDetails extends Fragment {
 
@@ -40,6 +35,7 @@ public class CreateAccommodationDetails extends Fragment {
     TextInputEditText editTitle, editDescription, editMin, editMax, editPrice, editCancel;
     AutoCompleteTextView accommodationType, priceType, confirmationType;
     Button nextBtn;
+    ArrayList<String> images =new ArrayList<>();
 
     public CreateAccommodationDetails() {
     }
@@ -68,6 +64,12 @@ public class CreateAccommodationDetails extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_create_accommodation_details, container, false);
         nextBtn = v.findViewById(R.id.buttonNext);
+
+        if(getArguments()!= null && getArguments().getSerializable("Request") != null)
+            accommodation = (AccommodationRequest) getArguments().getSerializable("Request");
+
+        if(getArguments()!= null && getArguments().getStringArrayList("Images") != null)
+            images = getArguments().getStringArrayList("Images");
 
         inputTitle = v.findViewById(R.id.inputTitle);
         editTitle = v.findViewById(R.id.inputEditTitle);
@@ -103,9 +105,9 @@ public class CreateAccommodationDetails extends Fragment {
             String confirm = confirmationType.getText().toString();
             if (!Validation.validateText(inputTitle, editTitle, requireActivity().getWindow()) ||
                     !Validation.validateText(inputDescription, editDescription, requireActivity().getWindow()) ||
-                    !Validation.validateNumber(inputMax, editMax, requireActivity().getWindow()) ||
+                    !Validation.validateNumberCompare(inputMax, editMax, editMin, requireActivity().getWindow()) ||
                     !Validation.validateNumber(inputMin, editMin, requireActivity().getWindow()) ||
-                    !Validation.validateNumber(inputPrice, editPrice, requireActivity().getWindow()) ||
+                    !Validation.validateDouble(inputPrice, editPrice, requireActivity().getWindow()) ||
                     !Validation.validateNumber(inputCancel, editCancel, requireActivity().getWindow()) || price.equals("") || acc.equals("") || confirm.equals("")) {
                 return;
             }
@@ -118,7 +120,8 @@ public class CreateAccommodationDetails extends Fragment {
                     null, null);
 
             Bundle args = new Bundle();
-            args.putSerializable("Request", accommodation);
+            args.putSerializable("Request",accommodation);
+            args.putStringArrayList("Images", images);
             Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_amenities, args);
         });
 
@@ -145,11 +148,11 @@ public class CreateAccommodationDetails extends Fragment {
             else if (view.getId() == R.id.inputEditDescription)
                 Validation.validateText(inputDescription, editDescription, requireActivity().getWindow());
             else if (view.getId() == R.id.inputEditMaxGuests)
-                Validation.validateNumber(inputMax, editMax, requireActivity().getWindow());
+                Validation.validateNumberCompare(inputMax, editMax, editMin, requireActivity().getWindow());
             else if (view.getId() == R.id.inputEditMinGuests)
                 Validation.validateNumber(inputMin, editMin, requireActivity().getWindow());
             else if (view.getId() == R.id.inputEditPrice)
-                Validation.validateNumber(inputPrice, editPrice, requireActivity().getWindow());
+                Validation.validateDouble(inputPrice, editPrice, requireActivity().getWindow());
             else if (view.getId() == R.id.inputEditCancel)
                 Validation.validateNumber(inputCancel, editCancel, requireActivity().getWindow());
         }

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.odyssey.R;
 import com.example.odyssey.model.accommodations.AccommodationRequest;
+import com.example.odyssey.utils.Validation;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -43,7 +46,7 @@ public class CreateAccommodationMap extends Fragment implements MapListener {
     ArrayList<String> images = new ArrayList<>();
     View v;
     LinearLayout map;
-    Button create;
+    Button createBtn, backBtn;
 
     MapView mapView;
     IMapController controller;
@@ -52,6 +55,7 @@ public class CreateAccommodationMap extends Fragment implements MapListener {
 
     TextInputLayout addressInput, cityInput, countryInput;
     TextInputEditText addressEdit, cityEdit, countryEdit;
+    String street = "", city = "", country = "";
     boolean isLocationPicked = false;
     public CreateAccommodationMap() {
 
@@ -69,16 +73,27 @@ public class CreateAccommodationMap extends Fragment implements MapListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        accommodation = (AccommodationRequest) getArguments().getSerializable("Request");
-        images = getArguments().getStringArrayList("Images");
+
+        if(getArguments()!= null && getArguments().getSerializable("Request") != null)
+            accommodation = (AccommodationRequest) getArguments().getSerializable("Request");
+
+        if(getArguments()!= null && getArguments().getStringArrayList("Images") != null)
+            images = getArguments().getStringArrayList("Images");
+
         v = inflater.inflate(R.layout.fragment_create_accommodation_map, container, false);
         map = v.findViewById(R.id.mapGoesHere);
+
         addressInput = v.findViewById(R.id.inputAddress);
         addressEdit = v.findViewById(R.id.inputEditAddress);
+        addressEdit.addTextChangedListener(new ValidationTextWatcher(addressEdit));
+
         cityInput = v.findViewById(R.id.inputCity);
         cityEdit = v.findViewById(R.id.inputEditCity);
+        cityEdit.addTextChangedListener(new ValidationTextWatcher(cityEdit));
+
         countryInput = v.findViewById(R.id.inputCountry);
         countryEdit = v.findViewById(R.id.inputEditCountry);
+        countryEdit.addTextChangedListener(new ValidationTextWatcher(countryEdit));
 
         org.osmdroid.config.Configuration.getInstance().setUserAgentValue(requireActivity().getPackageName());
 
@@ -104,11 +119,8 @@ public class CreateAccommodationMap extends Fragment implements MapListener {
 
         MapEventsReceiver mReceive = new MapEventsReceiver() {@Override
         public boolean singleTapConfirmedHelper(GeoPoint p) {
-            //Toast.makeText(requireContext(),p.getLatitude() + " - "+p.getLongitude(),Toast.LENGTH_LONG).show();
-
             Geocoder geocoder = new Geocoder(requireContext(), Locale.getDefault());
             String result = null;
-            String street = "", city = "", country = "";
             try {
                 List<Address> addressList = geocoder.getFromLocation(
                         p.getLatitude(), p.getLongitude(), 1);
@@ -134,8 +146,6 @@ public class CreateAccommodationMap extends Fragment implements MapListener {
                 Log.e("TAG", "Unable connect to Geocoder", e);
             }
 
-            accommodation.setNewAddress(new com.example.odyssey.model.Address(street, city, country));
-
             pickedLocationMarker.setPosition(new GeoPoint(p.getLatitude(),p.getLongitude())); //gde stavlja marker
             pickedLocationMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
             mapView.getOverlays().add(pickedLocationMarker);
@@ -151,13 +161,29 @@ public class CreateAccommodationMap extends Fragment implements MapListener {
         MapEventsOverlay OverlayEvents = new MapEventsOverlay(requireContext(), mReceive);
         mapView.getOverlays().add(OverlayEvents);
 
-        create = v.findViewById(R.id.buttonCreate);
-        create.setOnClickListener(new View.OnClickListener() {
+        createBtn = v.findViewById(R.id.buttonCreate);
+        createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!Validation.validateLettersAndNumber(addressInput, addressEdit, requireActivity().getWindow()) ||
+                    !Validation.validateText(cityInput, cityEdit, requireActivity().getWindow()) ||
+                    !Validation.validateText(countryInput, countryEdit, requireActivity().getWindow()))
+                    return;
+
+                accommodation.setNewAddress(new com.example.odyssey.model.Address(addressEdit.getText().toString(),
+                        cityEdit.getText().toString(), countryEdit.getText().toString()));
                 Toast.makeText(requireActivity(), "Accommodation request created", Toast.LENGTH_SHORT).show();
                 Navigation.findNavController(requireView()).navigate(R.id.nav_home);
             }
+        });
+
+        backBtn = v.findViewById(R.id.buttonBack);
+
+        backBtn.setOnClickListener(c -> {
+            Bundle args = new Bundle();
+            args.putSerializable("Request",accommodation);
+            args.putStringArrayList("Images", images);
+            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_slots, args);
         });
 
         return v;
@@ -171,5 +197,29 @@ public class CreateAccommodationMap extends Fragment implements MapListener {
     @Override
     public boolean onZoom(ZoomEvent event) {
         return false;
+    }
+
+    private class ValidationTextWatcher implements TextWatcher {
+        private final View view;
+
+        private ValidationTextWatcher(View view) {
+            this.view = view;
+        }
+
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            if(view.getId() == R.id.inputEditAddress)
+                Validation.validateLettersAndNumber(addressInput, addressEdit, requireActivity().getWindow());
+            else if(view.getId() == R.id.inputEditCity)
+                Validation.validateText(cityInput, cityEdit, requireActivity().getWindow());
+            else if(view.getId() == R.id.inputEditCountry)
+                Validation.validateText(countryInput, countryEdit, requireActivity().getWindow());
+        }
     }
 }

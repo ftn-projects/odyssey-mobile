@@ -36,6 +36,7 @@
             android:orientation="horizontal">
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Theme.Odyssey.TextInputLayout"
+                android:id="@+id/inputStartText"
                 android:enabled="false"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -52,6 +53,7 @@
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:enabled="false"
+                android:id="@+id/inputEndText"
                 style="@style/Theme.Odyssey.TextInputLayout"
                 android:layout_width="0dp"
                 android:layout_weight="1"

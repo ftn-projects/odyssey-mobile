@@ -6,6 +6,8 @@ import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import com.example.odyssey.model.TimeSlot;
 import com.example.odyssey.model.accommodations.AccommodationRequest;
 import com.example.odyssey.model.accommodations.AvailabilitySlot;
 import com.example.odyssey.utils.SlotUtils;
+import com.example.odyssey.utils.Validation;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
@@ -40,9 +43,9 @@ import java.util.stream.Collectors;
 public class CreateAccommodationSlots extends Fragment {
 
     View v;
-    Button nextBtn, addBtn;
+    Button nextBtn, addBtn, backBtn;
     MaterialButton dateBtn;
-    TextInputLayout priceInput;
+    TextInputLayout priceInput, startInput, endInput;
     TextInputEditText priceEdit, startEdit, endEdit;
     String date1, date2;
     private AccommodationRequest accommodation;
@@ -65,15 +68,30 @@ public class CreateAccommodationSlots extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        accommodation = (AccommodationRequest) getArguments().getSerializable("Request");
-        images = getArguments().getStringArrayList("Images");
+
+        if(getArguments()!= null && getArguments().getSerializable("Request") != null)
+            accommodation = (AccommodationRequest) getArguments().getSerializable("Request");
+
+        if(getArguments()!= null && getArguments().getStringArrayList("Images") != null)
+            images = getArguments().getStringArrayList("Images");
+
         v = inflater.inflate(R.layout.fragment_create_accommodation_slots, container, false);
         dateBtn = v.findViewById(R.id.selectDateButton);
         addBtn = v.findViewById(R.id.buttonAdd);
         nextBtn = v.findViewById(R.id.buttonNext);
+        backBtn = v.findViewById(R.id.buttonBack);
+
         priceEdit = v.findViewById(R.id.inputEditPrice);
+        priceInput = v.findViewById(R.id.inputPrice);
+        priceEdit.addTextChangedListener(new ValidationTextWatcher(priceEdit));
+
         startEdit = v.findViewById(R.id.inputEditStartText);
+        startInput = v.findViewById(R.id.inputStartText);
+        startEdit.addTextChangedListener(new ValidationTextWatcher(startEdit));
+
         endEdit = v.findViewById(R.id.inputEditEndText);
+        endInput = v.findViewById(R.id.inputEndText);
+        endEdit.addTextChangedListener(new ValidationTextWatcher(endEdit));
 
         dateBtn.setOnClickListener(v -> {
             MaterialDatePicker<Pair<Long, Long>> materialDatePicker = MaterialDatePicker.Builder.dateRangePicker().setSelection(new Pair<>(
@@ -93,6 +111,11 @@ public class CreateAccommodationSlots extends Fragment {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         addBtn.setOnClickListener(c -> {
+            if(!Validation.validateDouble(priceInput, priceEdit, requireActivity().getWindow()) ||
+                    !Validation.validateEmpty(startInput, startEdit, requireActivity().getWindow()) ||
+                    !Validation.validateEmpty(endInput, endEdit, requireActivity().getWindow()))
+                return;
+
             try {
                 LocalDateTime starting = LocalDate.parse(date1, formatter).atStartOfDay();
                 LocalDateTime ending = LocalDate.parse(date2, formatter).atStartOfDay();
@@ -108,7 +131,7 @@ public class CreateAccommodationSlots extends Fragment {
                     slots.setSlot(s);
                     layout.addView(slots);
                 }
-                priceEdit.setText("");
+
             } catch (DateTimeParseException e) {
                 e.printStackTrace();
             }
@@ -119,6 +142,13 @@ public class CreateAccommodationSlots extends Fragment {
             args.putSerializable("Request", accommodation);
             args.putStringArrayList("Images", images);
             Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_map, args);
+        });
+
+        backBtn.setOnClickListener(c -> {
+            Bundle args = new Bundle();
+            args.putSerializable("Request", accommodation);
+            args.putStringArrayList("Images", images);
+            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_images, args);
         });
 
         return v;
@@ -162,5 +192,29 @@ public class CreateAccommodationSlots extends Fragment {
         return slots.stream().sorted(
                 (s1, s2) -> s1.getTimeSlot().getStart().compareTo(s2.getTimeSlot().getStart())
         ).collect(Collectors.toList());
+    }
+
+    private class ValidationTextWatcher implements TextWatcher {
+        private final View view;
+
+        private ValidationTextWatcher(View view) {
+            this.view = view;
+        }
+
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            if(view.getId() == R.id.inputEditPrice)
+                Validation.validateDouble(priceInput, priceEdit, requireActivity().getWindow());
+            else if(view.getId() == R.id.inputEditStartText)
+                Validation.validateEmpty(startInput, startEdit, requireActivity().getWindow());
+            else if(view.getId() == R.id.inputEditEndText)
+                Validation.validateEmpty(endInput, endEdit, requireActivity().getWindow());
+        }
     }
 }
