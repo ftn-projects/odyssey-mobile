@@ -133,6 +133,7 @@ public class AccommodationCardFragment extends LinearLayout {
         imageView = findViewById(R.id.cardImageView);
         heartImageView = findViewById(R.id.heartImageView);
         locationTextView = findViewById(R.id.locationTextView);
+        accommodationRatingView = findViewById(R.id.accommodationRatingTextView);
         accommodationNameView = findViewById(R.id.accommodationTitleTextView);
         pricingSection = findViewById(R.id.cardPricingSection);
         perPricingSection = findViewById(R.id.cardPricePerPricing);

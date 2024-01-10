@@ -21,25 +21,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardCornerRadius="28dp">
-        <ImageView
-            android:id="@+id/accommodation_review_profile_image"
-            app:strokeWidth="1dp"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:src="@drawable/user_stock_image"
-            android:layout_gravity="center_vertical"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"/>
+            <ImageView
+                android:id="@+id/accommodation_review_profile_image"
+                app:strokeWidth="1dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/user_stock_image"
+                android:layout_gravity="center_vertical"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"/>
         </androidx.cardview.widget.CardView>
 
-        <!-- Nested Horizontal Linear Layout -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <!-- Text "Gradimir" -->
             <TextView
                 android:id="@+id/accommodation_review_username"
                 android:layout_width="wrap_content"
@@ -63,6 +61,7 @@
                 android:fontFamily="@font/montserrat_regular"/>
         </LinearLayout>
 
+        <!-- Flag Icon Image on the far right -->
         <ImageView
             android:id="@+id/accommodation_review_trash_icon"
             android:layout_width="36dp"
@@ -78,22 +77,22 @@
     </LinearLayout>
 
     <!-- Comment Texts and Date -->
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Amazing"-->
-<!--        android:textSize="18sp"-->
-<!--        android:textStyle="bold"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:fontFamily="@font/montserrat_regular"/>-->
+    <!--    <TextView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="Amazing"-->
+    <!--        android:textSize="18sp"-->
+    <!--        android:textStyle="bold"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        android:fontFamily="@font/montserrat_regular"/>-->
 
     <TextView
         android:id="@+id/accommodation_review_comment"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1"
-    android:text="Excellent service, clean house. I don't have any complaints. I would recommend this place to anyone."
-    android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Excellent service, clean house. I don't have any complaints. I would recommend this place to anyone."
+        android:layout_marginTop="8dp"
         android:justificationMode="inter_word"
         android:fontFamily="@font/montserrat_regular"
         android:layout_marginBottom="15dp" />

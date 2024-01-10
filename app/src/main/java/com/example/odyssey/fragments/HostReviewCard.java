@@ -2,7 +2,6 @@ package com.example.odyssey.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.icu.util.Calendar;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -19,26 +18,21 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
-import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.reviews.AccommodationReview;
+import com.example.odyssey.model.reviews.HostReview;
 import com.example.odyssey.utils.TokenUtils;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AccommodationReviewCard#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class AccommodationReviewCard extends Fragment {
-    private AccommodationReview accommodationReview;
+
+public class HostReviewCard extends Fragment {
+    private HostReview hostReview;
     ImageView userImage;
     TextView usernameTextView;
     TextView ratingTextView;
@@ -46,11 +40,14 @@ public class AccommodationReviewCard extends Fragment {
     TextView dateTextView;
     ImageView flagIcon;
     ImageView trashIcon;
-    public AccommodationReviewCard() {
+
+    public HostReviewCard() {
         // Required empty public constructor
     }
-    public static AccommodationReviewCard newInstance() {
-        AccommodationReviewCard fragment = new AccommodationReviewCard();
+
+
+    public static HostReviewCard newInstance(String param1, String param2) {
+        HostReviewCard fragment = new HostReviewCard();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -59,29 +56,31 @@ public class AccommodationReviewCard extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_accommodation_review_card, container, false);
-        accommodationReview = (AccommodationReview) getArguments().getSerializable("accommodationReview");
+        View view = inflater.inflate(R.layout.fragment_host_review_card, container, false);
+        hostReview = (HostReview) getArguments().getSerializable("hostReview");
+
         userImage = view.findViewById(R.id.accommodation_review_profile_image);
         String imagePath = loadUserImage();
         Glide.with(getContext()).load(imagePath).into(userImage);
         usernameTextView = view.findViewById(R.id.accommodation_review_username);
-        usernameTextView.setText(accommodationReview.getSubmitter().getName() + " " + accommodationReview.getSubmitter().getSurname());
+        usernameTextView.setText(hostReview.getSubmitter().getName() + " " + hostReview.getSubmitter().getSurname());
 
         ratingTextView = view.findViewById(R.id.accommodation_review_rating);
-        ratingTextView.setText(accommodationReview.getRating().toString());
+        ratingTextView.setText(hostReview.getRating().toString());
 
         commentTextView = view.findViewById(R.id.accommodation_review_comment);
-        commentTextView.setText(accommodationReview.getComment());
+        commentTextView.setText(hostReview.getComment());
 
         dateTextView = view.findViewById(R.id.accommodation_review_date);
 
-        LocalDateTime submissionDate = accommodationReview.getSubmissionDate();
+        LocalDateTime submissionDate = hostReview.getSubmissionDate();
 
         CharSequence relativeTime = DateUtils.getRelativeTimeSpanString(
                 submissionDate.toInstant(ZoneOffset.ofHoursMinutes(1,0)).toEpochMilli(),
@@ -93,12 +92,12 @@ public class AccommodationReviewCard extends Fragment {
         trashIcon = view.findViewById(R.id.accommodation_review_trash_icon);
         flagIcon = view.findViewById(R.id.accommodation_review_flag_icon);
 
-        if(TokenUtils.getId() != null && accommodationReview.getSubmitter().getId() == TokenUtils.getId()){
+        if(TokenUtils.getId() != null && hostReview.getSubmitter().getId() == TokenUtils.getId()){
             trashIcon.setVisibility(View.VISIBLE);
         }
         else trashIcon.setVisibility(View.GONE);
 
-        if(TokenUtils.getId() != null && accommodationReview.getAccommodation().getHost().getId() == TokenUtils.getId())
+        if(TokenUtils.getId() != null && hostReview.getHost().getId() == TokenUtils.getId())
         {
             flagIcon.setVisibility(View.VISIBLE);
         }
@@ -133,14 +132,13 @@ public class AccommodationReviewCard extends Fragment {
         return view;
     }
 
-
     private void reportReview() {
 
-        Call<ResponseBody> call = ClientUtils.reviewService.reportAccommodationReview(accommodationReview.getId());
+        Call<ResponseBody> call = ClientUtils.reviewService.reportHostReview(hostReview.getId());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.d("AccommodationReviewCard", "onResponse: " + response.code());
+                Log.d("HostReviewCard", "onResponse: " + response.code());
                 if (response.code() == 200) {
                     flagIcon.setVisibility(View.GONE);
                     Toast.makeText(getContext(), "Review reported", Toast.LENGTH_SHORT).show();
@@ -149,18 +147,18 @@ public class AccommodationReviewCard extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("AccommodationReviewCard", "onFailure: " + t.getMessage());
+                Log.d("HostReviewCard", "onFailure: " + t.getMessage());
                 Toast.makeText(getContext(), "Error reporting review", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void deleteReview() {
-        Call<ResponseBody> call = ClientUtils.reviewService.deleteAccommodationReview(accommodationReview.getId());
+        Call<ResponseBody> call = ClientUtils.reviewService.deleteHostReview(hostReview.getId());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.d("AccommodationReviewCard", "onResponse: " + response.code());
+                Log.d("HostReviewCard", "onResponse: " + response.code());
                 if (response.code() == 200) {
                     trashIcon.setVisibility(View.GONE);
                     Toast.makeText(getContext(), "Review deleted", Toast.LENGTH_SHORT).show();
@@ -172,7 +170,7 @@ public class AccommodationReviewCard extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("AccommodationReviewCard", "onFailure: " + t.getMessage());
+                Log.d("HostReviewCard", "onFailure: " + t.getMessage());
                 Toast.makeText(getContext(), "Error deleting review", Toast.LENGTH_SHORT).show();
             }
         });
@@ -195,6 +193,6 @@ public class AccommodationReviewCard extends Fragment {
     }
 
     public String loadUserImage(){
-        return ClientUtils.SERVICE_API_PATH + "users/image/" + accommodationReview.getSubmitter().getId();
+        return ClientUtils.SERVICE_API_PATH + "users/image/" + hostReview.getSubmitter().getId();
     }
 }

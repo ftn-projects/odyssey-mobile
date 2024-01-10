@@ -60,6 +60,7 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -101,6 +102,8 @@ public class AccommodationDetailsFragment extends Fragment {
     MyLocationNewOverlay mMyLocationOverlay;
     View rootView;
     Marker pickedLocationMarker;
+
+    LinearLayout reviewsSummaryContainer;
     public AccommodationDetailsFragment() {
         // Required empty public constructor
     }
@@ -135,6 +138,8 @@ public class AccommodationDetailsFragment extends Fragment {
         reviewCommentInput = view.findViewById(R.id.accommodation_review_comment);
         sendReviewButton = view.findViewById(R.id.accommodation_review_submit_button);
 
+        reviewsSummaryContainer = view.findViewById(R.id.accommodation_details_summary_reviews_container);
+
         sendReviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,7 +150,7 @@ public class AccommodationDetailsFragment extends Fragment {
         reviewsContainer = view.findViewById(R.id.accommodation_details_reviews_container);
         TextView minMaxGuests = view.findViewById(R.id.MinMaxGuests);
 
-        minMaxGuests.setText(+ accommodation.getMinGuests() + " - " + accommodation.getMaxGuests() + " guests");
+        minMaxGuests.setText(accommodation.getMinGuests() + " - " + accommodation.getMaxGuests() + " guests");
         toggleReservationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -206,6 +211,7 @@ public class AccommodationDetailsFragment extends Fragment {
                 break;
         }
 
+        getReviewRatings();
         loadReviews();
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -599,6 +605,36 @@ public class AccommodationDetailsFragment extends Fragment {
                 t.printStackTrace();
             }
         });
+    }
+
+    private void getReviewRatings(){
+        Call<ArrayList<Integer>> ratingsCall = ClientUtils.reviewService.getAccommodationRatings(accommodation.getId());
+        ratingsCall.enqueue(new Callback<ArrayList<Integer>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Integer>> call, Response<ArrayList<Integer>> response) {
+                if (response.isSuccessful()) {
+                    createReviewSummary(response.body());
+                } else {
+                    Log.e("REZ", "Unable to get ratings");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Integer>> call, Throwable t) {
+                Log.e("REZ", "Error while trying to get ratings");
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void createReviewSummary(List<Integer> ratings){
+        ReviewsSummary reviewsSummary = new ReviewsSummary();
+        Bundle args = new Bundle();
+        args.putSerializable("ratings", (ArrayList<Integer>) ratings);
+        reviewsSummary.setArguments(args);
+        getChildFragmentManager().beginTransaction()
+                .add(reviewsSummaryContainer.getId(), reviewsSummary)
+                .commit();
     }
     private Runnable requestRunnable = new Runnable() {
         @Override
