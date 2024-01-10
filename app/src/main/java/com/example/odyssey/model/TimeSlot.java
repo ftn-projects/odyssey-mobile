@@ -18,6 +18,11 @@ public class TimeSlot implements Serializable {
     public boolean overlaps(TimeSlot slot){
         return (this.getStart().isBefore(slot.getEnd()) && this.getEnd().isAfter(slot.getStart()));
     }
+
+    public boolean equals(TimeSlot slot){
+        return (this.getStart().equals(slot.getStart()) && this.getEnd().equals(slot.getEnd()));
+    }
+
     public boolean containsDay(LocalDate day){
         return !(this.getStart().toLocalDate().isAfter(day) && this.getEnd().toLocalDate().isBefore(day));
     }

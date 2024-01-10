@@ -91,7 +91,7 @@
     <string name="old_password">Old password</string>
 
     <string-array name="accommodation_types">
-        <item>Home</item>
+        <item>Room</item>
         <item>Apartment</item>
         <item>House</item>
     </string-array>

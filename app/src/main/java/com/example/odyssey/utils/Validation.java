@@ -34,8 +34,26 @@ public class Validation {
             input.setError("Input is required");
             requestFocus(edit, window);
             return false;
-        }else if(Integer.parseInt(edit.getText().toString())<0){
+        }else if(Integer.parseInt(edit.getText().toString())<=0){
             input.setError("Number must be non negative");
+            requestFocus(edit, window);
+            return false;
+        }
+        input.setErrorEnabled(false);
+        return true;
+    }
+
+    public static boolean validateNumberCompare(TextInputLayout input, TextInputEditText edit, TextInputEditText min, Window window){
+        if (edit.getText().toString().trim().isEmpty()) {
+            input.setError("Input is required");
+            requestFocus(edit, window);
+            return false;
+        }else if(Integer.parseInt(edit.getText().toString())<=0){
+            input.setError("Number must be non negative");
+            requestFocus(edit, window);
+            return false;
+        }else if(Integer.parseInt(edit.getText().toString())<=Integer.parseInt(min.getText().toString())){
+            input.setError("Number must be bigger than "+min.getText().toString());
             requestFocus(edit, window);
             return false;
         }
@@ -50,6 +68,16 @@ public class Validation {
             return false;
         }else if(Double.parseDouble(edit.getText().toString())<=0){
             input.setError("Number must be real");
+            requestFocus(edit, window);
+            return false;
+        }
+        input.setErrorEnabled(false);
+        return true;
+    }
+
+    public static boolean validateEmpty(TextInputLayout input, TextInputEditText edit, Window window){
+        if (edit.getText().toString().trim().isEmpty()) {
+            input.setError("Input is required");
             requestFocus(edit, window);
             return false;
         }

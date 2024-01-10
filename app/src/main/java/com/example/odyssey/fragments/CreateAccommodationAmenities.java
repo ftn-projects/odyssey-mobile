@@ -27,6 +27,7 @@ public class CreateAccommodationAmenities extends Fragment {
     private String mParam1;
     private String mParam2;
     private AccommodationRequest accommodation;
+    ArrayList<String> images =new ArrayList<>();
     CheckBox wifi,tv,air,kitchen,parking,beach,washer,spa,bed,smoking;
 
     Button nextBtn;
@@ -57,7 +58,13 @@ public class CreateAccommodationAmenities extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_create_accommodation_amenities, container, false);
-        accommodation = (AccommodationRequest) getArguments().getSerializable("Request");
+
+        if(getArguments()!= null && getArguments().getSerializable("Request") != null)
+            accommodation = (AccommodationRequest) getArguments().getSerializable("Request");
+
+        if(getArguments()!= null && getArguments().getStringArrayList("Images") != null)
+            images = getArguments().getStringArrayList("Images");
+
         nextBtn = v.findViewById(R.id.buttonNext);
         backBtn = v.findViewById(R.id.buttonBack);
         wifi = v.findViewById(R.id.checkWifi);
@@ -90,10 +97,16 @@ public class CreateAccommodationAmenities extends Fragment {
 
                 Bundle args = new Bundle();
                 args.putSerializable("Request",accommodation);
-                Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_images,args);
+                args.putStringArrayList("Images", images);
+                Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_images, args);
             }
         });
-        backBtn.setOnClickListener(c -> Navigation.findNavController(requireActivity(),R.id.fragment_container_main).navigate(R.id.nav_accommodation_create_details));
+        backBtn.setOnClickListener(c -> {
+            Bundle args = new Bundle();
+            args.putSerializable("Request",accommodation);
+            args.putStringArrayList("Images", images);
+            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_details, args);
+        });
         return v;
     }
 }
