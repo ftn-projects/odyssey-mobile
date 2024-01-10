@@ -19,14 +19,19 @@
             android:icon="@drawable/ic_reservation"
             android:orderInCategory="3" />
 
+        <item android:id="@+id/nav_guest_reviews"
+            android:title="My reviews"
+            android:icon="@drawable/ic_reservation"
+            android:orderInCategory="4" />
+
         <item android:id="@+id/nav_guest_notifications"
             android:title="@string/notifications"
             android:icon="@drawable/ic_notification"
-            android:orderInCategory="4" />
+            android:orderInCategory="5" />
 
         <item android:id="@+id/nav_logout"
             android:title="@string/logout"
             android:icon="@drawable/ic_logout"
-            android:orderInCategory="5" />
+            android:orderInCategory="6" />
     </group>
 </menu>
