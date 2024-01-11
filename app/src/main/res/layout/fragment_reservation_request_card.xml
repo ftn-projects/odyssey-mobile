@@ -8,6 +8,7 @@
     android:paddingEnd="10dp"
     android:paddingTop="5dp"
     android:paddingBottom="5dp"
+    android:layout_marginBottom="15dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -25,7 +26,7 @@
             android:layout_weight="1"
             android:text="The Willow"
             android:textStyle="bold"
-            android:textSize="25sp"
+            android:textSize="18sp"
             android:gravity="start"
             android:fontFamily="@font/montserrat_semibold" />
 
@@ -35,7 +36,7 @@
             android:layout_height="wrap_content"
             android:text="REQUESTED"
             android:textColor="@color/pending"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:fontFamily="@font/montserrat_semibold"
             android:layout_marginEnd="5dp"/>
     </LinearLayout>
@@ -53,7 +54,7 @@
             android:text="Milos Milosevic"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_marginEnd="5dp"/>
 
         <TextView
@@ -61,14 +62,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="3"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_marginEnd="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="cancellations"
-            android:textSize="20sp"/>
+            android:textSize="16sp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -82,14 +83,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="$"
-            android:textSize="20sp"/>
+            android:textSize="16sp"/>
         <TextView
             android:id="@+id/totalPrice"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="346,00"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_marginEnd="5dp"/>
 
         <TextView
@@ -97,14 +98,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="3"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_marginEnd="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="guests"
-            android:textSize="20sp"/>
+            android:textSize="16sp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -120,7 +121,7 @@
             android:text="22/01/2024"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_marginEnd="5dp"
             android:textAlignment="textEnd"/>
 
@@ -128,7 +129,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="-"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_marginEnd="10dp"/>
 
         <TextView
@@ -136,7 +137,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="25/01/2024"
-            android:textSize="20sp"/>
+            android:textSize="16sp"/>
     </LinearLayout>
 
     <LinearLayout

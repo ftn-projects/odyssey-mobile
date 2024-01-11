@@ -68,13 +68,13 @@ public class ReservationRequestCard extends LinearLayout {
                 guest.setText(reservation.getGuest().getName() + " " + reservation.getGuest().getSurname());
 
             if(reservation.getCancellationNumber() != null)
-                cancellations.setText(reservation.getCancellationNumber());
+                cancellations.setText(reservation.getCancellationNumber().toString());
 
             if(reservation.getPrice()!=null)
                 price.setText(reservation.getPrice().toString());
 
             if(reservation.getGuestNumber()!=null)
-                guestNumber.setText(reservation.getGuestNumber());
+                guestNumber.setText(reservation.getGuestNumber().toString());
 
             if(reservation.getStart()!=null)
                 startDate.setText(reservation.getStart().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
