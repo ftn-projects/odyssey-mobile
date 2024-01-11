@@ -2,10 +2,12 @@ package com.example.odyssey.clients;
 
 import com.example.odyssey.BuildConfig;
 import com.example.odyssey.model.accommodations.AccommodationRequest;
+import com.example.odyssey.utils.LocalDateAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
@@ -37,8 +39,10 @@ public class ClientUtils {
      * Prvo je potrebno da definisemo retrofit instancu preko koje ce komunikacija ici
      * */
     static Gson gson = new GsonBuilder()
-            .registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>)
-                    (json, typeOfT, context) -> LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
+            .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>)
+                    (json, typeOfT, context) -> LocalDate.parse(json.getAsString(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+
             .create();
     public static Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(SERVICE_API_PATH)
@@ -56,5 +60,6 @@ public class ClientUtils {
     public static AccommodationService accommodationService = retrofit.create(AccommodationService.class);
     public static ReviewService reviewService = retrofit.create(ReviewService.class);
     public static AccommodationRequestService accommodationRequestService = retrofit.create(AccommodationRequestService.class);
+    public static ReservationService reservationService = retrofit.create(ReservationService.class);
 
 }
