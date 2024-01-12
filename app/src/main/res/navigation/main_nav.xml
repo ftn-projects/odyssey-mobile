@@ -49,6 +49,13 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_host_reservation_requests"
+        android:name="com.example.odyssey.fragments.ReservationRequestsList"
+        android:label="Reservation requests"
+        tools:layout="@layout/fragment_reservation_requests_list">
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_host_accommodations"
         android:name="com.example.odyssey.fragments.HomeFragment"
         android:label="@string/host_accommodations"
