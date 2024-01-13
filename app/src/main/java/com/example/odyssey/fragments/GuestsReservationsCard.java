@@ -82,10 +82,12 @@ public class GuestsReservationsCard extends LinearLayout {
             if(reservation.getGuest() != null)
                 host.setText(reservation.getAccommodation().getHost().getName() + " " + reservation.getAccommodation().getHost().getSurname());
 
-            Log.d("Ne znam", reservation.getAccommodation().getCancellationDue() + ".");
+            Log.d("DAYS", reservation.getAccommodation().getCancellationDue() + ".");
             if(reservation.getStart() != null && reservation.getAccommodation().getCancellationDue()!=null){
                 LocalDate due = reservation.getStart().minusDays(reservation.getAccommodation().getCancellationDue());
                 cancelBy.setText(due.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+                if(!due.isAfter(LocalDate.now()))
+                    buttonSection.setVisibility(View.GONE);
             }
 
             if(reservation.getPrice()!=null)
