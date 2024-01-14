@@ -21,6 +21,15 @@ public interface ReservationService {
             @Query("endDate") Long endDate
     );
 
+    @GET("reservations/guest/{id}")
+    Call<List<AccreditReservation>> getReservationsByGuest(
+            @Path("id") Long id,
+            @Query("title") String title,
+            @Query("status") List<String> status,
+            @Query("startDate") Long startDate,
+            @Query("endDate") Long endDate
+    );
+
     @PUT("reservations/status/{id}")
     Call<ResponseBody> updateStatus(@Path("id") Long id, @Query("status") String status);
 }

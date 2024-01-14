@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".fragments.ReservationRequestCard"
+    tools:context=".fragments.GuestsReservationsCard"
     android:paddingStart="10dp"
     android:paddingEnd="10dp"
     android:paddingTop="5dp"
@@ -44,6 +44,16 @@
         android:textSize="18sp"
         android:fontFamily="@font/montserrat_semibold" />
 
+    <TextView
+        android:id="@+id/hostName"
+        android:layout_height="wrap_content"
+        android:text="Petar Petrovic"
+        android:layout_width="match_parent"
+        android:textSize="16sp"
+        android:layout_marginBottom="10dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,27 +61,19 @@
         android:layout_marginBottom="10dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp">
-        <TextView
-            android:id="@+id/guestName"
-            android:layout_height="wrap_content"
-            android:text="Milos Milosevic"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:layout_marginEnd="5dp"/>
 
         <TextView
-            android:id="@+id/cancellationNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3"
+            android:text="Cancel by:"
             android:textSize="16sp"
             android:layout_marginEnd="10dp"/>
 
         <TextView
+            android:id="@+id/cancelBy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="cancellations"
+            android:text="22/01/2024"
             android:textSize="16sp"/>
     </LinearLayout>
 
@@ -156,23 +158,15 @@
             android:layout_height="wrap_content">
         </LinearLayout>
 
-        <Button
-            android:id="@+id/buttonAccept"
-            android:backgroundTint="@color/approved"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="15dp"
-            android:text="Accept" />
 
         <Button
-            android:id="@+id/buttonDecline"
+            android:id="@+id/buttonCancel"
             android:backgroundTint="@color/cancelled"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginStart="15dp"
-            android:text="Decline" />
+            android:text="Cancel" />
     </LinearLayout>
 
 </LinearLayout>
