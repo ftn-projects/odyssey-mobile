@@ -1,8 +1,14 @@
-package com.example.odyssey.fragments;
+package com.example.odyssey.fragments.accommodationRequest;
 
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +17,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import com.example.odyssey.R;
-import com.example.odyssey.clients.ClientUtils;
-import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.accommodations.AccommodationRequest;
-import com.example.odyssey.model.accommodations.AvailabilitySlot;
+import com.example.odyssey.utils.Validation;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.events.MapEventsReceiver;
@@ -39,28 +41,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class UpdateAccommodationMap extends Fragment implements MapListener {
+public class CreateAccommodationMap extends Fragment implements MapListener {
     private AccommodationRequest accommodation;
     ArrayList<String> images = new ArrayList<>();
     View v;
     LinearLayout map;
-    Button create;
+    Button createBtn, backBtn;
 
     MapView mapView;
     IMapController controller;
     MyLocationNewOverlay mMyLocationOverlay;
     Marker pickedLocationMarker;
+
+    TextInputLayout addressInput, cityInput, countryInput;
+    TextInputEditText addressEdit, cityEdit, countryEdit;
+    String street = "", city = "", country = "";
     boolean isLocationPicked = false;
-    public UpdateAccommodationMap() {
+    public CreateAccommodationMap() {
 
     }
 
-    public static UpdateAccommodationMap newInstance(String param1, String param2) {
-        return new UpdateAccommodationMap();
+    public static CreateAccommodationMap newInstance(String param1, String param2) {
+        return new CreateAccommodationMap();
     }
 
     @Override
@@ -71,10 +73,27 @@ public class UpdateAccommodationMap extends Fragment implements MapListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        accommodation = (AccommodationRequest) getArguments().getSerializable("Request");
-        images = getArguments().getStringArrayList("Images");
+
+        if(getArguments()!= null && getArguments().getSerializable("Request") != null)
+            accommodation = (AccommodationRequest) getArguments().getSerializable("Request");
+
+        if(getArguments()!= null && getArguments().getStringArrayList("Images") != null)
+            images = getArguments().getStringArrayList("Images");
+
         v = inflater.inflate(R.layout.fragment_create_accommodation_map, container, false);
         map = v.findViewById(R.id.mapGoesHere);
+
+        addressInput = v.findViewById(R.id.inputAddress);
+        addressEdit = v.findViewById(R.id.inputEditAddress);
+        addressEdit.addTextChangedListener(new ValidationTextWatcher(addressEdit));
+
+        cityInput = v.findViewById(R.id.inputCity);
+        cityEdit = v.findViewById(R.id.inputEditCity);
+        cityEdit.addTextChangedListener(new ValidationTextWatcher(cityEdit));
+
+        countryInput = v.findViewById(R.id.inputCountry);
+        countryEdit = v.findViewById(R.id.inputEditCountry);
+        countryEdit.addTextChangedListener(new ValidationTextWatcher(countryEdit));
 
         org.osmdroid.config.Configuration.getInstance().setUserAgentValue(requireActivity().getPackageName());
 
@@ -83,7 +102,7 @@ public class UpdateAccommodationMap extends Fragment implements MapListener {
         mapView.setMultiTouchControls(true);
 
         controller = mapView.getController();
-        controller.setZoom(10.0);
+        controller.setZoom(20.0);
 
         mMyLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(requireActivity()), mapView);
         mMyLocationOverlay.enableMyLocation();
@@ -100,11 +119,8 @@ public class UpdateAccommodationMap extends Fragment implements MapListener {
 
         MapEventsReceiver mReceive = new MapEventsReceiver() {@Override
         public boolean singleTapConfirmedHelper(GeoPoint p) {
-            //Toast.makeText(requireContext(),p.getLatitude() + " - "+p.getLongitude(),Toast.LENGTH_LONG).show();
-
             Geocoder geocoder = new Geocoder(requireContext(), Locale.getDefault());
             String result = null;
-            String street = "", city = "", country = "";
             try {
                 List<Address> addressList = geocoder.getFromLocation(
                         p.getLatitude(), p.getLongitude(), 1);
@@ -121,16 +137,14 @@ public class UpdateAccommodationMap extends Fragment implements MapListener {
                     sb.append(address.getSubThoroughfare()).append("\n");
                     sb.append(address.getThoroughfare()).append("\n");
                     sb.append(address.getCountryName());
-                    result = sb.toString();
+
+                    addressEdit.setText(street);
+                    cityEdit.setText(city);
+                    countryEdit.setText(country);
                 }
             } catch (IOException e) {
                 Log.e("TAG", "Unable connect to Geocoder", e);
             }
-            Log.d("HELP", result);
-
-            Toast.makeText(requireContext(),street + ", " + city + ", "  + country ,Toast.LENGTH_LONG).show();
-
-            accommodation.setNewAddress(new com.example.odyssey.model.Address(street, city, country));
 
             pickedLocationMarker.setPosition(new GeoPoint(p.getLatitude(),p.getLongitude())); //gde stavlja marker
             pickedLocationMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
@@ -147,65 +161,32 @@ public class UpdateAccommodationMap extends Fragment implements MapListener {
         MapEventsOverlay OverlayEvents = new MapEventsOverlay(requireContext(), mReceive);
         mapView.getOverlays().add(OverlayEvents);
 
-        create = v.findViewById(R.id.buttonCreate);
-        create.setOnClickListener(new View.OnClickListener() {
+        createBtn = v.findViewById(R.id.buttonCreate);
+        createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!Validation.validateLettersAndNumber(addressInput, addressEdit, requireActivity().getWindow()) ||
+                    !Validation.validateText(cityInput, cityEdit, requireActivity().getWindow()) ||
+                    !Validation.validateText(countryInput, countryEdit, requireActivity().getWindow()))
+                    return;
+
+                accommodation.setNewAddress(new com.example.odyssey.model.Address(addressEdit.getText().toString(),
+                        cityEdit.getText().toString(), countryEdit.getText().toString()));
                 Toast.makeText(requireActivity(), "Accommodation request created", Toast.LENGTH_SHORT).show();
                 Navigation.findNavController(requireView()).navigate(R.id.nav_home);
             }
         });
 
-        loadAccommodationRequest();
-        return v;
-    }
+        backBtn = v.findViewById(R.id.buttonBack);
 
-    private void loadAccommodationRequest() {
-        Long id = 2L;
-        ClientUtils.accommodationService.getOne(id).enqueue(new Callback<Accommodation>() {
-            @Override
-            public void onResponse(@NonNull Call<Accommodation> call, @NonNull Response<Accommodation> response) {
-                if (!response.isSuccessful()) {
-                    Log.e("ACCOMMODATION REQUEST", response.message() != null ? response.message() : "error");
-                    return;
-                }
-                updateFormWithData(response.body());
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Accommodation> call, @NonNull Throwable t) {
-                Log.e("ACCOMMODATION REQUEST", t.getMessage() != null ? t.getMessage() : "error");
-            }
+        backBtn.setOnClickListener(c -> {
+            Bundle args = new Bundle();
+            args.putSerializable("Request",accommodation);
+            args.putStringArrayList("Images", images);
+            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_slots, args);
         });
-    }
 
-    private void updateFormWithData(Accommodation accommodation) {
-        com.example.odyssey.model.Address address = new com.example.odyssey.model.Address(
-                accommodation.getAddress().getStreet(), accommodation.getAddress().getCity(), accommodation.getAddress().getCountry()
-        );
-        this.accommodation.setNewAddress(address);
-
-        Geocoder geocoder = new Geocoder(requireContext(), Locale.getDefault());
-        GeoPoint p;
-
-        String result = null;
-        try {
-            List<Address> addressList = geocoder.getFromLocationName(
-                    address.getStreet() + ", " + address.getCity() + ", " + address.getCountry(),
-                    1
-            );
-            if (addressList != null && addressList.size() > 0) {
-                Address first = addressList.get(0);
-                p = new GeoPoint(first.getLatitude(), first.getLongitude());
-                first.getLongitude();
-
-                pickedLocationMarker.setPosition(new GeoPoint(p.getLatitude(),p.getLongitude()));
-                pickedLocationMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                mapView.getOverlays().add(pickedLocationMarker);
-            }
-        } catch (IOException e) {
-            Log.e("TAG", "Unable connect to Geocoder", e);
-        }
+        return v;
     }
 
     @Override
@@ -216,5 +197,29 @@ public class UpdateAccommodationMap extends Fragment implements MapListener {
     @Override
     public boolean onZoom(ZoomEvent event) {
         return false;
+    }
+
+    private class ValidationTextWatcher implements TextWatcher {
+        private final View view;
+
+        private ValidationTextWatcher(View view) {
+            this.view = view;
+        }
+
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            if(view.getId() == R.id.inputEditAddress)
+                Validation.validateLettersAndNumber(addressInput, addressEdit, requireActivity().getWindow());
+            else if(view.getId() == R.id.inputEditCity)
+                Validation.validateText(cityInput, cityEdit, requireActivity().getWindow());
+            else if(view.getId() == R.id.inputEditCountry)
+                Validation.validateText(countryInput, countryEdit, requireActivity().getWindow());
+        }
     }
 }

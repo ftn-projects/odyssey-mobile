@@ -1,21 +1,19 @@
-package com.example.odyssey.fragments;
+package com.example.odyssey.fragments.accommodationRequest;
 
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import com.example.odyssey.R;
-import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.accommodations.AccommodationRequest;
 import com.example.odyssey.utils.Validation;
@@ -23,24 +21,41 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.HashSet;
+import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+public class CreateAccommodationDetails extends Fragment {
 
-public class UpdateAccommodationDetails extends Fragment {
-    private AccommodationRequest accommodationRequest;
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+    private String mParam1;
+    private String mParam2;
+
+    private AccommodationRequest accommodation;
     TextInputLayout inputTitle, inputDescription, inputMin, inputMax, inputPrice, inputCancel;
     TextInputEditText editTitle, editDescription, editMin, editMax, editPrice, editCancel;
     AutoCompleteTextView accommodationType, priceType, confirmationType;
     Button nextBtn;
+    ArrayList<String> images =new ArrayList<>();
 
-    public UpdateAccommodationDetails() {
+    public CreateAccommodationDetails() {
+    }
+
+    public static CreateAccommodationDetails newInstance(String param1, String param2) {
+        CreateAccommodationDetails fragment = new CreateAccommodationDetails();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
     @Override
@@ -49,6 +64,12 @@ public class UpdateAccommodationDetails extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_create_accommodation_details, container, false);
         nextBtn = v.findViewById(R.id.buttonNext);
+
+        if(getArguments()!= null && getArguments().getSerializable("Request") != null)
+            accommodation = (AccommodationRequest) getArguments().getSerializable("Request");
+
+        if(getArguments()!= null && getArguments().getStringArrayList("Images") != null)
+            images = getArguments().getStringArrayList("Images");
 
         inputTitle = v.findViewById(R.id.inputTitle);
         editTitle = v.findViewById(R.id.inputEditTitle);
@@ -84,14 +105,14 @@ public class UpdateAccommodationDetails extends Fragment {
             String confirm = confirmationType.getText().toString();
             if (!Validation.validateText(inputTitle, editTitle, requireActivity().getWindow()) ||
                     !Validation.validateText(inputDescription, editDescription, requireActivity().getWindow()) ||
-                    !Validation.validateNumber(inputMax, editMax, requireActivity().getWindow()) ||
+                    !Validation.validateNumberCompare(inputMax, editMax, editMin, requireActivity().getWindow()) ||
                     !Validation.validateNumber(inputMin, editMin, requireActivity().getWindow()) ||
                     !Validation.validateDouble(inputPrice, editPrice, requireActivity().getWindow()) ||
                     !Validation.validateNumber(inputCancel, editCancel, requireActivity().getWindow()) || price.equals("") || acc.equals("") || confirm.equals("")) {
                 return;
             }
 
-            accommodationRequest = new AccommodationRequest(0L, AccommodationRequest.Type.CREATE, editTitle.getText().toString(),
+            accommodation = new AccommodationRequest(0L, AccommodationRequest.Type.CREATE, editTitle.getText().toString(),
                     editDescription.getText().toString(), Accommodation.Type.valueOf(acc.toUpperCase()), null,
                     Accommodation.getPricingType(acc.toUpperCase()), new HashSet<>(), Double.parseDouble(editPrice.getText().toString()),
                     confirm.equals("Automatic"), Long.parseLong(editCancel.getText().toString()), new HashSet<>(),
@@ -99,55 +120,12 @@ public class UpdateAccommodationDetails extends Fragment {
                     null, null);
 
             Bundle args = new Bundle();
-            args.putSerializable("Request", accommodationRequest);
-            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_update_amenities, args);
+            args.putSerializable("Request",accommodation);
+            args.putStringArrayList("Images", images);
+            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_amenities, args);
         });
-
-        loadAccommodationRequest();
 
         return v;
-    }
-
-    private void loadAccommodationRequest() {
-        Long id = 2L;
-        ClientUtils.accommodationService.getOne(id).enqueue(new Callback<Accommodation>() {
-            @Override
-            public void onResponse(@NonNull Call<Accommodation> call, @NonNull Response<Accommodation> response) {
-                if (!response.isSuccessful()) {
-                    Log.e("ACCOMMODATION REQUEST", response.message() != null ? response.message() : "error");
-                    return;
-                }
-                updateFormWithData(response.body());
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Accommodation> call, @NonNull Throwable t) {
-                Log.e("ACCOMMODATION REQUEST", t.getMessage() != null ? t.getMessage() : "error");
-            }
-        });
-    }
-
-    private void updateFormWithData(Accommodation accommodation) {
-        int type = 0;
-        if (accommodation.getType().equals(Accommodation.Type.APARTMENT)) type = 1;
-        if (accommodation.getType().equals(Accommodation.Type.ROOM)) type = 0;
-        if (accommodation.getType().equals(Accommodation.Type.HOUSE)) type = 2;
-        int price = 0;
-        if (accommodation.getPricing().equals(Accommodation.PricingType.PER_NIGHT)) price = 0;
-        else price = 1;
-
-
-        accommodation.getType().toString();
-        editTitle.setText(accommodation.getTitle());
-        editDescription.setText(accommodation.getDescription());
-        editDescription.setText(accommodation.getDescription());
-        accommodationType.setSelection(type);
-        confirmationType.setSelection(accommodation.getAutomaticApproval() ? 0 : 1);
-        editMin.setText(accommodation.getMinGuests().toString());
-        editMax.setText(accommodation.getMaxGuests().toString());
-        priceType.setSelection(price);
-        editPrice.setText(accommodation.getDefaultPrice().toString());
-        editCancel.setText(accommodation.getCancellationDue().toString());
     }
 
     private class ValidationTextWatcher implements TextWatcher {
@@ -170,7 +148,7 @@ public class UpdateAccommodationDetails extends Fragment {
             else if (view.getId() == R.id.inputEditDescription)
                 Validation.validateText(inputDescription, editDescription, requireActivity().getWindow());
             else if (view.getId() == R.id.inputEditMaxGuests)
-                Validation.validateNumber(inputMax, editMax, requireActivity().getWindow());
+                Validation.validateNumberCompare(inputMax, editMax, editMin, requireActivity().getWindow());
             else if (view.getId() == R.id.inputEditMinGuests)
                 Validation.validateNumber(inputMin, editMin, requireActivity().getWindow());
             else if (view.getId() == R.id.inputEditPrice)

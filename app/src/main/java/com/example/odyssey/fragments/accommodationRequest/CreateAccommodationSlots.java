@@ -1,4 +1,4 @@
-package com.example.odyssey.fragments;
+package com.example.odyssey.fragments.accommodationRequest;
 
 import android.os.Bundle;
 
@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.odyssey.R;
+import com.example.odyssey.fragments.AvailabilitySlots;
 import com.example.odyssey.model.TimeSlot;
 import com.example.odyssey.model.accommodations.AccommodationRequest;
 import com.example.odyssey.model.accommodations.AvailabilitySlot;
@@ -32,7 +33,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;

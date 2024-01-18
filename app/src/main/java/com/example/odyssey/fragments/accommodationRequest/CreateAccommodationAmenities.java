@@ -1,4 +1,4 @@
-package com.example.odyssey.fragments;
+package com.example.odyssey.fragments.accommodationRequest;
 
 import android.os.Bundle;
 
@@ -17,7 +17,6 @@ import com.example.odyssey.model.accommodations.Amenity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class CreateAccommodationAmenities extends Fragment {
