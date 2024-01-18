@@ -25,8 +25,8 @@ public class Accommodation implements Serializable {
     private Double totalPrice;
     private Double averageRating;
 
-    public enum Type {APARTMENT, ROOM, HOUSE}
-    public enum PricingType {PER_PERSON, PER_NIGHT}
+    public enum Type {ROOM, APARTMENT, HOUSE}
+    public enum PricingType {PER_NIGHT, PER_PERSON}
 
     public static PricingType getPricingType(String string){
         if(string.equals("PER PERSON")) return PricingType.PER_PERSON;

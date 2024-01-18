@@ -1,9 +1,8 @@
 package com.example.odyssey.clients;
 
 import com.example.odyssey.BuildConfig;
-import com.example.odyssey.model.accommodations.AccommodationRequest;
-import com.example.odyssey.utils.LocalDateAdapter;
-import com.example.odyssey.utils.LocalDateTimeAdapter;
+import com.example.odyssey.adapters.LocalDateAdapter;
+import com.example.odyssey.adapters.LocalDateTimeAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;

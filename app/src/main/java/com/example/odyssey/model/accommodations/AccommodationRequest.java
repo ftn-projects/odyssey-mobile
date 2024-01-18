@@ -1,10 +1,13 @@
 package com.example.odyssey.model.accommodations;
 
+import android.net.Uri;
+
 import com.example.odyssey.model.Address;
-import com.example.odyssey.model.User;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class AccommodationRequest implements Serializable {
@@ -13,7 +16,7 @@ public class AccommodationRequest implements Serializable {
     private String newTitle;
     private String newDescription;
     private Accommodation.Type newType;
-    private Address newAddress;
+    private Address newAddress = new Address();
     private Accommodation.PricingType newPricing;
     private Set<Amenity> newAmenities = new HashSet<>();
     private Double newDefaultPrice;
@@ -22,15 +25,20 @@ public class AccommodationRequest implements Serializable {
     private Set<AvailabilitySlot> newAvailableSlots = new HashSet<>();
     private Integer newMinGuests;
     private Integer newMaxGuests;
-    private Long accommodationId;
+    private Set<String> newImages = new HashSet<>();
+    private List<Uri> imageUris = new ArrayList<>();
     private Long hostId;
+    private Long accommodationId;
+
     public enum Type {CREATE, UPDATE}
+
+    public AccommodationRequest() {
+    }
 
     public AccommodationRequest(Long id, Type requestType, String newTitle, String newDescription,
                                 Accommodation.Type newType, Address newAddress, Accommodation.PricingType newPricing,
                                 Set<Amenity> newAmenities, Double newDefaultPrice, Boolean newAutomaticApproval, Long newCancellationDue,
-                                Set<AvailabilitySlot> newAvailableSlots, Integer newMinGuests, Integer newMaxGuests, Long accommodationId,
-                                Long hostId) {
+                                Set<AvailabilitySlot> newAvailableSlots, Integer newMinGuests, Integer newMaxGuests, Set<String> newImages, Long hostId, Long accommodationId) {
         this.id = id;
         this.requestType = requestType;
         this.newTitle = newTitle;
@@ -45,8 +53,9 @@ public class AccommodationRequest implements Serializable {
         this.newAvailableSlots = newAvailableSlots;
         this.newMinGuests = newMinGuests;
         this.newMaxGuests = newMaxGuests;
-        this.accommodationId = accommodationId;
+        this.newImages = newImages;
         this.hostId = hostId;
+        this.accommodationId = accommodationId;
     }
 
     public Long getId() {
@@ -161,12 +170,20 @@ public class AccommodationRequest implements Serializable {
         this.newMaxGuests = newMaxGuests;
     }
 
-    public Long getAccommodationId() {
-        return accommodationId;
+    public Set<String> getNewImages() {
+        return newImages;
     }
 
-    public void setAccommodationId(Long accommodationId) {
-        this.accommodationId = accommodationId;
+    public void setNewImages(Set<String> newImages) {
+        this.newImages = newImages;
+    }
+
+    public List<Uri> getImageUris() {
+        return imageUris;
+    }
+
+    public void setImageUris(List<Uri> imageUris) {
+        this.imageUris = imageUris;
     }
 
     public Long getHostId() {
@@ -175,5 +192,13 @@ public class AccommodationRequest implements Serializable {
 
     public void setHostId(Long hostId) {
         this.hostId = hostId;
+    }
+
+    public Long getAccommodationId() {
+        return accommodationId;
+    }
+
+    public void setAccommodationId(Long accommodationId) {
+        this.accommodationId = accommodationId;
     }
 }
