@@ -49,7 +49,6 @@ public class CreateAccommodationRequestImages extends Fragment {
     View v;
 
     ArrayList<Uri> images = new ArrayList<>();
-    ArrayList<Integer> removed = new ArrayList<>();
 
     public CreateAccommodationRequestImages() {
     }
@@ -142,7 +141,6 @@ public class CreateAccommodationRequestImages extends Fragment {
     }
 
     private void collectImages() {
-        for (int i : removed) images.remove(i);
         request.setImageUris(images);
         request.setNewImages(images.stream().map(uri -> uri.getLastPathSegment() + ".png")
                 .collect(Collectors.toSet()));
@@ -173,13 +171,11 @@ public class CreateAccommodationRequestImages extends Fragment {
         imageView.setImageURI(imageUri);
 
         ImageButton closeButton = itemView.findViewById(R.id.closeButton);
-        closeButton.setTag(images.size() - 1);
+        closeButton.setTag(images.size());
         closeButton.setOnClickListener(v -> {
-            int index = (int) v.getTag();
-            removed.add(index);
-            imagesLayout.removeView((View) v.getParent()); // TODO debug image removal
+            images.removeIf(uri -> uri.equals(imageUri));
+            imagesLayout.removeView(itemView);
         });
-
         imagesLayout.addView(itemView);
     }
 }
