@@ -26,12 +26,14 @@ public class AccommodationRequest implements Serializable {
     private Integer newMinGuests;
     private Integer newMaxGuests;
     private Set<String> newImages = new HashSet<>();
-    private List<Uri> imageUris = new ArrayList<>();
+    private List<Uri> localImageUris = new ArrayList<>();
+    private List<String> remoteImageNames = new ArrayList<>();
     private Long hostId;
     private Long accommodationId;
 
-    public enum Type {CREATE, UPDATE}
 
+
+    public enum Type {CREATE, UPDATE;}
     public AccommodationRequest() {
     }
 
@@ -56,6 +58,23 @@ public class AccommodationRequest implements Serializable {
         this.newImages = newImages;
         this.hostId = hostId;
         this.accommodationId = accommodationId;
+    }
+
+    public void loadData(Accommodation accommodation) {
+        newTitle = accommodation.getTitle();
+        newDescription = accommodation.getDescription();
+        newType = accommodation.getType();
+        newAddress = accommodation.getAddress();
+        newPricing = accommodation.getPricing();
+        newAmenities = new HashSet<>(accommodation.getAmenities());
+        newDefaultPrice = accommodation.getDefaultPrice();
+        newAutomaticApproval = accommodation.getAutomaticApproval();
+        newCancellationDue = accommodation.getCancellationDue();
+        newAvailableSlots = new HashSet<>(accommodation.getAvailableSlots());
+        newMinGuests = accommodation.getMinGuests();
+        newMaxGuests = accommodation.getMaxGuests();
+        hostId = accommodation.getHost().getId();
+        accommodationId = accommodation.getId();
     }
 
     public Long getId() {
@@ -178,12 +197,20 @@ public class AccommodationRequest implements Serializable {
         this.newImages = newImages;
     }
 
-    public List<Uri> getImageUris() {
-        return imageUris;
+    public List<Uri> getLocalImageUris() {
+        return localImageUris;
     }
 
-    public void setImageUris(List<Uri> imageUris) {
-        this.imageUris = imageUris;
+    public void setLocalImageUris(List<Uri> localImageUris) {
+        this.localImageUris = localImageUris;
+    }
+
+    public List<String> getRemoteImageNames() {
+        return remoteImageNames;
+    }
+
+    public void setRemoteImageNames(List<String> remoteImageNames) {
+        this.remoteImageNames = remoteImageNames;
     }
 
     public Long getHostId() {

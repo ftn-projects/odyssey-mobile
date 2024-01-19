@@ -3,16 +3,20 @@ package com.example.odyssey.fragments.accommodationRequest;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.odyssey.R;
+import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.accommodations.AccommodationRequest;
 import com.example.odyssey.utils.TokenUtils;
@@ -20,11 +24,16 @@ import com.example.odyssey.utils.Validation;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class CreateAccommodationRequestDetails extends Fragment {
-    private static final String ARG_REQUEST = "Request";
-    private static final String ARG_ACCOMMODATION_ID = "Accommodation id";
+    public static final String ARG_REQUEST = "request";
+    public static final String ARG_ACCOMMODATION_ID = "accommodationId";
     private AccommodationRequest request = null;
     TextInputLayout inputTitle, inputDescription, inputMin, inputMax, inputPrice, inputCancel;
     TextInputEditText editTitle, editDescription, editMin, editMax, editPrice, editCancel;
@@ -60,14 +69,17 @@ public class CreateAccommodationRequestDetails extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_create_accommodation_details, container, false);
         initializeElements(v);
-        loadData();
+
+        if (request.getRequestType().equals(AccommodationRequest.Type.UPDATE)) {
+            loadAccommodation(request.getAccommodationId());
+        } else loadData();
 
         nextBtn.setOnClickListener(v1 -> {
             if (!validFields()) return;
             collectData();
 
             Bundle args = new Bundle();
-            args.putSerializable("Request", request);
+            args.putSerializable(ARG_REQUEST, request);
             Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_map, args);
         });
 
@@ -106,16 +118,56 @@ public class CreateAccommodationRequestDetails extends Fragment {
         confirmationType = v.findViewById(R.id.dropdownConfirmationType);
     }
 
+    private void loadAccommodation(Long accommodationId) {
+        ClientUtils.accommodationService.findById(accommodationId).enqueue(new Callback<Accommodation>() {
+            @Override
+            public void onResponse(@NonNull Call<Accommodation> call, @NonNull Response<Accommodation> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    loadAccommodationWithImages(response.body());
+                } else {
+                    Toast.makeText(requireContext(), "Error loading accommodation", Toast.LENGTH_SHORT).show();
+                    Log.e("AccommodationRequest", "Error loading accommodation");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Accommodation> call, @NonNull Throwable t) {
+                Log.e("AccommodationRequest", t.getMessage() != null ? t.getMessage() : "Error loading accommodation");
+            }
+        });
+    }
+
+    private void loadAccommodationWithImages(Accommodation accommodation) {
+        ClientUtils.accommodationService.getImages(accommodation.getId()).enqueue(new Callback<ArrayList<String>>() {
+            @Override
+            public void onResponse(@NonNull Call<ArrayList<String>> call, @NonNull Response<ArrayList<String>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    request.loadData(accommodation);
+                    request.setRemoteImageNames(response.body());
+                    loadData();
+                } else {
+                    Toast.makeText(requireContext(), "Error loading accommodation", Toast.LENGTH_SHORT).show();
+                    Log.e("AccommodationRequest", "Error loading accommodation");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ArrayList<String>> call, @NonNull Throwable t) {
+                Log.e("AccommodationRequest", t.getMessage() != null ? t.getMessage() : "Error loading accommodation");
+            }
+        });
+    }
+
     private boolean validFields() {
-        return Validation.validateText(inputTitle, editTitle, requireActivity().getWindow()) &&
-                Validation.validateText(inputDescription, editDescription, requireActivity().getWindow()) &&
-                Validation.validateNumberCompare(inputMax, editMax, editMin, requireActivity().getWindow()) &&
-                Validation.validateNumber(inputMin, editMin, requireActivity().getWindow()) &&
-                Validation.validateDouble(inputPrice, editPrice, requireActivity().getWindow()) &&
-                Validation.validateNumber(inputCancel, editCancel, requireActivity().getWindow()) &&
-                Validation.validateSelection(priceType, requireActivity().getWindow()) &&
-                Validation.validateSelection(confirmationType, requireActivity().getWindow()) &&
-                Validation.validateSelection(accommodationType, requireActivity().getWindow());
+        return Validation.validateText(editTitle) &&
+                Validation.validateText(editDescription) &&
+                Validation.validateNumberCompare(editMax, editMin) &&
+                Validation.validateNumber(editMin) &&
+                Validation.validateDouble(editPrice) &&
+                Validation.validateNumber(editCancel) &&
+                Validation.validateSelection(priceType) &&
+                Validation.validateSelection(confirmationType) &&
+                Validation.validateSelection(accommodationType);
     }
 
     private void collectData() {
@@ -179,17 +231,17 @@ public class CreateAccommodationRequestDetails extends Fragment {
         @Override
         public void afterTextChanged(Editable editable) {
             if (view.getId() == R.id.inputEditTitle)
-                Validation.validateText(inputTitle, editTitle, requireActivity().getWindow());
+                Validation.validateText(editTitle);
             else if (view.getId() == R.id.inputEditDescription)
-                Validation.validateText(inputDescription, editDescription, requireActivity().getWindow());
+                Validation.validateText(editDescription);
             else if (view.getId() == R.id.inputEditMaxGuests)
-                Validation.validateNumberCompare(inputMax, editMax, editMin, requireActivity().getWindow());
+                Validation.validateNumberCompare(editMax, editMin);
             else if (view.getId() == R.id.inputEditMinGuests)
-                Validation.validateNumber(inputMin, editMin, requireActivity().getWindow());
+                Validation.validateNumber(editMin);
             else if (view.getId() == R.id.inputEditPrice)
-                Validation.validateDouble(inputPrice, editPrice, requireActivity().getWindow());
+                Validation.validateDouble(editPrice);
             else if (view.getId() == R.id.inputEditCancel)
-                Validation.validateNumber(inputCancel, editCancel, requireActivity().getWindow());
+                Validation.validateNumber(editCancel);
         }
     }
 }

@@ -21,28 +21,24 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.bumptech.glide.Glide;
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.model.accommodations.AccommodationRequest;
 import com.example.odyssey.utils.FileUploadUtils;
 
-import org.apache.commons.io.FileUtils;
-
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CreateAccommodationRequestImages extends Fragment {
-    private static final String ARG_REQUEST = "Request";
+    private static final String ARG_REQUEST = "request";
     private AccommodationRequest request = null;
     Button selectImageButton, createBtn, backBtn;
     LinearLayout imagesLayout;
@@ -53,7 +49,7 @@ public class CreateAccommodationRequestImages extends Fragment {
     public CreateAccommodationRequestImages() {
     }
 
-    public static CreateAccommodationRequestImages newInstance(String param1, String param2) {
+    public static CreateAccommodationRequestImages newInstance() {
         return new CreateAccommodationRequestImages();
     }
 
@@ -100,7 +96,7 @@ public class CreateAccommodationRequestImages extends Fragment {
         backBtn.setOnClickListener(c -> {
             collectImages();
             Bundle args = new Bundle();
-            args.putSerializable("Request", request);
+            args.putSerializable(ARG_REQUEST, request);
             Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_create_slots, args);
         });
         return v;
@@ -137,13 +133,15 @@ public class CreateAccommodationRequestImages extends Fragment {
     }
 
     private void loadImages() {
-        request.getImageUris().forEach(this::inflateImage);
+        request.getLocalImageUris().forEach(this::inflateImage);
+        request.getRemoteImageNames().forEach(this::inflateRemoteImage);
     }
 
     private void collectImages() {
-        request.setImageUris(images);
+        request.setLocalImageUris(images);
         request.setNewImages(images.stream().map(uri -> uri.getLastPathSegment() + ".png")
                 .collect(Collectors.toSet()));
+        request.getNewImages().addAll(request.getRemoteImageNames());
     }
 
     ActivityResultLauncher<Intent> launchSomeOtherActivity = registerForActivityResult(
@@ -178,4 +176,23 @@ public class CreateAccommodationRequestImages extends Fragment {
         });
         imagesLayout.addView(itemView);
     }
+
+    private void inflateRemoteImage(String imageName) {
+        View itemView = LayoutInflater.from(requireContext())
+                .inflate(R.layout.fragment_image_view, null);
+
+        ImageView imageView = itemView.findViewById(R.id.imageView);
+        String imagePath = ClientUtils.SERVICE_API_PATH +
+                "accommodations/" + request.getAccommodationId() + "/images/" + imageName;
+        Glide.with(requireContext()).load(imagePath).into(imageView);
+
+        ImageButton closeButton = itemView.findViewById(R.id.closeButton);
+        closeButton.setTag(images.size());
+        closeButton.setOnClickListener(v -> {
+            request.getRemoteImageNames().removeIf(uri -> uri.equals(imageName));
+            imagesLayout.removeView(itemView);
+        });
+        imagesLayout.addView(itemView);
+    }
+
 }

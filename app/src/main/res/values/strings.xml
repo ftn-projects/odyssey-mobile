@@ -92,6 +92,7 @@
     <string name="create_accommodation">Create accommodation</string>
     <string name="create">Create</string>
     <string name="back">Back</string>
+    <string name="edit_icon">Edit icon</string>
 
     <string-array name="accommodation_types">
         <item>Room</item>

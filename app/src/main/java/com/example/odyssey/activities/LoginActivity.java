@@ -48,10 +48,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        if (!Validation.validatePassword(passwordInput, passwordEdit, getWindow())) {
+        if (!Validation.validatePassword(passwordEdit)) {
             return;
         }
-        if (!Validation.validateEmail(emailInput, emailEdit, getWindow())) {
+        if (!Validation.validateEmail(emailEdit)) {
             return;
         }
 
@@ -99,9 +99,9 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable editable) {
             if (view.getId() == R.id.inputEditPassword)
-                Validation.validatePassword(passwordInput, passwordEdit, getWindow());
+                Validation.validatePassword(passwordEdit);
             else if (view.getId() == R.id.inputEditEmail)
-                Validation.validateEmail(emailInput, emailEdit, getWindow());
+                Validation.validateEmail(emailEdit);
         }
     }
 

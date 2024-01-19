@@ -33,6 +33,9 @@ public class Accommodation implements Serializable {
         return PricingType.PER_NIGHT;
     }
 
+    public Accommodation() {
+    }
+
     public Accommodation(Long id, String title, String description, Type type, Address address, PricingType pricing, Set<Amenity> amenities, User host, Double defaultPrice, Boolean automaticApproval, Long cancellationDue, Set<AvailabilitySlot> availableSlots, Integer minGuests, Integer maxGuests, Double totalPrice, Double averageRating) {
         this.id = id;
         this.title = title;

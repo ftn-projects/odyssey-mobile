@@ -1,13 +1,12 @@
 package com.example.odyssey.fragments.accommodationRequest;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
@@ -37,11 +36,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CreateAccommodationRequestSlots extends Fragment {
-    private static final String ARG_REQUEST = "Request";
+    private static final String ARG_REQUEST = "request";
     private AccommodationRequest request = null;
     TextInputLayout priceInput, startInput, endInput;
     TextInputEditText priceEdit, startEdit, endEdit;
@@ -49,6 +49,10 @@ public class CreateAccommodationRequestSlots extends Fragment {
     MaterialButton dateBtn;
     LinearLayout slotsLayout;
     View v;
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    LocalDateTime start, end;
+    Double price;
 
     public CreateAccommodationRequestSlots() {
     }
@@ -83,15 +87,11 @@ public class CreateAccommodationRequestSlots extends Fragment {
             materialDatePicker.show(getChildFragmentManager(), "tag");
         });
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
         addBtn.setOnClickListener(c -> {
             if (!validFields()) return;
 
             try {
-                LocalDateTime start = LocalDate.parse(startEdit.getText().toString(), formatter).atStartOfDay();
-                LocalDateTime end = LocalDate.parse(endEdit.getText().toString(), formatter).atStartOfDay();
-                Double price = Double.parseDouble(priceEdit.getText().toString());
+                collectData();
 
                 addSlot(new AvailabilitySlot(price, new TimeSlot(start, end)));
 
@@ -108,14 +108,28 @@ public class CreateAccommodationRequestSlots extends Fragment {
     }
 
     private void navigateTo(int id) {
+        if (request.getNewAvailableSlots().size() == 0) {
+            Toast.makeText(requireActivity(), "Please add at least one slot", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Bundle args = new Bundle();
-        args.putSerializable("Request", request);
+        args.putSerializable(ARG_REQUEST, request);
         Navigation.findNavController(requireView()).navigate(id, args);
     }
 
     private void loadData() {
         request.getNewAvailableSlots().forEach(s ->
                 slotsLayout.addView(new AvailabilitySlots(s, requireContext())));
+    }
+
+    private void collectData() {
+        start = LocalDate.parse(Objects.requireNonNull(
+                startEdit.getText()).toString(), formatter).atStartOfDay();
+        end = LocalDate.parse(Objects.requireNonNull(
+                endEdit.getText()).toString(), formatter).atStartOfDay();
+        price = Double.parseDouble(Objects.requireNonNull(
+                priceEdit.getText()).toString());
     }
 
     private void initializeElements(View v) {
@@ -126,23 +140,20 @@ public class CreateAccommodationRequestSlots extends Fragment {
 
         priceEdit = v.findViewById(R.id.inputEditPrice);
         priceInput = v.findViewById(R.id.inputPrice);
-        priceEdit.addTextChangedListener(new ValidationTextWatcher(priceEdit));
 
         startEdit = v.findViewById(R.id.inputEditStartText);
         startInput = v.findViewById(R.id.inputStartText);
-        startEdit.addTextChangedListener(new ValidationTextWatcher(startEdit));
 
         endEdit = v.findViewById(R.id.inputEditEndText);
         endInput = v.findViewById(R.id.inputEndText);
-        endEdit.addTextChangedListener(new ValidationTextWatcher(endEdit));
 
         slotsLayout = v.findViewById(R.id.plsRadiOpet);
     }
 
     private boolean validFields() {
-        return Validation.validateDouble(priceInput, priceEdit, requireActivity().getWindow()) &&
-                Validation.validateEmpty(startInput, startEdit, requireActivity().getWindow()) &&
-                Validation.validateEmpty(endInput, endEdit, requireActivity().getWindow());
+        return Validation.validateDouble(priceEdit) &&
+                Validation.validateEmpty(startEdit) &&
+                Validation.validateEmpty(endEdit);
     }
 
     private void addSlot(AvailabilitySlot slot) {
@@ -172,10 +183,6 @@ public class CreateAccommodationRequestSlots extends Fragment {
 
         request.getNewAvailableSlots().clear();
         request.getNewAvailableSlots().addAll(sorted(newSlots));
-
-        startEdit.setText("");
-        endEdit.setText("");
-        priceEdit.setText("");
     }
 
     private boolean isSuccessive(AvailabilitySlot first, AvailabilitySlot second) {
@@ -186,29 +193,5 @@ public class CreateAccommodationRequestSlots extends Fragment {
     private List<AvailabilitySlot> sorted(Collection<AvailabilitySlot> slots) {
         return slots.stream().sorted(Comparator.comparing(s -> s.getTimeSlot().getStart()))
                 .collect(Collectors.toList());
-    }
-
-    private class ValidationTextWatcher implements TextWatcher {
-        private final View view;
-
-        private ValidationTextWatcher(View view) {
-            this.view = view;
-        }
-
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            if (view.getId() == R.id.inputEditPrice)
-                Validation.validateDouble(priceInput, priceEdit, requireActivity().getWindow());
-            else if (view.getId() == R.id.inputEditStartText)
-                Validation.validateEmpty(startInput, startEdit, requireActivity().getWindow());
-            else if (view.getId() == R.id.inputEditEndText)
-                Validation.validateEmpty(endInput, endEdit, requireActivity().getWindow());
-        }
     }
 }

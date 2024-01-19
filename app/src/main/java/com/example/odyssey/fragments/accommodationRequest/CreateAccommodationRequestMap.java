@@ -35,12 +35,17 @@ import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class CreateAccommodationRequestMap extends Fragment implements MapListener {
-    private static final String ARG_REQUEST = "Request";
+    private static final String ARG_REQUEST = "request";
     private AccommodationRequest request = null;
 
     MapView mapView;
@@ -53,6 +58,8 @@ public class CreateAccommodationRequestMap extends Fragment implements MapListen
     TextInputEditText addressEdit, cityEdit, countryEdit;
     Button nextBtn, backBtn;
     View v;
+
+    LocalDateTime lastChange = null;
 
     public CreateAccommodationRequestMap() {
     }
@@ -73,6 +80,7 @@ public class CreateAccommodationRequestMap extends Fragment implements MapListen
         v = inflater.inflate(R.layout.fragment_create_accommodation_map, container, false);
         initializeElemenets(v);
         initializeMapEventReceiver();
+        loadData();
 
         nextBtn.setOnClickListener(v -> navigateTo(R.id.nav_accommodation_create_amenities));
         backBtn.setOnClickListener(c -> navigateTo(R.id.nav_accommodation_create_details));
@@ -81,10 +89,10 @@ public class CreateAccommodationRequestMap extends Fragment implements MapListen
     }
 
     private void navigateTo(int id) {
-        if (fieldsInvalid()) return;
+        if (validFields()) return;
         collectData();
         Bundle args = new Bundle();
-        args.putSerializable("Request", request);
+        args.putSerializable(ARG_REQUEST, request);
         Navigation.findNavController(requireView()).navigate(id, args);
     }
 
@@ -94,14 +102,17 @@ public class CreateAccommodationRequestMap extends Fragment implements MapListen
         addressInput = v.findViewById(R.id.inputAddress);
         addressEdit = v.findViewById(R.id.inputEditAddress);
         addressEdit.addTextChangedListener(new ValidationTextWatcher(addressEdit));
+        addressEdit.addTextChangedListener(new MapUpdateTextWatcher());
 
         cityInput = v.findViewById(R.id.inputCity);
         cityEdit = v.findViewById(R.id.inputEditCity);
         cityEdit.addTextChangedListener(new ValidationTextWatcher(cityEdit));
+        cityEdit.addTextChangedListener(new MapUpdateTextWatcher());
 
         countryInput = v.findViewById(R.id.inputCountry);
         countryEdit = v.findViewById(R.id.inputEditCountry);
         countryEdit.addTextChangedListener(new ValidationTextWatcher(countryEdit));
+        countryEdit.addTextChangedListener(new MapUpdateTextWatcher());
 
         nextBtn = v.findViewById(R.id.buttonCreate);
         backBtn = v.findViewById(R.id.buttonBack);
@@ -173,10 +184,36 @@ public class CreateAccommodationRequestMap extends Fragment implements MapListen
         mapView.getOverlays().add(OverlayEvents);
     }
 
-    private boolean fieldsInvalid() {
-        return !Validation.validateLettersAndNumber(addressInput, addressEdit, requireActivity().getWindow()) ||
-                !Validation.validateText(cityInput, cityEdit, requireActivity().getWindow()) ||
-                !Validation.validateText(countryInput, countryEdit, requireActivity().getWindow());
+    private void loadData() {
+        addressEdit.setText(request.getNewAddress().getStreet());
+        cityEdit.setText(request.getNewAddress().getCity());
+        countryEdit.setText(request.getNewAddress().getCountry());
+        updateMap();
+    }
+
+    private void updateMap() {
+        collectData();
+
+        Geocoder geocoder = new Geocoder(requireContext(), Locale.getDefault());
+        try {
+            com.example.odyssey.model.Address address = request.getNewAddress();
+            Address result = Objects.requireNonNull(geocoder.getFromLocationName(
+                    address.getStreet() + " ," + address.getCity() + " ," +
+                            address.getCountry(), 1)).get(0);
+            GeoPoint startPoint = new GeoPoint(result.getLatitude(), result.getLongitude());
+            controller.setCenter(startPoint);
+            pickedLocationMarker.setPosition(startPoint);
+            pickedLocationMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+            mapView.getOverlays().add(pickedLocationMarker);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean validFields() {
+        return !Validation.validateLettersAndNumber(addressEdit) ||
+                !Validation.validateText(cityEdit) ||
+                !Validation.validateText(countryEdit);
     }
 
     private void collectData() {
@@ -184,6 +221,29 @@ public class CreateAccommodationRequestMap extends Fragment implements MapListen
                 Objects.requireNonNull(addressEdit.getText()).toString(),
                 Objects.requireNonNull(cityEdit.getText()).toString(),
                 Objects.requireNonNull(countryEdit.getText()).toString()));
+    }
+
+    private class MapUpdateTextWatcher implements TextWatcher {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            lastChange = LocalDateTime.now();
+
+            ScheduledExecutorService backgroundExecutor = Executors.newSingleThreadScheduledExecutor();
+            backgroundExecutor.schedule(() -> {
+                requireActivity().runOnUiThread(() -> {
+                    if (Duration.between(lastChange, LocalDateTime.now()).toMillis() >= 800)
+                        updateMap();
+                });
+            }, 1000, TimeUnit.MILLISECONDS);
+        }
     }
 
     @Override
@@ -214,11 +274,11 @@ public class CreateAccommodationRequestMap extends Fragment implements MapListen
         @Override
         public void afterTextChanged(Editable editable) {
             if (view.getId() == R.id.inputEditAddress)
-                Validation.validateLettersAndNumber(addressInput, addressEdit, requireActivity().getWindow());
+                Validation.validateLettersAndNumber(addressEdit);
             else if (view.getId() == R.id.inputEditCity)
-                Validation.validateText(cityInput, cityEdit, requireActivity().getWindow());
+                Validation.validateText(cityEdit);
             else if (view.getId() == R.id.inputEditCountry)
-                Validation.validateText(countryInput, countryEdit, requireActivity().getWindow());
+                Validation.validateText(countryEdit);
         }
     }
 }

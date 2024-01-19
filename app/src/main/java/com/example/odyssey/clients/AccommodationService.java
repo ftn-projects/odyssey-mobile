@@ -24,7 +24,7 @@ public interface AccommodationService {
     );
 
     @GET("accommodations/{id}")
-    Call<Accommodation> getOne(@Path("id") Long id);
+    Call<Accommodation> findById(@Path("id") Long id);
 
     @GET("accommodations/{id}/totalPrice")
     Call<Accommodation> getAccommodationWithPrice(

@@ -1,5 +1,7 @@
 package com.example.odyssey.model;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class Address implements Serializable {
@@ -14,6 +16,12 @@ public class Address implements Serializable {
         this.street = street;
         this.city = city;
         this.country = country;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return street + ", " + city + ", " + country;
     }
 
     public String getStreet() {

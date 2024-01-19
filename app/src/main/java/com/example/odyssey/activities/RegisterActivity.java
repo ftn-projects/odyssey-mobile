@@ -88,15 +88,15 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     public void register(View view) {
-        if (!Validation.validatePassword(passwordInput, passwordEdit, getWindow()) ||
-                !Validation.validateEmail(emailInput, emailEdit, getWindow()) ||
-                !Validation.validatePhone(phoneNumberInput, phoneNumberEdit, getWindow()) ||
-                !Validation.validateText(nameInput, nameEdit, getWindow()) ||
-                !Validation.validateText(surnameInput, surnameEdit, getWindow()) ||
-                !Validation.validateLettersAndNumber(addressInput, addressEdit, getWindow()) ||
-                !Validation.validateText(cityInput, cityEdit, getWindow()) ||
-                !Validation.validateText(countryInput, countryEdit, getWindow()) ||
-                !Validation.validateConfirmedPassword(confirmInput, confirmEdit, passwordEdit, getWindow())) {
+        if (!Validation.validatePassword(passwordEdit) ||
+                !Validation.validateEmail(emailEdit) ||
+                !Validation.validatePhone(phoneNumberEdit) ||
+                !Validation.validateText(nameEdit) ||
+                !Validation.validateText(surnameEdit) ||
+                !Validation.validateLettersAndNumber(addressEdit) ||
+                !Validation.validateText(cityEdit) ||
+                !Validation.validateText(countryEdit) ||
+                !Validation.validateConfirmedPassword(confirmEdit, passwordEdit)) {
             return;
         }
         String role = roleSwitch.isChecked() ? "HOST" : "GUEST";
@@ -143,23 +143,23 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable editable) {
             if (view.getId() == R.id.inputEditPassword)
-                Validation.validatePassword(passwordInput, passwordEdit, getWindow());
+                Validation.validatePassword(passwordEdit);
             else if (view.getId() == R.id.inputEditEmail)
-                Validation.validateEmail(emailInput, emailEdit, getWindow());
+                Validation.validateEmail(emailEdit);
             else if (view.getId() == R.id.inputEditName)
-                Validation.validateText(nameInput, nameEdit, getWindow());
+                Validation.validateText(nameEdit);
             else if (view.getId() == R.id.inputEditSurname)
-                Validation.validateText(surnameInput, surnameEdit, getWindow());
+                Validation.validateText(surnameEdit);
             else if (view.getId() == R.id.inputEditAddress)
-                Validation.validateLettersAndNumber(addressInput, addressEdit, getWindow());
+                Validation.validateLettersAndNumber(addressEdit);
             else if (view.getId() == R.id.inputEditCity)
-                Validation.validateText(cityInput, cityEdit, getWindow());
+                Validation.validateText(cityEdit);
             else if (view.getId() == R.id.inputEditCountry)
-                Validation.validateText(countryInput, countryEdit, getWindow());
+                Validation.validateText(countryEdit);
             else if (view.getId() == R.id.inputEditPhoneNumber)
-                Validation.validatePhone(phoneNumberInput, phoneNumberEdit, getWindow());
+                Validation.validatePhone(phoneNumberEdit);
             else if (view.getId() == R.id.inputEditConfirmPassword)
-                Validation.validateConfirmedPassword(confirmInput, confirmEdit, passwordEdit, getWindow());
+                Validation.validateConfirmedPassword(confirmEdit, passwordEdit);
         }
     }
 }

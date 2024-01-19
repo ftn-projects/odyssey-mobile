@@ -19,7 +19,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CreateAccommodationRequestAmenities extends Fragment {
-    private static final String ARG_REQUEST = "Request";
+    private static final String ARG_REQUEST = "request";
     private AccommodationRequest request = null;
     CheckBox wifi, tv, air, kitchen, parking, beach, washer, spa, bed, smoking;
     Button nextBtn;
@@ -53,7 +53,7 @@ public class CreateAccommodationRequestAmenities extends Fragment {
     private void navigateTo(int id) {
         collectData();
         Bundle args = new Bundle();
-        args.putSerializable("Request", request);
+        args.putSerializable(ARG_REQUEST, request);
         Navigation.findNavController(requireView()).navigate(id, args);
     }
 
