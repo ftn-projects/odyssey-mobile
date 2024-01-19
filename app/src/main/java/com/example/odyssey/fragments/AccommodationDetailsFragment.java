@@ -97,12 +97,11 @@ public class AccommodationDetailsFragment extends Fragment {
     public AccommodationDetailsFragment() {
     }
 
-    private final List<String> imageUrls = new ArrayList<>();
+    private List<String> imageUrls = new ArrayList<>();
     private User loggedUser;
 
     public static AccommodationDetailsFragment newInstance() {
-        AccommodationDetailsFragment fragment = new AccommodationDetailsFragment();
-        return fragment;
+        return new AccommodationDetailsFragment();
     }
 
     @Override
@@ -195,29 +194,26 @@ public class AccommodationDetailsFragment extends Fragment {
 
         getReviewRatings();
         loadReviews();
-        dateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MaterialDatePicker<Pair<Long, Long>> materialDatePicker = MaterialDatePicker.Builder.dateRangePicker().setSelection(new Pair<>(
-                        MaterialDatePicker.thisMonthInUtcMilliseconds(),
-                        MaterialDatePicker.todayInUtcMilliseconds()
-                )).build();
-                materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
-                    @Override
-                    public void onPositiveButtonClick(Pair<Long, Long> selection) {
-                        startDate = new Date(selection.first);
-                        endDate = new Date(selection.second);
-                        String date1 = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(startDate);
-                        String date2 = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(endDate);
+        dateButton.setOnClickListener(view1 -> {
+            MaterialDatePicker<Pair<Long, Long>> materialDatePicker = MaterialDatePicker.Builder.dateRangePicker().setSelection(new Pair<>(
+                    MaterialDatePicker.thisMonthInUtcMilliseconds(),
+                    MaterialDatePicker.todayInUtcMilliseconds()
+            )).build();
+            materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
+                @Override
+                public void onPositiveButtonClick(Pair<Long, Long> selection) {
+                    startDate = new Date(selection.first);
+                    endDate = new Date(selection.second);
+                    String date1 = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(startDate);
+                    String date2 = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(endDate);
 
-                        startingDate.setText(MessageFormat.format("Selected Starting Date: {0}", date1));
-                        endingDate.setText(MessageFormat.format("Selected Ending Date: {0}", date2));
-                        loadAccommodation(accommodation.getId(), startDate, endDate, numberOfGuests);
-                    }
-                });
+                    startingDate.setText(MessageFormat.format("Selected Starting Date: {0}", date1));
+                    endingDate.setText(MessageFormat.format("Selected Ending Date: {0}", date2));
+                    loadAccommodation(accommodation.getId(), startDate, endDate, numberOfGuests);
+                }
+            });
 
-                materialDatePicker.show(getChildFragmentManager(), "tag");
-            }
+            materialDatePicker.show(getChildFragmentManager(), "tag");
         });
 
         TextInputEditText numberOfGuestsInput = view.findViewById(R.id.NumberOfGuestsEditTextReservation);
@@ -286,11 +282,9 @@ public class AccommodationDetailsFragment extends Fragment {
                             accommodation.getAddress().getCountry(), 1);
             Address address = Objects.requireNonNull(addresses).get(0);
 
-            // Use the latitude and longitude
-
             double latitude = address.getLatitude();
             double longitude = address.getLongitude();
-            GeoPoint startPointNew = new GeoPoint(latitude, longitude); //gde te postavi kad otvori mapu
+            GeoPoint startPointNew = new GeoPoint(latitude, longitude);
             controller.setCenter(startPointNew);
             Log.e("REZ", "Latitude: " + latitude + ", Longitude: " + longitude);
             pickedLocationMarker.setPosition(new GeoPoint(latitude, longitude));
@@ -320,9 +314,9 @@ public class AccommodationDetailsFragment extends Fragment {
     }
 
     public void loadImages() {
-        if (accommodation == null || rootView == null) {
-            return;
-        }
+        if (accommodation == null || rootView == null) return;
+        imageUrls = new ArrayList<>();
+
         Call<ArrayList<String>> call = ClientUtils.accommodationService.getImages(accommodation.getId());
         call.enqueue(new Callback<ArrayList<String>>() {
             @Override

@@ -5,9 +5,9 @@ import androidx.annotation.NonNull;
 import java.io.Serializable;
 
 public class Address implements Serializable {
-    private String street;
-    private String city;
-    private String country;
+    private String street = "";
+    private String city = "";
+    private String country = "";
 
     public Address() {
     }
@@ -21,7 +21,9 @@ public class Address implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return street + ", " + city + ", " + country;
+        return (street.trim().isEmpty() ? "" : street + ", ") +
+                (city.trim().isEmpty() ? "" : city + ", ") +
+                country.trim();
     }
 
     public String getStreet() {

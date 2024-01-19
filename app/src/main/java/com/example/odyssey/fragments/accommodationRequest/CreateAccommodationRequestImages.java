@@ -23,6 +23,7 @@ import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.example.odyssey.R;
+import com.example.odyssey.activities.MainActivity;
 import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.model.accommodations.AccommodationRequest;
 import com.example.odyssey.utils.FileUploadUtils;
@@ -62,12 +63,16 @@ public class CreateAccommodationRequestImages extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_create_accommodation_upload_images, container, false);
+        v = inflater.inflate(R.layout.fragment_create_accommodation_request_images, container, false);
         imagesLayout = v.findViewById(R.id.plsRadi);
         createBtn = v.findViewById(R.id.buttonCreate);
         backBtn = v.findViewById(R.id.buttonBack);
         selectImageButton = v.findViewById(R.id.buttonUpload);
         selectImageButton.setOnClickListener(c -> imageChooser());
+
+        ((MainActivity) requireActivity()).setActionBarTitle(
+                request.getAccommodationId() == null ? "Create accommodation" : "Edit accommodation"
+        );
 
         loadImages();
 

@@ -1,5 +1,6 @@
 package com.example.odyssey.fragments.accommodationRequest;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
@@ -16,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.odyssey.R;
+import com.example.odyssey.activities.MainActivity;
 import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.accommodations.AccommodationRequest;
@@ -39,6 +42,7 @@ public class CreateAccommodationRequestDetails extends Fragment {
     TextInputEditText editTitle, editDescription, editMin, editMax, editPrice, editCancel;
     AutoCompleteTextView accommodationType, priceType, confirmationType;
     Button nextBtn;
+    View v;
 
     public CreateAccommodationRequestDetails() {
     }
@@ -67,9 +71,8 @@ public class CreateAccommodationRequestDetails extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_create_accommodation_details, container, false);
+        v = inflater.inflate(R.layout.fragment_create_accommodation_request_details, container, false);
         initializeElements(v);
-
         if (request.getRequestType().equals(AccommodationRequest.Type.UPDATE)) {
             loadAccommodation(request.getAccommodationId());
         } else loadData();
@@ -114,8 +117,21 @@ public class CreateAccommodationRequestDetails extends Fragment {
         editCancel.addTextChangedListener(new ValidationTextWatcher(editCancel));
 
         priceType = v.findViewById(R.id.dropdownPriceType);
+        priceType.setAdapter(getAdapter(R.array.price_types));
         accommodationType = v.findViewById(R.id.dropdownAccommodationType);
+        accommodationType.setAdapter(getAdapter(R.array.accommodation_types));
         confirmationType = v.findViewById(R.id.dropdownConfirmationType);
+        confirmationType.setAdapter(getAdapter(R.array.confirmation_types));
+
+        ((MainActivity) requireActivity()).setActionBarTitle(
+                request.getAccommodationId() == null ? "Create accommodation" : "Edit accommodation"
+        );
+    }
+
+    private ArrayAdapter<String> getAdapter(int valuesId) {
+        return new ArrayAdapter<>(requireContext(),
+                android.R.layout.simple_dropdown_item_1line,
+                getResources().getStringArray(valuesId));
     }
 
     private void loadAccommodation(Long accommodationId) {
@@ -144,6 +160,7 @@ public class CreateAccommodationRequestDetails extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     request.loadData(accommodation);
                     request.setRemoteImageNames(response.body());
+                    initializeElements(v);
                     loadData();
                 } else {
                     Toast.makeText(requireContext(), "Error loading accommodation", Toast.LENGTH_SHORT).show();

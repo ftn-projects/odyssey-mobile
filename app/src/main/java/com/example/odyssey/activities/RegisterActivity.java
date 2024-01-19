@@ -1,8 +1,6 @@
 package com.example.odyssey.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,10 +13,8 @@ import android.widget.Toast;
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.model.Address;
-import com.example.odyssey.model.Auth.AuthResponse;
 import com.example.odyssey.model.Auth.Register;
 import com.example.odyssey.model.User;
-import com.example.odyssey.utils.TokenUtils;
 import com.example.odyssey.utils.Validation;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
@@ -53,8 +49,8 @@ public class RegisterActivity extends AppCompatActivity {
         surnameEdit = findViewById(R.id.inputEditSurname);
         surnameEdit.addTextChangedListener(new ValidationTextWatcher(surnameEdit));
 
-        addressInput = findViewById(R.id.inputAddress);
-        addressEdit = findViewById(R.id.inputEditAddress);
+        addressInput = findViewById(R.id.inputStreet);
+        addressEdit = findViewById(R.id.inputEditStreet);
         addressEdit.addTextChangedListener(new ValidationTextWatcher(addressEdit));
 
         cityInput = findViewById(R.id.inputCity);
@@ -150,7 +146,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Validation.validateText(nameEdit);
             else if (view.getId() == R.id.inputEditSurname)
                 Validation.validateText(surnameEdit);
-            else if (view.getId() == R.id.inputEditAddress)
+            else if (view.getId() == R.id.inputEditStreet)
                 Validation.validateLettersAndNumber(addressEdit);
             else if (view.getId() == R.id.inputEditCity)
                 Validation.validateText(cityEdit);

@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.odyssey.R;
+import com.example.odyssey.activities.MainActivity;
 import com.example.odyssey.model.accommodations.AccommodationRequest;
 import com.example.odyssey.utils.Validation;
 import com.google.android.material.textfield.TextInputEditText;
@@ -54,8 +55,8 @@ public class CreateAccommodationRequestMap extends Fragment implements MapListen
     MyLocationNewOverlay mMyLocationOverlay;
     Marker pickedLocationMarker;
 
-    TextInputLayout addressInput, cityInput, countryInput;
-    TextInputEditText addressEdit, cityEdit, countryEdit;
+    TextInputLayout streetInput, cityInput, countryInput;
+    TextInputEditText streetEdit, cityEdit, countryEdit;
     Button nextBtn, backBtn;
     View v;
 
@@ -77,7 +78,7 @@ public class CreateAccommodationRequestMap extends Fragment implements MapListen
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_create_accommodation_map, container, false);
+        v = inflater.inflate(R.layout.fragment_create_accommodation_request_map, container, false);
         initializeElemenets(v);
         initializeMapEventReceiver();
         loadData();
@@ -99,10 +100,10 @@ public class CreateAccommodationRequestMap extends Fragment implements MapListen
     private void initializeElemenets(View v) {
         map = v.findViewById(R.id.mapGoesHere);
 
-        addressInput = v.findViewById(R.id.inputAddress);
-        addressEdit = v.findViewById(R.id.inputEditAddress);
-        addressEdit.addTextChangedListener(new ValidationTextWatcher(addressEdit));
-        addressEdit.addTextChangedListener(new MapUpdateTextWatcher());
+        streetInput = v.findViewById(R.id.inputStreet);
+        streetEdit = v.findViewById(R.id.inputEditStreet);
+        streetEdit.addTextChangedListener(new ValidationTextWatcher(streetEdit));
+        streetEdit.addTextChangedListener(new MapUpdateTextWatcher());
 
         cityInput = v.findViewById(R.id.inputCity);
         cityEdit = v.findViewById(R.id.inputEditCity);
@@ -138,6 +139,10 @@ public class CreateAccommodationRequestMap extends Fragment implements MapListen
         mapView.addMapListener(this);
 
         pickedLocationMarker = new Marker(mapView);
+
+        ((MainActivity) requireActivity()).setActionBarTitle(
+                request.getAccommodationId() == null ? "Create accommodation" : "Edit accommodation"
+        );
     }
 
     private void initializeMapEventReceiver() {
@@ -160,7 +165,7 @@ public class CreateAccommodationRequestMap extends Fragment implements MapListen
                         sb.append(address.getCountryName());
 
                         String street = address.getThoroughfare() + " " + address.getSubThoroughfare();
-                        addressEdit.setText(street);
+                        streetEdit.setText(street);
                         cityEdit.setText(address.getLocality());
                         countryEdit.setText(address.getCountryName());
                     }
@@ -185,22 +190,31 @@ public class CreateAccommodationRequestMap extends Fragment implements MapListen
     }
 
     private void loadData() {
-        addressEdit.setText(request.getNewAddress().getStreet());
-        cityEdit.setText(request.getNewAddress().getCity());
-        countryEdit.setText(request.getNewAddress().getCountry());
+        com.example.odyssey.model.Address address = request.getNewAddress();
+        if (!address.getStreet().isEmpty())
+            streetEdit.setText(address.getStreet());
+        if (!address.getCity().isEmpty())
+            cityEdit.setText(address.getCity());
+        if (!address.getCountry().isEmpty())
+            countryEdit.setText(address.getCountry());
         updateMap();
     }
 
     private void updateMap() {
         collectData();
 
+        if (request.getNewAddress().toString().isEmpty()) return;
+        if (getContext() == null) return;
+
         Geocoder geocoder = new Geocoder(requireContext(), Locale.getDefault());
         try {
-            com.example.odyssey.model.Address address = request.getNewAddress();
-            Address result = Objects.requireNonNull(geocoder.getFromLocationName(
-                    address.getStreet() + " ," + address.getCity() + " ," +
-                            address.getCountry(), 1)).get(0);
-            GeoPoint startPoint = new GeoPoint(result.getLatitude(), result.getLongitude());
+            List<Address> result = geocoder.getFromLocationName(
+                    request.getNewAddress().toString(), 1);
+            if (result == null || result.isEmpty()) return;
+
+            Address found = result.get(0);
+
+            GeoPoint startPoint = new GeoPoint(found.getLatitude(), found.getLongitude());
             controller.setCenter(startPoint);
             pickedLocationMarker.setPosition(startPoint);
             pickedLocationMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
@@ -211,14 +225,14 @@ public class CreateAccommodationRequestMap extends Fragment implements MapListen
     }
 
     private boolean validFields() {
-        return !Validation.validateLettersAndNumber(addressEdit) ||
+        return !Validation.validateLettersAndNumber(streetEdit) ||
                 !Validation.validateText(cityEdit) ||
                 !Validation.validateText(countryEdit);
     }
 
     private void collectData() {
         request.setNewAddress(new com.example.odyssey.model.Address(
-                Objects.requireNonNull(addressEdit.getText()).toString(),
+                Objects.requireNonNull(streetEdit.getText()).toString(),
                 Objects.requireNonNull(cityEdit.getText()).toString(),
                 Objects.requireNonNull(countryEdit.getText()).toString()));
     }
@@ -273,8 +287,8 @@ public class CreateAccommodationRequestMap extends Fragment implements MapListen
 
         @Override
         public void afterTextChanged(Editable editable) {
-            if (view.getId() == R.id.inputEditAddress)
-                Validation.validateLettersAndNumber(addressEdit);
+            if (view.getId() == R.id.inputEditStreet)
+                Validation.validateLettersAndNumber(streetEdit);
             else if (view.getId() == R.id.inputEditCity)
                 Validation.validateText(cityEdit);
             else if (view.getId() == R.id.inputEditCountry)

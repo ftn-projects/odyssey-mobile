@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.odyssey.R;
+import com.example.odyssey.activities.MainActivity;
 import com.example.odyssey.model.accommodations.AccommodationRequest;
 import com.example.odyssey.model.accommodations.Amenity;
 
@@ -41,7 +42,7 @@ public class CreateAccommodationRequestAmenities extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_create_accommodation_amenities, container, false);
+        View v = inflater.inflate(R.layout.fragment_create_accommodation_request_amenities, container, false);
         initializeElements(v);
         loadData();
 
@@ -70,6 +71,10 @@ public class CreateAccommodationRequestAmenities extends Fragment {
         spa = v.findViewById(R.id.checkSpa);
         bed = v.findViewById(R.id.checkKingBed);
         smoking = v.findViewById(R.id.checkSmoking);
+
+        ((MainActivity) requireActivity()).setActionBarTitle(
+                request.getAccommodationId() == null ? "Create accommodation" : "Edit accommodation"
+        );
     }
 
     private void loadData() {

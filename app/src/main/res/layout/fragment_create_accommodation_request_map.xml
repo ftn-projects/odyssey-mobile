@@ -22,13 +22,13 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Theme.Odyssey.TextInputLayout"
-            android:id="@+id/inputAddress"
+            android:id="@+id/inputStreet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Address">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputEditAddress"
+                android:id="@+id/inputEditStreet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_regular"

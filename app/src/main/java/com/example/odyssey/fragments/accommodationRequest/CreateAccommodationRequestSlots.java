@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.odyssey.R;
+import com.example.odyssey.activities.MainActivity;
 import com.example.odyssey.fragments.AvailabilitySlots;
 import com.example.odyssey.model.TimeSlot;
 import com.example.odyssey.model.accommodations.AccommodationRequest;
@@ -70,7 +71,7 @@ public class CreateAccommodationRequestSlots extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_create_accommodation_slots, container, false);
+        v = inflater.inflate(R.layout.fragment_create_accommodation_request_slots, container, false);
         initializeElements(v);
         loadData();
 
@@ -148,6 +149,10 @@ public class CreateAccommodationRequestSlots extends Fragment {
         endInput = v.findViewById(R.id.inputEndText);
 
         slotsLayout = v.findViewById(R.id.plsRadiOpet);
+
+        ((MainActivity) requireActivity()).setActionBarTitle(
+                request.getAccommodationId() == null ? "Create accommodation" : "Edit accommodation"
+        );
     }
 
     private boolean validFields() {
