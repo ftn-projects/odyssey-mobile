@@ -106,65 +106,37 @@
 
     <fragment
         android:id="@+id/nav_accommodation_create_details"
-        android:name="com.example.odyssey.fragments.CreateAccommodationDetails"
+        android:name="com.example.odyssey.fragments.accommodationRequest.CreateAccommodationRequestDetails"
         android:label="Create Accommodation"
         tools:layout="@layout/fragment_create_accommodation_details">
     </fragment>
 
     <fragment
         android:id="@+id/nav_accommodation_create_amenities"
-        android:name="com.example.odyssey.fragments.CreateAccommodationAmenities"
+        android:name="com.example.odyssey.fragments.accommodationRequest.CreateAccommodationRequestAmenities"
         android:label="Create Accommodation"
         tools:layout="@layout/fragment_create_accommodation_amenities">
     </fragment>
 
     <fragment
         android:id="@+id/nav_accommodation_create_images"
-        android:name="com.example.odyssey.fragments.CreateAccommodationUploadImages"
+        android:name="com.example.odyssey.fragments.accommodationRequest.CreateAccommodationRequestImages"
         android:label="Create Accommodation"
         tools:layout="@layout/fragment_create_accommodation_upload_images">
     </fragment>
 
     <fragment
         android:id="@+id/nav_accommodation_create_slots"
-        android:name="com.example.odyssey.fragments.CreateAccommodationSlots"
+        android:name="com.example.odyssey.fragments.accommodationRequest.CreateAccommodationRequestSlots"
         android:label="Create Accommodation"
         tools:layout="@layout/fragment_create_accommodation_slots">
     </fragment>
 
     <fragment
         android:id="@+id/nav_accommodation_create_map"
-        android:name="com.example.odyssey.fragments.CreateAccommodationMap"
+        android:name="com.example.odyssey.fragments.accommodationRequest.CreateAccommodationRequestMap"
         android:label="Create Accommodation"
         tools:layout="@layout/fragment_create_accommodation_map">
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_accommodation_update_details"
-        android:name="com.example.odyssey.fragments.UpdateAccommodationDetails"
-        android:label="Update Accommodation"
-        tools:layout="@layout/fragment_update_accommodation_details">
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_accommodation_update_amenities"
-        android:name="com.example.odyssey.fragments.UpdateAccommodationAmenities"
-        android:label="Update Accommodation"
-        tools:layout="@layout/fragment_update_accommodation_amenities">
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_accommodation_update_slots"
-        android:name="com.example.odyssey.fragments.UpdateAccommodationSlots"
-        android:label="Update Accommodation"
-        tools:layout="@layout/fragment_update_accommodation_slots">
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_accommodation_update_map"
-        android:name="com.example.odyssey.fragments.UpdateAccommodationMap"
-        android:label="Update Accommodation"
-        tools:layout="@layout/fragment_update_accommodation_map">
     </fragment>
 
 </navigation>
