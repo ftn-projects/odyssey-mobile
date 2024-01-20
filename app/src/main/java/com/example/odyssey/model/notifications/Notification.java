@@ -1,9 +1,11 @@
 package com.example.odyssey.model.notifications;
 
+import com.example.odyssey.adapters.LocalDateTimeAdapter;
 import com.example.odyssey.model.reservations.AccreditReservation;
 import com.example.odyssey.model.reviews.AccommodationReview;
 import com.example.odyssey.model.reviews.HostReview;
 import com.example.odyssey.model.users.User;
+import com.google.gson.annotations.JsonAdapter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -34,6 +36,10 @@ public class Notification implements Serializable {
         this.reservation = reservation;
         this.accommodationReview = accommodationReview;
         this.hostReview = hostReview;
+    }
+
+    public String getShortTitle() {
+        return title.length() > 28 ? title.substring(0, 28) + "..." : title;
     }
 
     public Long getId() {

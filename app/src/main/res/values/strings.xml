@@ -93,6 +93,9 @@
     <string name="create">Create</string>
     <string name="back">Back</string>
     <string name="edit_icon">Edit icon</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="date">Date</string>
 
     <string-array name="accommodation_types">
         <item>Room</item>

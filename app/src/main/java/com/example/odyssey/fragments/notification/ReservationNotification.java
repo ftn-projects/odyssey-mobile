@@ -1,4 +1,4 @@
-package com.example.odyssey.fragments;
+package com.example.odyssey.fragments.notification;
 
 import android.os.Bundle;
 
