@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         if (role != null) {
             getMenuInflater().inflate(R.menu.home_auth_menu, menu);
 
-            MenuItem item = menu.findItem(R.id.nav_notifications);
+//            MenuItem item = menu.findItem(R.id.nav_notifications);
             removeNotificationBadge();
             createNotificationBadge();
 

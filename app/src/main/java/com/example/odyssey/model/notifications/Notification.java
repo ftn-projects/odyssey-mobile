@@ -36,6 +36,14 @@ public class Notification implements Serializable {
         this.hostReview = hostReview;
     }
 
+    public String getShortTitle() {
+        return text.length() > 20 ? text.substring(0, 20) + "..." : text;
+    }
+
+    public String getShortText() {
+        return text.length() > 30 ? text.substring(0, 30) + "..." : text;
+    }
+
     public Long getId() {
         return id;
     }
