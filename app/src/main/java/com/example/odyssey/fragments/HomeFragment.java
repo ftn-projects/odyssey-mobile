@@ -17,6 +17,7 @@ import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.accommodations.Amenity;
 import com.example.odyssey.model.accommodations.AvailabilitySlot;
+import com.example.odyssey.model.stats.AccommodationTotalStats;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -69,14 +70,6 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
 
         ImageButton searchButton = rootView.findViewById(R.id.search_button);
         searchButton.setOnClickListener(view -> getAccommodations());
-
-
-//        AccommodationCard accommodationCard = rootView.findViewById(R.id.accommodationCard1);
-//        accommodationCard.setOnClickListener(view -> {
-//            AccommodationDetailsFragment accommodationDetailsFragment = new AccommodationDetailsFragment();
-//            Navigation.findNavController(requireActivity(), R.id.fragment_container_main).navigate(R.id.nav_accommodation_details);
-//
-//        });
 
         this.rootView = rootView;
         getAccommodations();
@@ -147,11 +140,8 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
             public void onResponse(Call<ArrayList<Accommodation>> call, Response<ArrayList<Accommodation>> response) {
                 if (response.code() == 200) {
                     LinearLayout accommodationContainer = rootView.findViewById(R.id.accommodation_cards_container);
-                    accommodationContainer.removeAllViews();
                     accommodations = response.body();
-                    for (Accommodation accommodation : accommodations) {
-                        addAccommodationCardFragment(accommodation);
-                    }
+                    populateAccommodationCards(accommodations);
                 } else {
                     Log.d("REZ", "Bad");
                 }
@@ -164,17 +154,21 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
         });
     }
 
-    private void addAccommodationCardFragment(Accommodation accommodation) {
-        AccommodationCardFragment cardFragment = new AccommodationCardFragment(getContext());
-        cardFragment.setAccommodation(accommodation);
-        cardFragment.setOnClickListener(view -> {
-            Bundle args = new Bundle();
-            args.putSerializable("Accommodation", accommodation);
-            Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_details, args);
-        });
+    private void populateAccommodationCards(List<Accommodation> accommodations) {
+        LinearLayout container = getView().findViewById(R.id.accommodation_cards_container);
+        container.removeAllViews();
+        for (Accommodation accommodation : accommodations){
+            AccommodationCard fragment = new AccommodationCard();
 
-        LinearLayout accommodationContainer = this.rootView.findViewById(R.id.accommodation_cards_container);
-        accommodationContainer.addView(cardFragment);
+            Bundle args = new Bundle();
+            args.putSerializable("accommodation", accommodation);
+            fragment.setArguments(args);
+
+            // Add the fragment to the reviewsContainer
+            getChildFragmentManager().beginTransaction()
+                    .add(container.getId(), fragment)
+                    .commit();
+        }
     }
 
     private void fillSearchButton() {
