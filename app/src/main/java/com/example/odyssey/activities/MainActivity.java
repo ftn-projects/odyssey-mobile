@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupActionBar() {
+        toolbar.setPadding(toolbar.getPaddingLeft(), toolbar.getPaddingTop(), 30, toolbar.getPaddingBottom());
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
