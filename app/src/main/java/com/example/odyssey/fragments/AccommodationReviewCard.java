@@ -46,6 +46,8 @@ public class AccommodationReviewCard extends Fragment {
     TextView dateTextView;
     ImageView flagIcon;
     ImageView trashIcon;
+
+    TextView commentedOn;
     public AccommodationReviewCard() {
         // Required empty public constructor
     }
@@ -71,6 +73,8 @@ public class AccommodationReviewCard extends Fragment {
         String imagePath = loadUserImage();
         Glide.with(getContext()).load(imagePath).into(userImage);
         usernameTextView = view.findViewById(R.id.accommodation_review_username);
+        commentedOn = view.findViewById(R.id.commentedOnAccommodation);
+        commentedOn.setText("Commented on accommodation " + accommodationReview.getAccommodation().getTitle());
         usernameTextView.setText(accommodationReview.getSubmitter().getName() + " " + accommodationReview.getSubmitter().getSurname());
 
         ratingTextView = view.findViewById(R.id.accommodation_review_rating);

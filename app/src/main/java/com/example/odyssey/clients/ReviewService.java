@@ -23,7 +23,7 @@ public interface ReviewService {
     @GET("reviews/accommodation")
     Call<ArrayList<AccommodationReview>> getAllAccommodationReviews(
             @Query("accommodationId") Long accommodationId,
-            @Query("userId") Long submitterId,
+            @Query("submitterId") Long submitterId,
             @Query("status") ArrayList<Review.Status> listTypes
     );
 
