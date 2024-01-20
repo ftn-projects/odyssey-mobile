@@ -65,6 +65,7 @@ public class ClientUtils {
     public static ReviewService reviewService = retrofit.create(ReviewService.class);
     public static AccommodationRequestService accommodationRequestService = retrofit.create(AccommodationRequestService.class);
     public static ReservationService reservationService = retrofit.create(ReservationService.class);
+    public static FileDownloadService fileDownloadService = retrofit.create(FileDownloadService.class);
     public static ReportService  reportService = retrofit.create(ReportService.class);
     public static NotificationService notificationService = retrofit.create(NotificationService.class);
 }

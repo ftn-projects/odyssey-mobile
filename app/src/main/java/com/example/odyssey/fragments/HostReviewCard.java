@@ -41,6 +41,8 @@ public class HostReviewCard extends Fragment {
     ImageView flagIcon;
     ImageView trashIcon;
 
+    TextView commentedOn;
+
     public HostReviewCard() {
         // Required empty public constructor
     }
@@ -67,6 +69,8 @@ public class HostReviewCard extends Fragment {
         hostReview = (HostReview) getArguments().getSerializable("hostReview");
 
         userImage = view.findViewById(R.id.accommodation_review_profile_image);
+        commentedOn = view.findViewById(R.id.commentedOnHost);
+        commentedOn.setText("Commented on host " + hostReview.getHost().getName() + " " + hostReview.getHost().getSurname());
         String imagePath = loadUserImage();
         Glide.with(getContext()).load(imagePath).into(userImage);
         usernameTextView = view.findViewById(R.id.accommodation_review_username);

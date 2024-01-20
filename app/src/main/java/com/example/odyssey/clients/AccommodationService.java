@@ -1,6 +1,8 @@
 package com.example.odyssey.clients;
 
 import com.example.odyssey.model.accommodations.Accommodation;
+import com.example.odyssey.model.stats.AccommodationTotalStats;
+import com.example.odyssey.model.stats.TotalStats;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,4 +39,12 @@ public interface AccommodationService {
     @GET("accommodations/{id}/images")
     Call<ArrayList<String>> getImages(@Path("id") Long id);
 
+    @GET("accommodations/stats/accommodation/{id}")
+    Call<AccommodationTotalStats> getPeriodStatsForAccommodation(@Path("id") Long id, @Query("startDate") Long startDate, @Query("endDate") Long endDate);
+
+    @GET("accommodations/stats/host/{id}")
+    Call<TotalStats> generatePeriodStats(@Path("id") Long id, @Query("startDate") Long startDate, @Query("endDate") Long endDate);
+
+    @GET("accommodations/stats/host/{id}/all")
+    Call<ArrayList<AccommodationTotalStats>> getPeriodStatsAllAccommodation(@Path("id") Long id, @Query("startDate") Long startDate, @Query("endDate") Long endDate);
 }
