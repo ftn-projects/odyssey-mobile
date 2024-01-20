@@ -1,6 +1,6 @@
 package com.example.odyssey.model.stats;
 
-import com.example.odyssey.model.User;
+import com.example.odyssey.model.users.User;
 
 import java.io.Serializable;
 import java.util.List;

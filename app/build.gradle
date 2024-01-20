@@ -61,4 +61,5 @@ dependencies {
     implementation 'org.osmdroid:osmdroid-android:6.1.14'
     implementation 'commons-io:commons-io:2.15.1'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.github.NaikSoftware:StompProtocolAndroid:1.6.6'
 }

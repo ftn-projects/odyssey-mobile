@@ -1,6 +1,6 @@
 package com.example.odyssey.clients;
 
-import com.example.odyssey.model.accommodations.AccreditReservation;
+import com.example.odyssey.model.reservations.AccreditReservation;
 
 import java.util.List;
 

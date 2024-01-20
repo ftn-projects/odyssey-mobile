@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.NotificationListFragment">
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/notification_all_toggle"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="All"
+            style="?attr/materialButtonOutlinedStyle"/>
+
+        <Button
+            android:id="@+id/notification_read_toggle"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="Read"
+            style="?attr/materialButtonOutlinedStyle"/>
+
+        <Button
+            android:id="@+id/notification_unread_toggle"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="Unread"
+            style="?attr/materialButtonOutlinedStyle"/>
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <ListView
+        android:id="@+id/notifications_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="#000"
+        android:dividerHeight="2dp"/>
+
+</FrameLayout>

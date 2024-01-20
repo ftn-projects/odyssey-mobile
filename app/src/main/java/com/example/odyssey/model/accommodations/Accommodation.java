@@ -1,7 +1,7 @@
 package com.example.odyssey.model.accommodations;
 
 import com.example.odyssey.model.Address;
-import com.example.odyssey.model.User;
+import com.example.odyssey.model.users.User;
 
 import java.io.Serializable;
 import java.util.HashSet;

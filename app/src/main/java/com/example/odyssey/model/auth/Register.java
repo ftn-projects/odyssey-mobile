@@ -1,7 +1,7 @@
-package com.example.odyssey.model.Auth;
+package com.example.odyssey.model.auth;
 
 import com.example.odyssey.model.Address;
-import com.example.odyssey.model.User;
+import com.example.odyssey.model.users.User;
 
 public class Register extends User {
     private String password;
@@ -9,7 +9,7 @@ public class Register extends User {
 
     public Register(Long id, String email, String name, String surname, String phone, Address address, Settings settings,
                     String bio, String password, String role) {
-        super(id, email, name, surname, phone, address, settings, bio);
+        super(id, email, name, surname, phone, role, address, settings, bio);
         this.password = password;
         this.role = role;
     }

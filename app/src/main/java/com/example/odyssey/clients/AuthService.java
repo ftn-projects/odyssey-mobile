@@ -1,8 +1,8 @@
 package com.example.odyssey.clients;
 
-import com.example.odyssey.model.Auth.AuthResponse;
-import com.example.odyssey.model.Auth.Login;
-import com.example.odyssey.model.Auth.Register;
+import com.example.odyssey.model.auth.AuthResponse;
+import com.example.odyssey.model.auth.Login;
+import com.example.odyssey.model.auth.Register;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
