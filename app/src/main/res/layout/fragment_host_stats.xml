@@ -19,6 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Accommodation report"
+                android:fontFamily="@font/montserrat_regular"
                 android:textSize="20sp"
                 android:gravity="center">
 
@@ -28,7 +29,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:gravity="center">
+                android:gravity="center"
+                android:fontFamily="@font/montserrat_regular">
 
             </TextView>
             <com.google.android.material.button.MaterialButton
@@ -43,14 +45,17 @@
                 android:id="@+id/totalReservationsTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
                 android:textSize="20sp"
                 android:layout_marginTop="50dp">
 
             </TextView>
             <TextView
                 android:id="@+id/totalIncomeTextView"
+                android:fontFamily="@font/montserrat_regular"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:textSize="20sp">
 
             </TextView>
 
@@ -69,6 +74,14 @@
                 android:layout_marginTop="100dp">
 
             </com.github.mikephil.charting.charts.PieChart>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/exportAllToPDFButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:text="Export to PDF"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"/>
         </LinearLayout>
     </ScrollView>
 

@@ -1,11 +1,21 @@
 package com.example.odyssey.fragments;
 
+
+import android.Manifest;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +24,10 @@ import android.widget.Toast;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
+import com.example.odyssey.clients.FileDownloadService;
 import com.example.odyssey.model.stats.AccommodationTotalStats;
 import com.example.odyssey.model.stats.TotalStats;
+import com.example.odyssey.services.FileDownloadManager;
 import com.example.odyssey.utils.TokenUtils;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -36,8 +48,14 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
+import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -51,6 +69,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -129,6 +148,7 @@ public class HostStatsFragment extends Fragment {
         }
 
         MaterialButton button = view.findViewById(R.id.selectDateButtonFilter);
+        MaterialButton exportPdf = view.findViewById(R.id.exportAllToPDFButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,6 +169,14 @@ public class HostStatsFragment extends Fragment {
                 materialDatePicker.show(getChildFragmentManager(), "tag");
             }
         });
+
+        exportPdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadReport();
+            }
+        });
+
         return view;
     }
 
@@ -188,9 +216,11 @@ public class HostStatsFragment extends Fragment {
         else {
             List<Entry> lineEntries = new ArrayList<Entry>();
             for (int i = 0; i < totalStats.getMonthlyStats().size(); i++) {
-                lineEntries.add(new Entry(totalStats.getMonthlyStats().get(i).getMonth(), totalStats.getMonthlyStats().get(i).getTotalIncome().floatValue()));
+                Entry entry = new Entry(totalStats.getMonthlyStats().get(i).getMonth(), totalStats.getMonthlyStats().get(i).getTotalIncome().floatValue());
+                lineEntries.add(entry);
             }
             LineDataSet lineDataSet = getDataSet(lineEntries, "Total Income");
+            lineDataSet.setValueTypeface(getResources().getFont(R.font.montserrat_regular));
             dataSets.add(lineDataSet);
         }
 
@@ -200,20 +230,23 @@ public class HostStatsFragment extends Fragment {
                 lineEntries.add(new Entry(accommodationTotalStatsList.get(i).getMonthlyStats().get(j).getMonth(), accommodationTotalStatsList.get(i).getMonthlyStats().get(j).getTotalIncome().floatValue()));
             }
             LineDataSet lineDataSet = getDataSet(lineEntries, accommodationTotalStatsList.get(i).getAccommodation().getTitle());
+            lineDataSet.setValueTypeface(getResources().getFont(R.font.montserrat_regular));
             lineDataSet.setColor(colors[i % colors.length]);
             dataSets.add(lineDataSet);
         }
 
         lineChart.getDescription().setText("Total income for " + getMilisecondsFormatted(totalStats.getStart()) + " - " + getMilisecondsFormatted(totalStats.getEnd()));
-
+        lineChart.getDescription().setTypeface(getResources().getFont(R.font.montserrat_regular));
 
         Legend legend = lineChart.getLegend();
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         legend.setDrawInside(false);
+        legend.setTypeface(getResources().getFont(R.font.montserrat_regular));
         lineChart.getDescription().setTextSize(12);
         lineChart.setDrawMarkers(true);
         lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        lineChart.getXAxis().setTypeface(getResources().getFont(R.font.montserrat_regular));
         lineChart.animateY(1000);
         lineChart.getXAxis().setGranularityEnabled(true);
         lineChart.getXAxis().setGranularity(1.0f);
@@ -250,7 +283,9 @@ public class HostStatsFragment extends Fragment {
 
         }
         pieChart.setEntryLabelColor(Color.BLACK);
+        pieChart.setEntryLabelTypeface(getResources().getFont(R.font.montserrat_regular));
         PieDataSet dataSet = new PieDataSet(entries, "Income");
+        dataSet.setValueTypeface(getResources().getFont(R.font.montserrat_regular));
         dataSet.setColors(colors);
 
         PieData data = new PieData(dataSet);
@@ -268,6 +303,7 @@ public class HostStatsFragment extends Fragment {
         pieChart.setDescription(description);
         pieChart.setCenterText("Total income\n" + "$" + totalStats.getTotalIncome().toString());
         pieChart.setCenterTextSize(20f);
+        pieChart.setCenterTextTypeface(getResources().getFont(R.font.montserrat_regular));
         pieChart.invalidate();
     }
 
@@ -338,5 +374,24 @@ public class HostStatsFragment extends Fragment {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yyyy");
         String formattedDate = localDate.format(formatter);
         return formattedDate;
+    }
+
+    private void downloadReport() {
+        Call<ResponseBody> call = ClientUtils.fileDownloadService.downloadHostReport(TokenUtils.getId(), dates.get(0), dates.get(1));
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    // Get the download URL from the response body
+                    FileDownloadManager manager = new FileDownloadManager();
+                    manager.requestDownload(call.request().url().toString(), getContext(), getActivity(), "hostReport.pdf");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getContext(), "Error while downloading report", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
