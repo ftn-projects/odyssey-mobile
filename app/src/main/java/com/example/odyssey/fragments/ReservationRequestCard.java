@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
-import com.example.odyssey.model.accommodations.AccreditReservation;
+import com.example.odyssey.model.reservations.AccreditReservation;
 
 import java.time.format.DateTimeFormatter;
 

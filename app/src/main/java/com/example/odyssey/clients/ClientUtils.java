@@ -18,7 +18,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ClientUtils {
-    public static final String SERVICE_API_PATH = BuildConfig.SERVER_IP;
+    public static final String SERVICE_API_PATH = "http://" + BuildConfig.SERVER_IP + "/api/v1/";
+    public static final String WEB_SOCKET_PATH = "ws://" + BuildConfig.SERVER_IP + "/websocket";
 
     /*
      * Ovo ce nam sluziti za debug, da vidimo da li zahtevi i odgovori idu
@@ -64,5 +65,5 @@ public class ClientUtils {
     public static ReviewService reviewService = retrofit.create(ReviewService.class);
     public static AccommodationRequestService accommodationRequestService = retrofit.create(AccommodationRequestService.class);
     public static ReservationService reservationService = retrofit.create(ReservationService.class);
-
+    public static NotificationService notificationService = retrofit.create(NotificationService.class);
 }

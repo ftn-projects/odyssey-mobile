@@ -35,7 +35,7 @@ import com.example.odyssey.R;
 import com.example.odyssey.clients.AmenityIconMapper;
 import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.fragments.accommodationRequest.CreateAccommodationRequestDetails;
-import com.example.odyssey.model.User;
+import com.example.odyssey.model.users.User;
 import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.accommodations.Amenity;
 import com.example.odyssey.model.accommodations.AvailabilitySlot;

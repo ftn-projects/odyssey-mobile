@@ -1,4 +1,4 @@
-package com.example.odyssey.model.Auth;
+package com.example.odyssey.model.auth;
 
 public class Login {
     private String username;

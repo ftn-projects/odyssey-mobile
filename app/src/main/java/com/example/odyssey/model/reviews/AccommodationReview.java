@@ -1,6 +1,6 @@
 package com.example.odyssey.model.reviews;
 
-import com.example.odyssey.model.User;
+import com.example.odyssey.model.users.User;
 import com.example.odyssey.model.accommodations.Accommodation;
 
 import java.io.Serializable;

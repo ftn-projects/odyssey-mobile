@@ -1,4 +1,6 @@
-package com.example.odyssey.model;
+package com.example.odyssey.model.users;
+
+import com.example.odyssey.model.Address;
 
 import java.io.Serializable;
 
