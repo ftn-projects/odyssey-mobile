@@ -2,9 +2,10 @@ package com.example.odyssey.model.stats;
 
 import com.example.odyssey.model.User;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TotalStats {
+public class TotalStats implements Serializable {
     Long start;
     Long end;
     User host;

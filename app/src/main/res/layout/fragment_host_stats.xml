@@ -82,6 +82,13 @@
                 android:text="Export to PDF"
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"/>
+            <LinearLayout
+                android:id="@+id/accommodation_stat_cards_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:orientation="vertical"
+                android:gravity="center"/>
         </LinearLayout>
     </ScrollView>
 

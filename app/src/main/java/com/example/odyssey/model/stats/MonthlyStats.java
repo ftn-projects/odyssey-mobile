@@ -1,6 +1,9 @@
 package com.example.odyssey.model.stats;
 
-public class MonthlyStats {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class MonthlyStats implements Serializable {
     private Long month;
     private Integer reservationsCount;
     private Double totalIncome;

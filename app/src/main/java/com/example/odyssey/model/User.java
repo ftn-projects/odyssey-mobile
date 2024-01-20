@@ -11,6 +11,7 @@ public class User implements Serializable {
     private Address address;
     private Settings settings;
     private String bio;
+    private String role;
 
     public static class Settings {
         private Boolean ReservationNotification_On = true;

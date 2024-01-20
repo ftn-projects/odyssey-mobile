@@ -2,9 +2,10 @@ package com.example.odyssey.model.stats;
 
 import com.example.odyssey.model.accommodations.Accommodation;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class AccommodationTotalStats {
+public class AccommodationTotalStats implements Serializable {
     Long start;
     Long end;
     Integer totalReservations;

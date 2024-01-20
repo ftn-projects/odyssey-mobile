@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -190,7 +191,20 @@ public class HostStatsFragment extends Fragment {
     }
 
     private void populateAccommodationCards() {
+        LinearLayout container = getView().findViewById(R.id.accommodation_stat_cards_container);
+        container.removeAllViews();
+        for (AccommodationTotalStats stat : accommodationTotalStatsList){
+            AccommodationStatCardFragment fragment = new AccommodationStatCardFragment();
 
+            Bundle args = new Bundle();
+            args.putSerializable("stats", stat);
+            fragment.setArguments(args);
+
+            // Add the fragment to the reviewsContainer
+            getChildFragmentManager().beginTransaction()
+                    .add(container.getId(), fragment)
+                    .commit();
+        }
     }
 
     private void populateTextView() {
@@ -253,6 +267,7 @@ public class HostStatsFragment extends Fragment {
         lineChart.getAxisRight().setEnabled(false);
         lineChart.getAxisLeft().setDrawGridLines(false);
         lineChart.getAxisRight().setDrawGridLines(false);
+        lineChart.getXAxis().setLabelCount(5);
         LineData lineData = new LineData(dataSets);
         lineChart.setData(lineData);
         lineChart.getXAxis().setValueFormatter(new ValueFormatter() {
