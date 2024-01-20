@@ -18,9 +18,9 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
-import com.example.odyssey.model.User;
-import com.example.odyssey.model.accommodations.AccreditReservation;
 import com.example.odyssey.model.reports.UserReport;
+import com.example.odyssey.model.reservations.AccreditReservation;
+import com.example.odyssey.model.users.User;
 import com.example.odyssey.utils.TokenUtils;
 import com.google.android.material.button.MaterialButton;
 
