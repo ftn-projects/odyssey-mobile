@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.HostStatsFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Accommodation report"
+                android:textSize="20sp"
+                android:gravity="center">
+
+            </TextView>
+            <TextView
+                android:id="@+id/timePeriodTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:gravity="center">
+
+            </TextView>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/selectDateButtonFilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Change time period"
+                android:fontFamily="@font/montserrat_regular"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+            <TextView
+                android:id="@+id/totalReservationsTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_marginTop="50dp">
+
+            </TextView>
+            <TextView
+                android:id="@+id/totalIncomeTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/mainLineChart"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:layout_marginTop="100dp">
+
+            </com.github.mikephil.charting.charts.LineChart>
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/mainPieChart"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:layout_marginTop="100dp">
+
+            </com.github.mikephil.charting.charts.PieChart>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

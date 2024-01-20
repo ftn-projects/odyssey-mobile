@@ -71,7 +71,7 @@
 
     <fragment
         android:id="@+id/nav_host_stats"
-        android:name="com.example.odyssey.fragments.HomeFragment"
+        android:name="com.example.odyssey.fragments.HostStatsFragment"
         android:label="@string/host_stats"
         tools:layout="@layout/fragment_home">
     </fragment>
@@ -96,6 +96,7 @@
         android:label="@string/admin_accommodations"
         tools:layout="@layout/fragment_home">
     </fragment>
+
 
     <fragment
         android:id="@+id/nav_accommodation_details"
