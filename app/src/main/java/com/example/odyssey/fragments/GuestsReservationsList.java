@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
-import com.example.odyssey.model.accommodations.AccreditReservation;
+import com.example.odyssey.model.reservations.AccreditReservation;
 import com.example.odyssey.utils.ReservationsListener;
 import com.example.odyssey.utils.TokenUtils;
 import com.google.android.material.button.MaterialButton;

@@ -1,4 +1,4 @@
-package com.example.odyssey.utils;
+package com.example.odyssey.adapters;
 
 import android.content.Context;
 import android.net.Uri;

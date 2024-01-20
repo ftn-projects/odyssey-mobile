@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/nav_account"
-        android:title="@string/account"
-        android:icon="@drawable/profile_example"
+    <item android:id="@+id/nav_notifications"
+        android:title="@string/notifications"
+        android:icon="@drawable/ic_notification"
         app:showAsAction="ifRoom" />
 
 </menu>

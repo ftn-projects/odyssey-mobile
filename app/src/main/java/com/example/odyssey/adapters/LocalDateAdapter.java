@@ -1,4 +1,4 @@
-package com.example.odyssey.utils;
+package com.example.odyssey.adapters;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;

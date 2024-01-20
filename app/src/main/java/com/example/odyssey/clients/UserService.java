@@ -1,7 +1,6 @@
 package com.example.odyssey.clients;
 
-import com.example.odyssey.model.Auth.AuthResponse;
-import com.example.odyssey.model.User;
+import com.example.odyssey.model.users.User;
 import com.example.odyssey.model.users.PasswordUpdate;
 
 import java.util.List;

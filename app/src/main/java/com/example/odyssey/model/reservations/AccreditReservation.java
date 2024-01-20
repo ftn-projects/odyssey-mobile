@@ -1,10 +1,9 @@
-package com.example.odyssey.model.accommodations;
+package com.example.odyssey.model.reservations;
 
-import com.example.odyssey.model.TimeSlot;
-import com.example.odyssey.model.User;
+import com.example.odyssey.model.accommodations.Accommodation;
+import com.example.odyssey.model.users.User;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class AccreditReservation {
     private Long id;

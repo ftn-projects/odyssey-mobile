@@ -1,7 +1,7 @@
-package com.example.odyssey.model.Auth;
+package com.example.odyssey.model.auth;
 
 import com.example.odyssey.model.Address;
-import com.example.odyssey.model.User;
+import com.example.odyssey.model.users.User;
 
 public class Register extends User {
     private String password;

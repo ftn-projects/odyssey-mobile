@@ -12,8 +12,8 @@ import android.view.View;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
-import com.example.odyssey.model.Auth.AuthResponse;
-import com.example.odyssey.model.Auth.Login;
+import com.example.odyssey.model.auth.AuthResponse;
+import com.example.odyssey.model.auth.Login;
 import com.example.odyssey.utils.TokenUtils;
 import com.example.odyssey.utils.Validation;
 import com.google.android.material.textfield.TextInputEditText;
@@ -48,10 +48,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        if (!Validation.validatePassword(passwordInput, passwordEdit, getWindow())) {
+        if (!Validation.validatePassword(passwordEdit)) {
             return;
         }
-        if (!Validation.validateEmail(emailInput, emailEdit, getWindow())) {
+        if (!Validation.validateEmail(emailEdit)) {
             return;
         }
 
@@ -99,9 +99,9 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable editable) {
             if (view.getId() == R.id.inputEditPassword)
-                Validation.validatePassword(passwordInput, passwordEdit, getWindow());
+                Validation.validatePassword(passwordEdit);
             else if (view.getId() == R.id.inputEditEmail)
-                Validation.validateEmail(emailInput, emailEdit, getWindow());
+                Validation.validateEmail(emailEdit);
         }
     }
 

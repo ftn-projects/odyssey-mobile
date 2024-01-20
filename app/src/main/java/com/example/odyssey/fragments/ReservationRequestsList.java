@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
-import com.example.odyssey.model.accommodations.AccreditReservation;
+import com.example.odyssey.model.reservations.AccreditReservation;
 import com.example.odyssey.utils.TokenUtils;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -24,7 +24,6 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

@@ -9,12 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
-import com.example.odyssey.model.User;
-import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.reviews.AccommodationReview;
 import com.example.odyssey.model.reviews.HostReview;
 import com.example.odyssey.utils.TokenUtils;

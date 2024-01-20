@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.CreateAccommodationMap">
+    tools:context=".fragments.accommodationRequest.CreateAccommodationRequestMap">
 
     <LinearLayout
         android:layout_width="350dp"
@@ -22,13 +22,13 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Theme.Odyssey.TextInputLayout"
-            android:id="@+id/inputAddress"
+            android:id="@+id/inputStreet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Address">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputEditAddress"
+                android:id="@+id/inputEditStreet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_regular"
@@ -115,8 +115,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_weight="1"
-                android:text="Create" />
+                android:text="Next" />
         </LinearLayout>
     </LinearLayout>
-
 </FrameLayout>

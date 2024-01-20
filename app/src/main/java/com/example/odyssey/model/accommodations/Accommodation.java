@@ -1,7 +1,7 @@
 package com.example.odyssey.model.accommodations;
 
 import com.example.odyssey.model.Address;
-import com.example.odyssey.model.User;
+import com.example.odyssey.model.users.User;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -25,12 +25,15 @@ public class Accommodation implements Serializable {
     private Double totalPrice;
     private Double averageRating;
 
-    public enum Type {APARTMENT, ROOM, HOUSE}
-    public enum PricingType {PER_PERSON, PER_NIGHT}
+    public enum Type {ROOM, APARTMENT, HOUSE}
+    public enum PricingType {PER_NIGHT, PER_PERSON}
 
     public static PricingType getPricingType(String string){
         if(string.equals("PER PERSON")) return PricingType.PER_PERSON;
         return PricingType.PER_NIGHT;
+    }
+
+    public Accommodation() {
     }
 
     public Accommodation(Long id, String title, String description, Type type, Address address, PricingType pricing, Set<Amenity> amenities, User host, Double defaultPrice, Boolean automaticApproval, Long cancellationDue, Set<AvailabilitySlot> availableSlots, Integer minGuests, Integer maxGuests, Double totalPrice, Double averageRating) {
