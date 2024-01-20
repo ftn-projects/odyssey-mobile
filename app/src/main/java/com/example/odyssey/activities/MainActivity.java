@@ -1,17 +1,28 @@
 package com.example.odyssey.activities;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.OptIn;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -29,8 +40,12 @@ import com.google.android.material.badge.BadgeUtils;
 import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.google.android.material.navigation.NavigationView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
     private final String role = TokenUtils.getRole(); // edit to change role
     private Toolbar toolbar;
     private BadgeDrawable notificationBadge = null;
-    private StompClient stompClient = null;
+    private StompClient badgeClient = null, notificationClient = null;
+    private final String CHANNEL_ID = "channel_01", NOTIFICATION = "notification", NOTIFICATION_ID = "notificationId";
 
     @SuppressLint("CheckResult")
     @Override
@@ -121,11 +137,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // menu.clear();  if there are menus for specific fragments inside toolbar
         if (role != null) {
             getMenuInflater().inflate(R.menu.home_auth_menu, menu);
 
-            MenuItem item = menu.findItem(R.id.nav_notifications);
             removeNotificationBadge();
             createNotificationBadge();
 
@@ -154,10 +168,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupStompClient() {
-        if (stompClient != null) return;
-
-        stompClient = new StompClient();
-        stompClient.subscribe("/topic/notifications", this::updateNotificationCount);
+        if (badgeClient == null) {
+            badgeClient = new StompClient();
+            badgeClient.subscribe(this::updateNotificationCount);
+        }
+        if (notificationClient == null) {
+            notificationClient = new StompClient();
+            notificationClient.subscribe(this::sendNotificationId);
+        }
     }
 
     private void updateNotificationCount() {
@@ -167,15 +185,14 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     List<Notification> notifications = response.body();
                     if (notifications != null) {
+                        notifications.sort((n1, n2) -> n2.getDate().compareTo(n1.getDate()));
                         if (notifications.size() != 0) {
                             if (notificationBadge == null)
                                 createNotificationBadge();
                             notificationBadge.setNumber(notifications.size());
                         } else removeNotificationBadge();
                     }
-                } else {
-                    Log.e("(¬‿¬)", "updateNotificaitonCount(): " + response.body());
-                }
+                } else Log.e("(¬‿¬)", "updateNotificaitonCount(): " + response.body());
             }
 
             @Override
@@ -188,9 +205,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (stompClient != null) {
-            stompClient.disconnect();
-            stompClient = null;
+        if (badgeClient != null) {
+            badgeClient.disconnect();
+            badgeClient = null;
+        }
+        if (notificationClient != null) {
+            notificationClient.disconnect();
+            notificationClient = null;
         }
     }
 
@@ -212,4 +233,75 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setTitle(title);
         }
     }
+
+    Notification savedNotification = null;
+
+    public void sendNotificationId(Long notificationId) {
+        ClientUtils.notificationService.findById(notificationId).enqueue(new Callback<Notification>() {
+            @Override
+            public void onResponse(@NonNull Call<Notification> call, @NonNull Response<Notification> response) {
+                if (!response.isSuccessful()) {
+                    Log.e("(¬‿¬)", "Failed getting notification");
+                    return;
+                }
+                Notification notification = response.body();
+                if (notification == null) {
+                    Log.e("(¬‿¬)", "Notification is null");
+                    return;
+                }
+                sendNotification(notification);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Notification> call, @NonNull Throwable t) {
+                Log.e("(¬‿¬)", "Failed getting notification", t);
+            }
+        });
+    }
+
+    public void sendNotification(Notification notification) {
+        savedNotification = notification;
+        createNotificationChannel();
+        int notificationId = new SimpleDateFormat("ddHHmmss", Locale.getDefault()).format(new Date()).hashCode();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 1,
+                intent, PendingIntent.FLAG_IMMUTABLE);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setAutoCancel(true)
+                .setContentTitle(notification.getTitle())
+                .setContentText(notification.getText())
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent);
+        NotificationManagerCompat manager = NotificationManagerCompat.from(this);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) !=
+                PackageManager.PERMISSION_GRANTED) {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+            return;
+        }
+        manager.notify(notificationId, builder.build());
+        savedNotification = null;
+    }
+
+    private void createNotificationChannel() {
+        CharSequence name = "Odyssey";
+        String description = "Notifications from Odyssey";
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+        channel.setDescription(description);
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        if (notificationManager != null)
+            notificationManager.createNotificationChannel(channel);
+    }
+
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    if (savedNotification != null) sendNotification(savedNotification);
+                } else Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+            });
 }

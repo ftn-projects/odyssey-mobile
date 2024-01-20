@@ -16,6 +16,9 @@ public interface NotificationService {
     @GET("notifications/user/{userId}")
     Call<List<Notification>> findByUserId(@Path("userId") Long userId, @Query("types") List<Notification.Type> types, @Query("read") Boolean read);
 
+    @GET("notifications/{id}")
+    Call<Notification> findById(@Path("id") Long id);
+
     @PUT("notifications/{id}/{read}")
     Call<ResponseBody> updateRead(@Path("id") Long id, @Path("read") Boolean read);
 }
