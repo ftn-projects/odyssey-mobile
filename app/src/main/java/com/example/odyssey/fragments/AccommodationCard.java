@@ -14,11 +14,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.model.accommodations.Accommodation;
+import com.example.odyssey.utils.TokenUtils;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.ArrayList;
@@ -35,7 +37,6 @@ public class AccommodationCard extends Fragment {
     private AnimatedVectorDrawable fillHeart;
 
     private boolean full = false;
-
 
 
     public AccommodationCard() {
@@ -68,7 +69,7 @@ public class AccommodationCard extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(accommodation==null || getView()==null) return;
+        if (accommodation == null || getView() == null) return;
 
 
         TextView locationTextView = getView().findViewById(R.id.locationTextView);
@@ -89,7 +90,7 @@ public class AccommodationCard extends Fragment {
         heartImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                animateHeartFill();
+               checkFavorites(true);
             }
         });
         getView().setOnClickListener(new View.OnClickListener() {
@@ -100,8 +101,6 @@ public class AccommodationCard extends Fragment {
                 Navigation.findNavController(requireView()).navigate(R.id.nav_accommodation_details, args);
             }
         });
-
-
 
 
         locationTextView.setText(accommodation.getAddress().getCity() + ", " + accommodation.getAddress().getCountry());
@@ -119,27 +118,25 @@ public class AccommodationCard extends Fragment {
             else
                 totalPriceSection.setVisibility(View.GONE);
 
-        }
-        else{
+        } else {
             pricingSection.setVisibility(View.GONE);
         }
 
-
+        checkFavorites(false);
 
     }
 
     private void animateHeartFill() {
         ImageView heartImageView = getView().findViewById(R.id.heartImageView);
-        AnimatedVectorDrawable drawable = full ? emptyHeart : fillHeart;
+        AnimatedVectorDrawable drawable = full ? fillHeart : emptyHeart;
         heartImageView.setImageDrawable(drawable);
         drawable.start();
-        full = !full;
 
         Log.d("AccommodationCard", "Heart clicked! Animation started: " + (full ? "Empty to Fill" : "Fill to Empty"));
     }
 
-    public void setImages(ImageView imageView){
-        if(imageView == null) {
+    public void setImages(ImageView imageView) {
+        if (imageView == null) {
             Log.e("AccommodationCard", "ImageView is null");
             return;
         }
@@ -147,22 +144,111 @@ public class AccommodationCard extends Fragment {
         call.enqueue(new Callback<ArrayList<String>>() {
             @Override
             public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
-                if(response.code()==200){
+                if (response.code() == 200) {
                     List<String> accommodationImages = response.body();
-                    if(accommodationImages!=null && accommodationImages.size()>0){
+                    if (accommodationImages != null && accommodationImages.size() > 0) {
                         String imagePath = ClientUtils.SERVICE_API_PATH + "accommodations/" + accommodation.getId() + "/images/" + accommodationImages.get(0);
                         Glide.with(getContext()).load(imagePath).into(imageView);
                     }
-                }else{
-                    Log.d("REZ","Bad");
+                } else {
+                    Log.d("REZ", "Bad");
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<String>> call, Throwable t) {
-                Log.d("REZ",t.getMessage() != null?t.getMessage():"error");
+                Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
             }
         });
 
+    }
+
+    private void checkFavorites(Boolean executable) {
+        if(TokenUtils.getId()==null || !TokenUtils.getRole().equals("GUEST")) {
+            if(executable){
+                Toast.makeText(getContext(), "You must be logged in as a user to favorite accommodations", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
+
+        Call<ArrayList<Accommodation>> call = ClientUtils.accommodationService.getFavorites(TokenUtils.getId());
+        call.enqueue(new Callback<ArrayList<Accommodation>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Accommodation>> call, Response<ArrayList<Accommodation>> response) {
+                if (response.code() == 200) {
+                    ArrayList<Accommodation> accommodationList = response.body();
+                    boolean idExists = accommodationList.stream().anyMatch(a -> a.getId().equals(accommodation.getId()));
+                    if(idExists){
+                        full = true;
+                        animateHeartFill();
+                        if(executable){
+                            removeFavorite();
+                        }
+                    }
+                    else{
+                        full = false;
+                        animateHeartFill();
+                        if(executable){
+                            addFavorite();
+                        }
+                    }
+
+                } else {
+                    Log.d("REZ", "Bad");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Accommodation>> call, Throwable t) {
+                Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
+            }
+        });
+    }
+
+
+    private void addFavorite(){
+        Call<Void> call = ClientUtils.accommodationService.addFavorite(TokenUtils.getId(), accommodation.getId());
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.code() == 200){
+                    Log.d("REZ", "Success");
+                    Toast.makeText(getContext(), "Added to favorites", Toast.LENGTH_SHORT).show();
+                    full = true;
+                    animateHeartFill();
+                }
+                else {
+                    Log.d("REZ", "Bad");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
+            }
+        });
+    }
+
+    private void removeFavorite(){
+        Call<Void> call = ClientUtils.accommodationService.removeFavorite(TokenUtils.getId(), accommodation.getId());
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.code()==200){
+                    Log.d("REZ", "Success");
+                    Toast.makeText(getContext(), "Removed from favorites", Toast.LENGTH_SHORT).show();
+                    full = false;
+                    animateHeartFill();
+                }
+                else {
+                    Log.d("REZ", "Bad");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
+            }
+        });
     }
 }
