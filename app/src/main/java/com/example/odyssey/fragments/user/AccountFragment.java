@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -22,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.bumptech.glide.Glide;
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.model.Address;
@@ -60,6 +62,8 @@ public class AccountFragment extends Fragment {
 
     }
 
+    ImageView image;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_account, container, false);
@@ -80,6 +84,8 @@ public class AccountFragment extends Fragment {
         updateDetailsBtn = v.findViewById(R.id.btnUpdateDetails);
         updatePasswordBtn = v.findViewById(R.id.btnUpdatePassword);
         deactivateBtn = v.findViewById(R.id.btnDeactivate);
+
+        image = v.findViewById(R.id.profile_image);
 
         updateImageBtn.setOnClickListener(v1 -> updateImage());
         updateDetailsBtn.setOnClickListener(v1 -> updateDetails());
@@ -109,6 +115,9 @@ public class AccountFragment extends Fragment {
         countryInput.setText(user.getAddress().getCountry());
         phoneInput.setText(user.getPhone());
         emailInput.setText(user.getEmail());
+
+        String imagePath = ClientUtils.SERVICE_API_PATH + "users/image/" + user.getId();
+        Glide.with(requireContext()).load(imagePath).into(image);
     }
 
     private void closeFragment() {

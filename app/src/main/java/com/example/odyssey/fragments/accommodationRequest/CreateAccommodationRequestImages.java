@@ -87,14 +87,14 @@ public class CreateAccommodationRequestImages extends Fragment {
                         uploadImages(response.body().getId());
                         Navigation.findNavController(requireView()).navigate(R.id.nav_home);
                     } else {
-                        Toast.makeText(requireActivity(), "Could not make a reservation request", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireActivity(), "Could not make an accommodation request", Toast.LENGTH_SHORT).show();
                         Log.e("CreateAccommodationMap", response.message());
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<AccommodationRequestSubmission> call, @NonNull Throwable t) {
-                    Log.e("CreateAccommodationMap", t.getMessage() != null ? t.getMessage() : "Could not make a reservation request");
+                    Log.e("CreateAccommodationMap", t.getMessage() != null ? t.getMessage() : "Could not make an accommodation request");
                 }
             });
         });

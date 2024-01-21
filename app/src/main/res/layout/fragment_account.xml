@@ -19,6 +19,7 @@
             android:paddingEnd="47dp"
             android:paddingVertical="20dp">
             <ImageView
+                android:id="@+id/profile_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/profile_example"
@@ -29,7 +30,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="20dp"
-                android:visibility="gone"
                 android:text="@string/btn_edit_image"/>
         </LinearLayout>
 
@@ -230,7 +230,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/update_details"
-                android:visibility="gone"
                 android:layout_marginBottom="10dp"
                 android:layout_marginStart="17dp"/>
         </LinearLayout>
@@ -314,7 +313,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Update password"
-                android:visibility="gone"
                 android:layout_marginBottom="10dp"
                 android:layout_marginStart="17dp"/>
         </LinearLayout>
@@ -333,7 +331,6 @@
                 android:text="@string/deactivate_account"
                 android:backgroundTint="?attr/colorError"
                 android:textColor="?attr/colorOnError"
-                android:visibility="gone"
                 android:layout_marginBottom="10dp"
                 android:layout_marginStart="17dp"/>
         </LinearLayout>

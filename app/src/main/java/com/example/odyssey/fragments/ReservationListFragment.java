@@ -190,7 +190,7 @@ public class ReservationListFragment extends Fragment {
                     if (reservations == null) return;
 
                     for (AccreditReservation reservation : reservations) {
-                        ReservationCard card = new ReservationCard(hostMode, requireContext());
+                        ReservationCard card = new ReservationCard(hostMode, requireActivity(), requireContext());
                         card.setReservation(reservation);
                         cardHolder.addView(card);
                     }

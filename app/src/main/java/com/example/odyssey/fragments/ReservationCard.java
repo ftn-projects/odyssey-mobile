@@ -1,6 +1,7 @@
 package com.example.odyssey.fragments;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +11,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.navigation.Navigation;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.model.reservations.AccreditReservation;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import okhttp3.ResponseBody;
@@ -32,10 +38,12 @@ public class ReservationCard extends LinearLayout {
 
     Button accept, decline, cancel, report;
     Boolean hostMode;
+    FragmentActivity activity;
 
-    public ReservationCard(Boolean hostMode, Context context) {
+    public ReservationCard(Boolean hostMode, FragmentActivity activity, Context context) {
         super(context);
         this.hostMode = hostMode;
+        this.activity = activity;
         init();
     }
 
@@ -100,6 +108,10 @@ public class ReservationCard extends LinearLayout {
             accept.setVisibility(GONE);
             decline.setVisibility(GONE);
         }
+
+        if(!(reservation.getStatus().equals(AccreditReservation.Status.ACCEPTED) &&
+                reservation.getStart().isBefore(LocalDate.now())))
+            report.setVisibility(GONE);
     }
 
     private void init() {
@@ -119,6 +131,7 @@ public class ReservationCard extends LinearLayout {
         accept = findViewById(R.id.buttonAccept);
         decline = findViewById(R.id.buttonDecline);
         cancel = findViewById(R.id.buttonCancel);
+        report = findViewById(R.id.buttonReport);
 
         accept.setOnClickListener(c -> {
             Call<ResponseBody> call = ClientUtils.reservationService.updateStatus(reservation.getId(), "ACCEPTED");
@@ -201,10 +214,19 @@ public class ReservationCard extends LinearLayout {
             });
         });
 
-        if (hostMode) cancel.setVisibility(GONE);
+        report.setOnClickListener(v -> {
+            Bundle args = new Bundle();
+            args.putLong("reported", reservation.getGuest().getId());
+            Navigation.findNavController(activity, R.id.fragment_container_main).navigate(R.id.nav_report, args);
+        });
+
+        if (hostMode) {
+            cancel.setVisibility(GONE);
+        }
         else {
             accept.setVisibility(GONE);
             decline.setVisibility(GONE);
+            report.setVisibility(GONE);
         }
     }
 }
