@@ -27,6 +27,10 @@ public class TimeSlot implements Serializable {
         return !(this.getStart().toLocalDate().isAfter(day) && this.getEnd().toLocalDate().isBefore(day));
     }
 
+    public boolean coolerContainsDay(LocalDate day){
+        return this.getStart().toLocalDate().isBefore(day) && this.getEnd().toLocalDate().isAfter(day);
+    }
+
     public List<LocalDate> getDays(){
         return new ArrayList<>();
 //        return start.toLocalDate().datesUntil(end.toLocalDate()).collect(Collectors.toList());

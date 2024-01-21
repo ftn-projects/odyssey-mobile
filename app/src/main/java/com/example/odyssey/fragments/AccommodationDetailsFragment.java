@@ -6,6 +6,7 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Parcel;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -36,6 +37,7 @@ import com.example.odyssey.clients.AmenityIconMapper;
 import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.fragments.accommodationRequest.CreateAccommodationRequestDetails;
 import com.example.odyssey.fragments.review.ReviewSectionFragment;
+import com.example.odyssey.model.TimeSlot;
 import com.example.odyssey.model.users.User;
 import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.accommodations.Amenity;
@@ -43,6 +45,7 @@ import com.example.odyssey.model.accommodations.AvailabilitySlot;
 import com.example.odyssey.model.reviews.AccommodationReview;
 import com.example.odyssey.utils.TokenUtils;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
@@ -59,7 +62,10 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
@@ -113,6 +119,15 @@ public class AccommodationDetailsFragment extends Fragment {
         getCurrentUser();
         accommodation = (Accommodation) getArguments().getSerializable("Accommodation");
 
+
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        addReviewSection();
         Set<Amenity> amenities = accommodation.getAmenities();
         reservationInputSection = view.findViewById(R.id.details_reservation_input_section);
         toggleReservationButton = view.findViewById(R.id.toggle_reservation_button);
@@ -185,7 +200,24 @@ public class AccommodationDetailsFragment extends Fragment {
             MaterialDatePicker<Pair<Long, Long>> materialDatePicker = MaterialDatePicker.Builder.dateRangePicker().setSelection(new Pair<>(
                     MaterialDatePicker.thisMonthInUtcMilliseconds(),
                     MaterialDatePicker.todayInUtcMilliseconds()
-            )).build();
+            )).setCalendarConstraints(new CalendarConstraints.Builder()
+                    .setValidator(new CalendarConstraints.DateValidator() {
+                        @Override
+                        public int describeContents() {
+                            return 0;
+                        }
+
+                        @Override
+                        public void writeToParcel(@NonNull Parcel dest, int flags) {
+
+                        }
+
+                        @Override
+                        public boolean isValid(long date) {
+                            return isDateAvailable(accommodation, date);
+                        }
+                    })
+                    .build()).build();
             materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
                 @Override
                 public void onPositiveButtonClick(Pair<Long, Long> selection) {
@@ -281,16 +313,27 @@ public class AccommodationDetailsFragment extends Fragment {
             e.printStackTrace();
         }
 
-        return view;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        addReviewSection();
+    public boolean isDateAvailable(Accommodation accommodationInput, long dateMil) {
 
+        LocalDateTime now = LocalDateTime.now();
+        Instant instant = Instant.ofEpochMilli(dateMil);
+        LocalDateTime date = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+        if (date.isBefore(now)) {
+            return false;
+        }
+
+        for (AvailabilitySlot availabilitySlot : accommodationInput.getAvailableSlots()) {
+
+            TimeSlot timeSlot = availabilitySlot.getTimeSlot();
+            if (timeSlot.coolerContainsDay(date.toLocalDate())) {
+                return true;
+            }
+        }
+
+        return false;
     }
-
     public void setImages() {
         ArrayList<SlideModel> imageList = new ArrayList<>();
 

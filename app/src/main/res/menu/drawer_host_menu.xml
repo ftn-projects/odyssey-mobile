@@ -24,13 +24,14 @@
             android:icon="@drawable/ic_reservation"
             android:orderInCategory="4" />
 
-        <item android:id="@+id/nav_host_accommodations"
-            android:title="@string/host_accommodations"
-            android:icon="@drawable/ic_accommodation"
-            android:orderInCategory="5" />
 
         <item android:id="@+id/nav_accommodation_create_details"
             android:title="@string/create_accommodation"
+            android:icon="@drawable/ic_accommodation"
+            android:orderInCategory="5" />
+
+        <item android:id="@+id/nav_host_accommodations_view"
+            android:title="My accommodations"
             android:icon="@drawable/ic_accommodation"
             android:orderInCategory="6" />
 
