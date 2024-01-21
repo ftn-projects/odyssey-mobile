@@ -36,6 +36,8 @@ import com.example.odyssey.clients.AmenityIconMapper;
 import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.fragments.accommodationRequest.CreateAccommodationRequestDetails;
 import com.example.odyssey.fragments.user.ProfileFragment;
+import com.example.odyssey.fragments.review.ReviewSectionFragment;
+
 import com.example.odyssey.model.users.User;
 import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.accommodations.Amenity;
@@ -83,10 +85,6 @@ public class AccommodationDetailsFragment extends Fragment {
 
     LinearLayout map;
     MapView mapView;
-    RatingBar ratingBar;
-    MaterialButton sendReviewButton;
-    TextInputEditText reviewCommentInput;
-    private LinearLayout reviewsContainer;
     IMapController controller;
     private final Handler handler = new Handler(Looper.getMainLooper());
     MyLocationNewOverlay mMyLocationOverlay;
@@ -120,15 +118,7 @@ public class AccommodationDetailsFragment extends Fragment {
         Set<Amenity> amenities = accommodation.getAmenities();
         reservationInputSection = view.findViewById(R.id.details_reservation_input_section);
         toggleReservationButton = view.findViewById(R.id.toggle_reservation_button);
-        ratingBar = view.findViewById(R.id.accommodation_review_rating_bar);
-        reviewCommentInput = view.findViewById(R.id.accommodation_review_comment);
-        sendReviewButton = view.findViewById(R.id.accommodation_review_submit_button);
 
-        reviewsSummaryContainer = view.findViewById(R.id.accommodation_details_summary_reviews_container);
-
-        sendReviewButton.setOnClickListener(v -> submitReview());
-
-        reviewsContainer = view.findViewById(R.id.accommodation_details_reviews_container);
         TextView minMaxGuests = view.findViewById(R.id.MinMaxGuests);
 
         view.findViewById(R.id.details_host_container).setOnClickListener(v -> {
@@ -199,8 +189,6 @@ public class AccommodationDetailsFragment extends Fragment {
                 throw new IllegalArgumentException("Invalid pricing type");
         }
 
-        getReviewRatings();
-        loadReviews();
         dateButton.setOnClickListener(view1 -> {
             MaterialDatePicker<Pair<Long, Long>> materialDatePicker = MaterialDatePicker.Builder.dateRangePicker().setSelection(new Pair<>(
                     MaterialDatePicker.thisMonthInUtcMilliseconds(),
@@ -304,6 +292,13 @@ public class AccommodationDetailsFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        addReviewSection();
+
+    }
+
     public void setImages() {
         ArrayList<SlideModel> imageList = new ArrayList<>();
 
@@ -373,6 +368,18 @@ public class AccommodationDetailsFragment extends Fragment {
                 Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
             }
         });
+    }
+
+    private void addReviewSection(){
+        LinearLayout reviewSectionContainer = getView().findViewById(R.id.accommodation_details_reviews_section_container);
+        ReviewSectionFragment reviewSectionFragment = new ReviewSectionFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("id", accommodation.getId());
+        args.putSerializable("type", "ACCOMMODATION");
+        reviewSectionFragment.setArguments(args);
+        getChildFragmentManager().beginTransaction()
+                .add(reviewSectionContainer.getId(), reviewSectionFragment)
+                .commit();
     }
 
     public void addAmenities(Set<Amenity> amenities) {
@@ -476,99 +483,6 @@ public class AccommodationDetailsFragment extends Fragment {
 
     }
 
-    private void loadReviews() {
-        Call<ArrayList<AccommodationReview>> call = ClientUtils.reviewService.getAllAccommodationReviews(accommodation.getId(), null, null);
-        call.enqueue(new Callback<ArrayList<AccommodationReview>>() {
-            @Override
-            public void onResponse(@NonNull Call<ArrayList<AccommodationReview>> call, @NonNull Response<ArrayList<AccommodationReview>> response) {
-                if (response.code() == 200) {
-                    ArrayList<AccommodationReview> reviews = response.body();
-                    if (reviews != null) {
-                        populateReviews(reviews);
-                    }
-                } else {
-                    Log.d("REZ", "Bad");
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ArrayList<AccommodationReview>> call, @NonNull Throwable t) {
-                Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
-            }
-        });
-    }
-
-    private void populateReviews(List<AccommodationReview> reviews) {
-        reviewsContainer.removeAllViews();
-
-        for (AccommodationReview review : reviews) {
-            AccommodationReviewCard reviewCardFragment = new AccommodationReviewCard();
-
-            // Pass the review as an argument to the fragment
-            Bundle args = new Bundle();
-            args.putSerializable("accommodationReview", review);
-            reviewCardFragment.setArguments(args);
-
-            // Add the fragment to the reviewsContainer
-            getChildFragmentManager().beginTransaction()
-                    .add(reviewsContainer.getId(), reviewCardFragment)
-                    .commit();
-        }
-    }
-
-    public boolean isReviewDataValid(Double rating) {
-        return rating != null && rating >= 0 && rating <= 5;
-    }
-
-    public void submitReview() {
-        Double rating = (double) ratingBar.getRating();
-        String comment = Objects.requireNonNull(reviewCommentInput.getText()).toString().trim();
-        if (TokenUtils.getId() == null || !TokenUtils.getRole().equals("GUEST")) {
-            Toast.makeText(requireActivity(), "You must be logged in as a guest to make a review", Toast.LENGTH_LONG).show();
-            return;
-        }
-        if (!isReviewDataValid(rating)) {
-            Toast.makeText(requireActivity(), "Invalid rating", Toast.LENGTH_LONG).show();
-            return;
-        }
-        if (loggedUser == null) {
-            Toast.makeText(requireActivity(), "Unable to get user data", Toast.LENGTH_LONG).show();
-            return;
-        }
-        Log.e("REZ", "Logged user: " + loggedUser.getName());
-        Log.e("REZ", "Current date: " + LocalDateTime.now());
-
-        AccommodationReview review = new AccommodationReview(null, rating, comment, LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS), loggedUser, AccommodationReview.Status.REQUESTED, accommodation);
-        sendReview(review);
-    }
-
-    public void sendReview(AccommodationReview review) {
-        for (AvailabilitySlot availabilitySlot : accommodation.getAvailableSlots()) {
-            Log.e("REZ", availabilitySlot.getTimeSlot().getStart().toString());
-        }
-        Gson gson = new Gson();
-        String jsonPayload = gson.toJson(accommodation);
-        Log.e("ReviewTag", "Sending JSON: " + jsonPayload);
-        Call<ResponseBody> createReviewCall = ClientUtils.reviewService.create(review);
-        createReviewCall.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(requireActivity(), "Successfully created a review!", Toast.LENGTH_LONG).show();
-                    loadReviews();
-                } else {
-                    Toast.makeText(requireActivity(), "Unexpected error while creating a review", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                Toast.makeText(requireActivity(), "Unable to connect to the server", Toast.LENGTH_LONG).show();
-                t.printStackTrace();
-            }
-        });
-    }
-
     private void getCurrentUser() {
         Call<User> getUserCall = ClientUtils.userService.findById(TokenUtils.getId());
         getUserCall.enqueue(new Callback<User>() {
@@ -580,43 +494,12 @@ public class AccommodationDetailsFragment extends Fragment {
                     loggedUser = null;
                 }
             }
-
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                 loggedUser = null;
                 t.printStackTrace();
             }
         });
-    }
-
-    private void getReviewRatings() {
-        Call<ArrayList<Integer>> ratingsCall = ClientUtils.reviewService.getAccommodationRatings(accommodation.getId());
-        ratingsCall.enqueue(new Callback<ArrayList<Integer>>() {
-            @Override
-            public void onResponse(@NonNull Call<ArrayList<Integer>> call, @NonNull Response<ArrayList<Integer>> response) {
-                if (response.isSuccessful()) {
-                    createReviewSummary(response.body());
-                } else {
-                    Log.e("REZ", "Unable to get ratings");
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ArrayList<Integer>> call, @NonNull Throwable t) {
-                Log.e("REZ", "Error while trying to get ratings");
-                t.printStackTrace();
-            }
-        });
-    }
-
-    private void createReviewSummary(List<Integer> ratings) {
-        ReviewsSummary reviewsSummary = new ReviewsSummary();
-        Bundle args = new Bundle();
-        args.putSerializable("ratings", (ArrayList<Integer>) ratings);
-        reviewsSummary.setArguments(args);
-        getChildFragmentManager().beginTransaction()
-                .add(reviewsSummaryContainer.getId(), reviewsSummary)
-                .commit();
     }
 
     private final Runnable requestRunnable = new Runnable() {

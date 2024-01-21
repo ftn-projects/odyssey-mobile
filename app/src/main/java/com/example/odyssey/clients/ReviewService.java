@@ -46,11 +46,10 @@ public interface ReviewService {
     Call<ArrayList<Integer>> getHostRatings(@Path("id") Long id);
 
     @POST("reviews/accommodation")
-    Call<ResponseBody> create(@Body AccommodationReview request);
-
+    Call<ResponseBody> createAccommodationReview(@Body AccommodationReview request);
 
     @POST("reviews/host")
-    Call<ResponseBody> create(@Body HostReview request);
+    Call<ResponseBody> createHostReview(@Body HostReview request);
 
     @PUT("reviews/accommodation/report/{id}")
     Call<ResponseBody> reportAccommodationReview(@Query("id") Long id);
