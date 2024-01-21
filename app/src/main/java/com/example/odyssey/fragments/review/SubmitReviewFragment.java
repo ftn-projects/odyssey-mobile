@@ -86,7 +86,7 @@ public class SubmitReviewFragment extends Fragment {
 
     private void submitReview(){
         if(!isReviewDataValid()) return;
-        if(loggedUser == null || TokenUtils.getRole()!="GUEST") {
+        if(loggedUser == null || TokenUtils.getRole(requireContext()) != "GUEST") {
             Toast.makeText(requireActivity(), "You must be logged in as a guest to submit a review", Toast.LENGTH_LONG).show();
             return;
         }

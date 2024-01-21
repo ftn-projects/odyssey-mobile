@@ -99,15 +99,17 @@ public class RegisterActivity extends AppCompatActivity {
 
         Address address = new Address(addressEdit.getText().toString(), cityEdit.getText().toString(), countryEdit.getText().toString());
         Register register = new Register(-1L, emailEdit.getText().toString(), nameEdit.getText().toString(), surnameEdit.getText().toString(),
-                phoneNumberEdit.getText().toString(), address, new User.Settings(), "", passwordEdit.getText().toString(), role);
+                phoneNumberEdit.getText().toString(), role, address, new User.Settings(), "", passwordEdit.getText().toString());
         Call<Register> registerResponse = ClientUtils.authService.register(register);
 
         registerResponse.enqueue(new Callback<Register>() {
             @Override
             public void onResponse(Call<Register> call, Response<Register> response) {
-                if (response.code() == 201) {
+                if (response.isSuccessful()) {
                     Toast.makeText(getBaseContext(), "Registration success", Toast.LENGTH_LONG).show();
                 } else {
+                    String message = ClientUtils.getError(response, "Registration failed");
+                    Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
                     Log.d("UWU", response.code() + " " + response.message());
                     Log.d("REZ", "Bad");
                 }
