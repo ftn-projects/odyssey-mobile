@@ -95,6 +95,14 @@
     <string name="edit_icon">Edit icon</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
+    <string name="cancel_btn">CANCEL</string>
+    <string name="role">Role</string>
+    <string name="about_me">About me</string>
+    <string name="contact">Contact</string>
+    <string name="report">Report</string>
+    <string name="edit_btn">EDIT</string>
+    <string name="about">About</string>
+    <string name="profile">Profile</string>
 
     <string-array name="accommodation_types">
         <item>Room</item>

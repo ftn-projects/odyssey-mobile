@@ -50,7 +50,7 @@ public interface ReviewService {
 
 
     @POST("reviews/host")
-    Call<ResponseBody> create(@Body Review request);
+    Call<ResponseBody> create(@Body HostReview request);
 
     @PUT("reviews/accommodation/report/{id}")
     Call<ResponseBody> reportAccommodationReview(@Query("id") Long id);

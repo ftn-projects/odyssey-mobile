@@ -35,6 +35,7 @@ import com.example.odyssey.R;
 import com.example.odyssey.clients.AmenityIconMapper;
 import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.fragments.accommodationRequest.CreateAccommodationRequestDetails;
+import com.example.odyssey.fragments.user.ProfileFragment;
 import com.example.odyssey.model.users.User;
 import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.accommodations.Amenity;
@@ -129,6 +130,12 @@ public class AccommodationDetailsFragment extends Fragment {
 
         reviewsContainer = view.findViewById(R.id.accommodation_details_reviews_container);
         TextView minMaxGuests = view.findViewById(R.id.MinMaxGuests);
+
+        view.findViewById(R.id.details_host_container).setOnClickListener(v -> {
+            Bundle arg = new Bundle();
+            arg.putLong(ProfileFragment.ARG_USER_ID, accommodation.getHost().getId());
+            Navigation.findNavController(view).navigate(R.id.nav_profile, arg);
+        });
 
         minMaxGuests.setText(accommodation.getMinGuests() + " - " + accommodation.getMaxGuests() + " guests");
         toggleReservationButton.setOnClickListener(v -> toggleReservationInput());
