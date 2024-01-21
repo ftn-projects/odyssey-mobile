@@ -151,10 +151,24 @@
 
     <fragment
         android:id="@+id/nav_notifications"
-        android:name="com.example.odyssey.fragments.NotificationListFragment"
+        android:name="com.example.odyssey.fragments.notification.NotificationListFragment"
+        android:label="@string/notifications"
         tools:layout="@layout/fragment_notification_list">
     </fragment>
 
+    <fragment
+        android:id="@+id/nav_generic_notification"
+        android:name="com.example.odyssey.fragments.notification.GenericNotification"
+        android:label="Notification"
+        tools:layout="@layout/fragment_notification_list">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_reservation_notification"
+        android:name="com.example.odyssey.fragments.notification.ReservationNotification"
+        android:label="Notification"
+        tools:layout="@layout/fragment_notification_list">
+      
     <fragment
         android:id="@+id/nav_report"
         android:name="com.example.odyssey.fragments.ReportPopupDialog"

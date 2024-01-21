@@ -95,6 +95,7 @@
     <string name="edit_icon">Edit icon</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
+    <string name="date">Date</string>
     <string name="cancel_btn">CANCEL</string>
     <string name="role">Role</string>
     <string name="about_me">About me</string>
