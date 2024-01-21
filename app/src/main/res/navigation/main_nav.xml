@@ -49,13 +49,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_guest_notifications"
-        android:name="com.example.odyssey.fragments.HomeFragment"
-        android:label="@string/notifications"
-        tools:layout="@layout/fragment_home">
-    </fragment>
-
-    <fragment
         android:id="@+id/nav_host_reviews"
         android:name="com.example.odyssey.fragments.HostReviewsView"
         android:label="My Reviews"
@@ -74,13 +67,6 @@
         android:name="com.example.odyssey.fragments.ReservationRequestsList"
         android:label="Reservation requests"
         tools:layout="@layout/fragment_reservation_requests_list">
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_host_notifications"
-        android:name="com.example.odyssey.fragments.HomeFragment"
-        android:label="@string/notifications"
-        tools:layout="@layout/fragment_home">
     </fragment>
 
     <fragment
@@ -164,10 +150,24 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_accommodation_notification"
+        android:name="com.example.odyssey.fragments.notification.AccommodationReviewNotification"
+        android:label="Notification"
+        tools:layout="@layout/fragment_accommodation_review_notification">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_host_notification"
+        android:name="com.example.odyssey.fragments.notification.HostReviewNotification"
+        android:label="Notification"
+        tools:layout="@layout/fragment_host_review_notification">
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_reservation_notification"
         android:name="com.example.odyssey.fragments.notification.ReservationNotification"
         android:label="Notification"
-        tools:layout="@layout/fragment_notification_list">
+        tools:layout="@layout/fragment_reservation_notification">
     </fragment>
       
     <fragment

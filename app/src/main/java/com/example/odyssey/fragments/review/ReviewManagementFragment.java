@@ -34,7 +34,8 @@ public class ReviewManagementFragment extends Fragment {
     ListView reviewsView;
     List<Review> reviews = new ArrayList<>();
     String search;
-    Boolean[] flags = new Boolean[]{false, false, false, false};
+    Boolean reported = false;
+    String status = null;
 
     public ReviewManagementFragment() {
     }
@@ -62,21 +63,23 @@ public class ReviewManagementFragment extends Fragment {
         MaterialButton declinedBtn = v.findViewById(R.id.blocked_toggle);
         MaterialButton reportedBtn = v.findViewById(R.id.reported_toggle);
         requested.setOnClickListener(btnView -> {
-            flags[0] = !flags[0];
+            status = "REQUESTED";
             filter();
         });
         acceptedBtn.setOnClickListener(v1 -> {
-            flags[1] = !flags[1];
+            status = "ACCEPTED";
             filter();
         });
         declinedBtn.setOnClickListener(btnView -> {
-            flags[2] = !flags[2];
+            status = "DECLINED";
             filter();
         });
         reportedBtn.setOnClickListener(btnView -> {
-            flags[3] = !flags[3];
+            reported = !reported;
             filter();
         });
+
+        requested.setChecked(true);
 
         TextInputEditText searchInput = v.findViewById(R.id.input_search);
         searchInput.addTextChangedListener(new TextWatcher() {
@@ -96,17 +99,16 @@ public class ReviewManagementFragment extends Fragment {
         });
 
         updateData();
-        filter();
         return v;
     }
 
     private void filter() {
         List<Review> filtered = reviews.stream().filter(r ->
-                (!flags[0] || r.getStatus().equals(Review.Status.REQUESTED)) &&
-                        (!flags[1] || r.getStatus().equals(Review.Status.ACCEPTED)) &&
-                        (!flags[2] || r.getStatus().equals(Review.Status.DECLINED)) &&
-                        (!flags[3] || r.getStatus().equals(Review.Status.REPORTED)) &&
-                        (search == null || (r.getTitle().toLowerCase().contains(search)))
+                (status != "REQUESTED" || r.getStatus().equals(Review.Status.REQUESTED)) &&
+                        (status != "ACCEPTED" || r.getStatus().equals(Review.Status.ACCEPTED)) &&
+                        (status != "DECLINED" || r.getStatus().equals(Review.Status.DECLINED)) &&
+                        (status != "REPORTED" || r.getStatus().equals(Review.Status.REPORTED)) &&
+                        (search == null || (r.getComment().toLowerCase().contains(search)))
         ).collect(Collectors.toList());
 
         adapter.clear();

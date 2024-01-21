@@ -68,9 +68,6 @@ public class HostReviewDetails extends Fragment {
         TextView notificationTitle = view.findViewById(R.id.notification_title);
         notificationTitle.setText("Host review");
 
-        TextView notificationDetails = view.findViewById(R.id.notification_details);
-        notificationDetails.setText("");
-
         LinearLayout reviewSection = view.findViewById(R.id.notification_review_section);
 
         ImageView notificationImage = view.findViewById(R.id.notification_profile_image);
@@ -100,7 +97,7 @@ public class HostReviewDetails extends Fragment {
         dismiss.setOnClickListener(v -> dismiss());
 
         activate.setVisibility(review.getStatus().equals(Review.Status.REQUESTED) || review.getStatus().equals(Review.Status.DECLINED) ? View.VISIBLE : View.GONE);
-        decline.setVisibility(review.getStatus().equals(Review.Status.ACCEPTED) || review.getStatus().equals(Review.Status.REPORTED) ? View.VISIBLE : View.GONE);
+        decline.setVisibility(!review.getStatus().equals(Review.Status.DECLINED) ? View.VISIBLE : View.GONE);
         dismiss.setVisibility(review.getStatus().equals(Review.Status.REPORTED) ? View.VISIBLE : View.GONE);
     }
 
@@ -124,7 +121,7 @@ public class HostReviewDetails extends Fragment {
     }
 
     private void decline() {
-        ClientUtils.reviewService.accept(review.getId()).enqueue(new Callback<ResponseBody>() {
+        ClientUtils.reviewService.decline(review.getId()).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (!response.isSuccessful()) {
@@ -143,7 +140,7 @@ public class HostReviewDetails extends Fragment {
     }
 
     private void dismiss() {
-        ClientUtils.reviewService.accept(review.getId()).enqueue(new Callback<ResponseBody>() {
+        ClientUtils.reviewService.dismiss(review.getId()).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (!response.isSuccessful()) {

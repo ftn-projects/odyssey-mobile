@@ -20,9 +20,4 @@ public class HostReview extends Review implements Serializable {
     public void setHost(User host) {
         this.host = host;
     }
-
-    @Override
-    public String getTitle() {
-        return host.getName() + " " + host.getSurname();
-    }
 }

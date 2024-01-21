@@ -39,10 +39,10 @@ public interface ReviewService {
             @Query("listTypes") ArrayList<Review.Status> listTypes
     );
     @GET("reviews/accommodation/{id}")
-    Call<ArrayList<AccommodationReview>> getOneAccommodationReview(@Query("id") Long id);
+    Call<AccommodationReview> getOneAccommodationReview(@Path("id") Long id);
 
     @GET("reviews/host/{id}")
-    Call<ArrayList<Review>> getOneHostReview(@Query("id") Long id);
+    Call<HostReview> getOneHostReview(@Path("id") Long id);
 
     @GET("reviews/accommodation/host/{id}")
     Call<ArrayList<AccommodationReview>> getAllAccommodationReviewsByHostId(

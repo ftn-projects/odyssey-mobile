@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -19,12 +20,18 @@ import com.bumptech.glide.Glide;
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.model.reviews.AccommodationReview;
+import com.example.odyssey.model.reviews.HostReview;
 import com.example.odyssey.model.reviews.Review;
 import com.example.odyssey.model.users.UserWithReports;
 import com.example.odyssey.utils.TokenUtils;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ReviewManagementAdapter extends ArrayAdapter<Review> {
     Context context;
@@ -55,25 +62,61 @@ public class ReviewManagementAdapter extends ArrayAdapter<Review> {
         TextView dateView = convertView.findViewById(R.id.account_status);
         ImageView profileImage = convertView.findViewById(R.id.profile_image);
 
-        String type = (review instanceof AccommodationReview) ? "Accommodation review" : "Host review";
-        nameView.setText(review.getTitle());
-        roleView.setText(type);
+        nameView.setText(review.getComment());
+        roleView.setText(String.valueOf(review.getRating()));
         dateView.setText(review.getStatus().toString());
 
         String imagePath = ClientUtils.SERVICE_API_PATH + "users/image/" + review.getSubmitter().getId();
         Glide.with(context).load(imagePath).into(profileImage);
 
         convertView.setOnClickListener(view1 -> {
-            Bundle args = new Bundle();
-            args.putSerializable("review", review);
-            if (review instanceof AccommodationReview)
-                Navigation.findNavController(rootView).navigate(R.id.nav_review_accommodation_details, args);
-            else Navigation.findNavController(rootView).navigate(R.id.nav_review_host_details, args);
+            getAccommodationReview(review.getId());
         });
 
         setStatusDesign(convertView, review.getStatus());
 
         return convertView;
+    }
+
+    private void getAccommodationReview(Long id) {
+        ClientUtils.reviewService.getOneAccommodationReview(id).enqueue(new Callback<AccommodationReview>() {
+            @Override
+            public void onResponse(Call<AccommodationReview> call, Response<AccommodationReview> response) {
+                if (!response.isSuccessful()) {
+                    if (response.code() == 404) {
+                        getHostReview(id);
+                    }
+                    return;
+                }
+                Bundle args = new Bundle();
+                args.putSerializable("review", response.body());
+                Navigation.findNavController(rootView).navigate(R.id.nav_review_accommodation_details, args);
+            }
+
+            @Override
+            public void onFailure(Call<AccommodationReview> call, Throwable t) {
+            }
+        });
+    }
+
+    private void getHostReview(Long id) {
+        ClientUtils.reviewService.getOneHostReview(id).enqueue(new Callback<HostReview>() {
+            @Override
+            public void onResponse(Call<HostReview> call, Response<HostReview> response) {
+                if (!response.isSuccessful()) {
+                    String message = ClientUtils.getError(response, "Review not found.");
+                    Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                Bundle args = new Bundle();
+                args.putSerializable("review", response.body());
+                Navigation.findNavController(rootView).navigate(R.id.nav_review_host_details, args);
+            }
+
+            @Override
+            public void onFailure(Call<HostReview> call, Throwable t) {
+            }
+        });
     }
 
     private void setStatusDesign(View v, Review.Status status) {

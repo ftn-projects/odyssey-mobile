@@ -21,9 +21,4 @@ private Accommodation accommodation;
     public void setAccommodation(Accommodation accommodation) {
         this.accommodation = accommodation;
     }
-
-    @Override
-    public String getTitle() {
-        return accommodation.getTitle();
-    }
 }

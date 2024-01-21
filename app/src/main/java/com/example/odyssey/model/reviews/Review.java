@@ -5,7 +5,7 @@ import com.example.odyssey.model.users.User;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public abstract class Review implements Serializable {
+public class Review implements Serializable {
     private Long id;
     private Double rating;
     private String comment;
@@ -22,8 +22,6 @@ public abstract class Review implements Serializable {
         this.submitter = submitter;
         this.status = status;
     }
-
-    public abstract String getTitle();
 
     public Long getId() {
         return id;
