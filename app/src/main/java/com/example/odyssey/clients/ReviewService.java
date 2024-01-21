@@ -48,7 +48,6 @@ public interface ReviewService {
     @POST("reviews/accommodation")
     Call<ResponseBody> createAccommodationReview(@Body AccommodationReview request);
 
-
     @POST("reviews/host")
     Call<ResponseBody> createHostReview(@Body HostReview request);
 
