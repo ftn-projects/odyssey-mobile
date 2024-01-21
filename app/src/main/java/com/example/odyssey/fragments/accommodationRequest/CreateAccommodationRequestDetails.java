@@ -1,6 +1,5 @@
 package com.example.odyssey.fragments.accommodationRequest;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,7 +20,7 @@ import com.example.odyssey.R;
 import com.example.odyssey.activities.MainActivity;
 import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.model.accommodations.Accommodation;
-import com.example.odyssey.model.accommodations.AccommodationRequest;
+import com.example.odyssey.model.accommodations.AccommodationRequestSubmission;
 import com.example.odyssey.utils.TokenUtils;
 import com.example.odyssey.utils.Validation;
 import com.google.android.material.textfield.TextInputEditText;
@@ -37,7 +36,7 @@ import retrofit2.Response;
 public class CreateAccommodationRequestDetails extends Fragment {
     public static final String ARG_REQUEST = "request";
     public static final String ARG_ACCOMMODATION_ID = "accommodationId";
-    private AccommodationRequest request = null;
+    private AccommodationRequestSubmission request = null;
     TextInputLayout inputTitle, inputDescription, inputMin, inputMax, inputPrice, inputCancel;
     TextInputEditText editTitle, editDescription, editMin, editMax, editPrice, editCancel;
     AutoCompleteTextView accommodationType, priceType, confirmationType;
@@ -59,13 +58,13 @@ public class CreateAccommodationRequestDetails extends Fragment {
             accommodationId = getArguments().getLong(ARG_ACCOMMODATION_ID);
 
         if (getArguments() != null && getArguments().containsKey(ARG_REQUEST))
-            request = (AccommodationRequest) getArguments().getSerializable(ARG_REQUEST);
+            request = (AccommodationRequestSubmission) getArguments().getSerializable(ARG_REQUEST);
         else {
-            request = new AccommodationRequest();
+            request = new AccommodationRequestSubmission();
             request.setHostId(TokenUtils.getId());
             request.setAccommodationId(accommodationId);
             request.setRequestType(accommodationId == null ?
-                    AccommodationRequest.Type.CREATE : AccommodationRequest.Type.UPDATE);
+                    AccommodationRequestSubmission.Type.CREATE : AccommodationRequestSubmission.Type.UPDATE);
         }
     }
 
@@ -73,7 +72,7 @@ public class CreateAccommodationRequestDetails extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_create_accommodation_request_details, container, false);
         initializeElements(v);
-        if (request.getRequestType().equals(AccommodationRequest.Type.UPDATE)) {
+        if (request.getRequestType().equals(AccommodationRequestSubmission.Type.UPDATE)) {
             loadAccommodation(request.getAccommodationId());
         } else loadData();
 

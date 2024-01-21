@@ -1,5 +1,7 @@
 package com.example.odyssey.clients;
 
+import android.util.Log;
+
 import com.example.odyssey.BuildConfig;
 import com.example.odyssey.adapters.LocalDateAdapter;
 import com.example.odyssey.adapters.LocalDateTimeAdapter;
@@ -7,13 +9,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -54,6 +59,18 @@ public class ClientUtils {
             .client(getClient())
             .build();
 
+    public static String getError(Response<?> response, String defaultValue) {
+        String error = defaultValue;
+        if (response.headers().names().contains("Error-Type")) {
+            try {
+                error = response.errorBody().string();
+            } catch (IOException | NullPointerException e) {
+                Log.e("ClientUtils", e.getMessage(), e);
+            }
+        }
+        return error;
+    }
+
     /*
      * Definisemo konkretnu instancu servisa na intnerntu sa kojim
      * vrsimo komunikaciju
@@ -65,6 +82,7 @@ public class ClientUtils {
     public static ReviewService reviewService = retrofit.create(ReviewService.class);
     public static AccommodationRequestService accommodationRequestService = retrofit.create(AccommodationRequestService.class);
     public static ReservationService reservationService = retrofit.create(ReservationService.class);
+    public static FileDownloadService fileDownloadService = retrofit.create(FileDownloadService.class);
     public static ReportService  reportService = retrofit.create(ReportService.class);
     public static NotificationService notificationService = retrofit.create(NotificationService.class);
 }

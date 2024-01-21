@@ -76,6 +76,14 @@
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/commentedOnHost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#787575"
+        android:text="Commented on accommodation"
+        android:fontFamily="@font/montserrat_regular"/>
     <!-- Comment Texts and Date -->
     <!--    <TextView-->
     <!--        android:layout_width="match_parent"-->

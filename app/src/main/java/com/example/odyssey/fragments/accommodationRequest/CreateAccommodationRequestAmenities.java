@@ -12,7 +12,7 @@ import androidx.navigation.Navigation;
 
 import com.example.odyssey.R;
 import com.example.odyssey.activities.MainActivity;
-import com.example.odyssey.model.accommodations.AccommodationRequest;
+import com.example.odyssey.model.accommodations.AccommodationRequestSubmission;
 import com.example.odyssey.model.accommodations.Amenity;
 
 import java.util.HashSet;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 public class CreateAccommodationRequestAmenities extends Fragment {
     private static final String ARG_REQUEST = "request";
-    private AccommodationRequest request = null;
+    private AccommodationRequestSubmission request = null;
     CheckBox wifi, tv, air, kitchen, parking, beach, washer, spa, bed, smoking;
     Button nextBtn;
     Button backBtn;
@@ -37,7 +37,7 @@ public class CreateAccommodationRequestAmenities extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null && getArguments().containsKey(ARG_REQUEST))
-            request = (AccommodationRequest) getArguments().getSerializable(ARG_REQUEST);
+            request = (AccommodationRequestSubmission) getArguments().getSerializable(ARG_REQUEST);
     }
 
     @Override

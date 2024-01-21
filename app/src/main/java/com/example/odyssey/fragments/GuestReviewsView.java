@@ -14,9 +14,11 @@ import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.model.reviews.AccommodationReview;
 import com.example.odyssey.model.reviews.HostReview;
+import com.example.odyssey.model.reviews.Review;
 import com.example.odyssey.utils.TokenUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -65,7 +67,8 @@ public class GuestReviewsView extends Fragment {
     }
 
     private void getGuestHostReviews(){
-        Call<ArrayList<HostReview>> call = ClientUtils.reviewService.getAllHostReviews(null,guestId,null);
+        ArrayList<Review.Status> listTypes = new ArrayList<>(Arrays.asList(Review.Status.ACCEPTED));
+        Call<ArrayList<HostReview>> call = ClientUtils.reviewService.getAllHostReviews(null,guestId,listTypes);
         call.enqueue(new Callback<ArrayList<HostReview>>() {
             @Override
             public void onResponse(Call<ArrayList<HostReview>> call, Response<ArrayList<HostReview>> response) {
@@ -87,7 +90,8 @@ public class GuestReviewsView extends Fragment {
     }
 
     private void getGuestAccommodationReviews() {
-        Call<ArrayList<AccommodationReview>> call = ClientUtils.reviewService.getAllAccommodationReviews(null,guestId,null);
+        ArrayList<Review.Status> listTypes = new ArrayList<>(Arrays.asList(Review.Status.ACCEPTED));
+        Call<ArrayList<AccommodationReview>> call = ClientUtils.reviewService.getAllAccommodationReviews(null,guestId,listTypes);
         call.enqueue(new Callback<ArrayList<AccommodationReview>>() {
             @Override
             public void onResponse(Call<ArrayList<AccommodationReview>> call, Response<ArrayList<AccommodationReview>> response) {

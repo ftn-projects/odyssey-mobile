@@ -24,8 +24,6 @@ public interface UserService {
     @GET("users/{id}")
     Call<User> findById(@Path("id") Long id);
 
-
-
     @PUT("users")
     Call<User> update(@Body User user);
 
@@ -34,6 +32,12 @@ public interface UserService {
 
     @DELETE("users/deactivate/{id}")
     Call<ResponseBody> deactivate(@Path("id") Long id);
+
+    @PUT("users/activate/{id}")
+    Call<ResponseBody> activate(@Path("id") Long id);
+
+    @DELETE("users/block/{id}")
+    Call<ResponseBody> block(@Path("id") Long id);
 
     @Multipart
     @POST("users/image/{id}")

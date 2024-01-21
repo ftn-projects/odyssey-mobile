@@ -93,4 +93,9 @@
         <color name="md_theme_dark_outlineVariant">#514346</color>
         <color name="md_theme_dark_scrim">#000000</color>
 
+        <color name="pink_2">#FFB6C1</color>
+        <color name="pink_pressed">#FF95A5</color>
+        <color name="pink_checked">#FF7383</color>
+        <color name="red">#FF5252</color>
+
 </resources>

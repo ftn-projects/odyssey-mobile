@@ -1,4 +1,4 @@
-package com.example.odyssey.fragments;
+package com.example.odyssey.fragments.review;
 
 import android.os.Bundle;
 
@@ -11,7 +11,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.odyssey.R;
-import com.example.odyssey.model.reviews.AccommodationReview;
 
 import java.util.List;
 

@@ -9,7 +9,7 @@ public class Register extends User {
 
     public Register(Long id, String email, String name, String surname, String phone, Address address, Settings settings,
                     String bio, String password, String role) {
-        super(id, email, name, surname, phone, address, settings, bio);
+        super(id, email, name, surname, phone, role, address, settings, bio);
         this.password = password;
         this.role = role;
     }

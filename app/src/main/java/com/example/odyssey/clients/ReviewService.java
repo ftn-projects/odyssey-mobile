@@ -1,7 +1,5 @@
 package com.example.odyssey.clients;
 
-import com.example.odyssey.model.accommodations.Accommodation;
-import com.example.odyssey.model.accommodations.AccommodationRequest;
 import com.example.odyssey.model.reviews.AccommodationReview;
 import com.example.odyssey.model.reviews.HostReview;
 import com.example.odyssey.model.reviews.Review;
@@ -23,7 +21,7 @@ public interface ReviewService {
     @GET("reviews/accommodation")
     Call<ArrayList<AccommodationReview>> getAllAccommodationReviews(
             @Query("accommodationId") Long accommodationId,
-            @Query("userId") Long submitterId,
+            @Query("submitterId") Long submitterId,
             @Query("status") ArrayList<Review.Status> listTypes
     );
 
@@ -31,13 +29,19 @@ public interface ReviewService {
     Call<ArrayList<HostReview>> getAllHostReviews(
             @Query("hostId") Long hostId,
             @Query("submitterId") Long submitterId,
-            @Query("status") ArrayList<Review.Status> listTypes
+            @Query("listTypes") ArrayList<Review.Status> listTypes
     );
     @GET("reviews/accommodation/{id}")
     Call<ArrayList<AccommodationReview>> getOneAccommodationReview(@Query("id") Long id);
 
     @GET("reviews/host/{id}")
     Call<ArrayList<Review>> getOneHostReview(@Query("id") Long id);
+
+    @GET("reviews/accommodation/host/{id}")
+    Call<ArrayList<AccommodationReview>> getAllAccommodationReviewsByHostId(
+            @Path("id") Long id,
+            @Query("listTypes") ArrayList<Review.Status> listTypes
+    );
 
     @GET("reviews/accommodation/rating/{id}")
     Call<ArrayList<Integer>> getAccommodationRatings(@Path("id") Long id);
@@ -46,11 +50,11 @@ public interface ReviewService {
     Call<ArrayList<Integer>> getHostRatings(@Path("id") Long id);
 
     @POST("reviews/accommodation")
-    Call<ResponseBody> create(@Body AccommodationReview request);
+    Call<ResponseBody> createAccommodationReview(@Body AccommodationReview request);
 
 
     @POST("reviews/host")
-    Call<ResponseBody> create(@Body Review request);
+    Call<ResponseBody> createHostReview(@Body HostReview request);
 
     @PUT("reviews/accommodation/report/{id}")
     Call<ResponseBody> reportAccommodationReview(@Query("id") Long id);

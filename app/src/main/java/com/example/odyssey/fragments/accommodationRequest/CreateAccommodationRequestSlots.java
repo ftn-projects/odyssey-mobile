@@ -16,7 +16,7 @@ import com.example.odyssey.R;
 import com.example.odyssey.activities.MainActivity;
 import com.example.odyssey.fragments.AvailabilitySlots;
 import com.example.odyssey.model.TimeSlot;
-import com.example.odyssey.model.accommodations.AccommodationRequest;
+import com.example.odyssey.model.accommodations.AccommodationRequestSubmission;
 import com.example.odyssey.model.accommodations.AvailabilitySlot;
 import com.example.odyssey.utils.SlotUtils;
 import com.example.odyssey.utils.Validation;
@@ -43,7 +43,7 @@ import java.util.stream.Collectors;
 
 public class CreateAccommodationRequestSlots extends Fragment {
     private static final String ARG_REQUEST = "request";
-    private AccommodationRequest request = null;
+    private AccommodationRequestSubmission request = null;
     TextInputLayout priceInput, startInput, endInput;
     TextInputEditText priceEdit, startEdit, endEdit;
     Button nextBtn, addBtn, backBtn;
@@ -66,7 +66,7 @@ public class CreateAccommodationRequestSlots extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null && getArguments().containsKey(ARG_REQUEST))
-            request = (AccommodationRequest) getArguments().getSerializable(ARG_REQUEST);
+            request = (AccommodationRequestSubmission) getArguments().getSerializable(ARG_REQUEST);
     }
 
     @Override

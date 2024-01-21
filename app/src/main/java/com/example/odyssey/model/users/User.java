@@ -5,29 +5,35 @@ import com.example.odyssey.model.Address;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private Long id;
-    private String email;
-    private String name;
-    private String surname;
-    private String phone;
-    private Address address;
-    private Settings settings;
-    private String bio;
+    protected Long id;
+    protected String email;
+    protected String name;
+    protected String surname;
+    protected String phone;
+    protected String role;
+    protected Address address;
+    protected Settings settings;
+    protected String bio;
 
-    public static class Settings {
-        private Boolean ReservationNotification_On = true;
-        private Boolean HostNotification_On = true;
+    public static class Settings implements Serializable{
+        private Boolean reservationRequested = true;
+        private Boolean reservationAccepted = true;
+        private Boolean reservationDeclined = true;
+        private Boolean reservationCancelled = true;
+        private Boolean profileReviewed = true;
+        private Boolean accommodationReviewed = true;
     }
 
     public User() {
     }
 
-    public User(Long id, String email, String name, String surname, String phone, Address address, Settings settings, String bio) {
+    public User(Long id, String email, String name, String surname, String phone, String role, Address address, Settings settings, String bio) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.surname = surname;
         this.phone = phone;
+        this.role = role;
         this.address = address;
         this.settings = settings;
         this.bio = bio;
@@ -71,6 +77,14 @@ public class User implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Address getAddress() {

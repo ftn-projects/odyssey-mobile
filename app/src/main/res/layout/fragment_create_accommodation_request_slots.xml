@@ -129,8 +129,6 @@
                 android:text="Price"
                 android:fontFamily="@font/montserrat_regular">
             </TextView>
-
-
         </LinearLayout>
 
         <ScrollView

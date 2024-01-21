@@ -15,6 +15,15 @@ import androidx.navigation.Navigation;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
+import android.widget.ListAdapter;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.odyssey.R;
+import com.example.odyssey.activities.MainActivity;
 import com.example.odyssey.model.notifications.Notification;
 
 import java.util.List;

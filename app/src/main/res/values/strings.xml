@@ -96,7 +96,22 @@
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="date">Date</string>
+    <string name="cancel_btn">CANCEL</string>
+    <string name="role">Role</string>
+    <string name="about_me">About me</string>
+    <string name="contact">Contact</string>
+    <string name="report">Report</string>
+    <string name="edit_btn">EDIT</string>
+    <string name="about">About</string>
+    <string name="profile">Profile</string>
+    <string name="my_profile">My profile</string>
+    <string name="my_accommodations">My accommodations</string>
+    <string name="reservation_requests">Reservation requests</string>
 
+    <string-array name="sort_options">
+        <item>Sort title ascending</item>
+        <item>Sort title descending</item>
+    </string-array>
     <string-array name="accommodation_types">
         <item>Room</item>
         <item>Apartment</item>
