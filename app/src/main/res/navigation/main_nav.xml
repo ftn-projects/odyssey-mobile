@@ -64,9 +64,9 @@
 
     <fragment
         android:id="@+id/nav_host_reservations"
-        android:name="com.example.odyssey.fragments.HomeFragment"
+        android:name="com.example.odyssey.fragments.ReservationListFragment"
         android:label="@string/host_reservations"
-        tools:layout="@layout/fragment_home">
+        tools:layout="@layout/fragment_reservation_list">
     </fragment>
 
     <fragment
@@ -159,6 +159,18 @@
         android:id="@+id/nav_report"
         android:name="com.example.odyssey.fragments.ReportPopupDialog"
         tools:layout="@layout/report_dialog">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_user_management"
+        android:name="com.example.odyssey.fragments.user.UserManagementFragment"
+        tools:layout="@layout/fragment_user_management">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_user_management_details"
+        android:name="com.example.odyssey.fragments.user.UserManagementDetailsFragment"
+        tools:layout="@layout/fragment_user_management_details">
     </fragment>
 
 </navigation>

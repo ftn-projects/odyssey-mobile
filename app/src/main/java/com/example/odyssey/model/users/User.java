@@ -5,15 +5,15 @@ import com.example.odyssey.model.Address;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private Long id;
-    private String email;
-    private String name;
-    private String surname;
-    private String phone;
-    private String role;
-    private Address address;
-    private Settings settings;
-    private String bio;
+    protected Long id;
+    protected String email;
+    protected String name;
+    protected String surname;
+    protected String phone;
+    protected String role;
+    protected Address address;
+    protected Settings settings;
+    protected String bio;
 
     public static class Settings implements Serializable{
         private Boolean reservationRequested = true;

@@ -33,6 +33,12 @@ public interface UserService {
     @DELETE("users/deactivate/{id}")
     Call<ResponseBody> deactivate(@Path("id") Long id);
 
+    @PUT("users/activate/{id}")
+    Call<ResponseBody> activate(@Path("id") Long id);
+
+    @DELETE("users/block/{id}")
+    Call<ResponseBody> block(@Path("id") Long id);
+
     @Multipart
     @POST("users/image/{id}")
     Call<ResponseBody> uploadImage(@Path("id") Long id, @Part MultipartBody.Part image);

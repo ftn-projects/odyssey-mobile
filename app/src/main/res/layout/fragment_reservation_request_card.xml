@@ -69,6 +69,7 @@
             android:layout_marginEnd="10dp"/>
 
         <TextView
+            android:id="@+id/cancellationLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="cancellations"
@@ -173,6 +174,15 @@
             android:layout_gravity="end"
             android:layout_marginStart="15dp"
             android:text="Decline" />
+
+        <Button
+            android:id="@+id/buttonCancel"
+            android:backgroundTint="@color/cancelled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginStart="15dp"
+            android:text="Cancel" />
     </LinearLayout>
 
 </LinearLayout>

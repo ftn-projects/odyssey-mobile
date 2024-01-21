@@ -53,5 +53,4 @@ public class NotificationSummaryAdapter extends ArrayAdapter<Notification> {
 
         return convertView;
     }
-
 }

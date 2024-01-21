@@ -1,15 +1,15 @@
 package com.example.odyssey.fragments;
 
 import android.content.Context;
-
-import androidx.core.content.ContextCompat;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.core.content.ContextCompat;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
@@ -27,7 +27,7 @@ import retrofit2.Response;
 public class GuestsReservationsCard extends LinearLayout {
 
     private AccreditReservation reservation;
-    TextView title, status, host, cancelBy, price, startDate,endDate , guestNumber;
+    TextView title, status, host, cancelBy, price, startDate, endDate, guestNumber;
 
     LinearLayout statusLayout, buttonSection;
     Button cancel;
@@ -37,14 +37,14 @@ public class GuestsReservationsCard extends LinearLayout {
         init(parentFragment);
     }
 
-    public void setReservation(AccreditReservation reservation){
+    public void setReservation(AccreditReservation reservation) {
         this.reservation = reservation;
-        if(reservation!=null){
-            if(reservation.getAccommodation().getTitle() !=null)
+        if (reservation != null) {
+            if (reservation.getAccommodation().getTitle() != null)
                 title.setText(reservation.getAccommodation().getTitle());
 
-            if(reservation.getStatus() != null){
-                switch (reservation.getStatus()){
+            if (reservation.getStatus() != null) {
+                switch (reservation.getStatus()) {
                     case ACCEPTED:
                         statusLayout.getBackground().setTint(ContextCompat.getColor(getContext(), R.color.approved_30));
                         status.setTextColor(ContextCompat.getColor(getContext(), R.color.approved));
@@ -76,33 +76,33 @@ public class GuestsReservationsCard extends LinearLayout {
                 }
             }
 
-            if(reservation.getGuest() != null)
+            if (reservation.getGuest() != null)
                 host.setText(reservation.getAccommodation().getHost().getName() + " " + reservation.getAccommodation().getHost().getSurname());
 
             Log.d("DAYS", reservation.getAccommodation().getCancellationDue() + ".");
-            if(reservation.getStart() != null && reservation.getAccommodation().getCancellationDue()!=null){
+            if (reservation.getStart() != null && reservation.getAccommodation().getCancellationDue() != null) {
                 LocalDate due = reservation.getStart().minusDays(reservation.getAccommodation().getCancellationDue());
                 cancelBy.setText(due.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-                if(!due.isAfter(LocalDate.now()))
-                    buttonSection.setVisibility(View.GONE);
+                if (!due.isAfter(LocalDate.now()))
+                    cancel.setEnabled(false);
             }
 
-            if(reservation.getPrice()!=null)
+            if (reservation.getPrice() != null)
                 price.setText(reservation.getPrice().toString());
 
-            if(reservation.getGuestNumber()!=null)
+            if (reservation.getGuestNumber() != null)
                 guestNumber.setText(reservation.getGuestNumber().toString());
 
-            if(reservation.getStart()!=null)
+            if (reservation.getStart() != null)
                 startDate.setText(reservation.getStart().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
-            if(reservation.getEnd()!=null)
+            if (reservation.getEnd() != null)
                 endDate.setText(reservation.getEnd().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         }
 
     }
 
-    private void init(GuestsReservationsList parentFragment){
+    private void init(GuestsReservationsList parentFragment) {
         LayoutInflater.from(getContext()).inflate(R.layout.fragment_guests_reservations_card, this, true);
 
         title = findViewById(R.id.accommodationTitleTextView);
@@ -118,29 +118,32 @@ public class GuestsReservationsCard extends LinearLayout {
         cancel = findViewById(R.id.buttonCancel);
 
         cancel.setOnClickListener(c -> {
-            Log.d("REQ","Uso");
+            Log.d("REQ", "Uso");
             String newStatus = reservation.getStatus().equals(AccreditReservation.Status.REQUESTED) ? "CANCELLED_REQUEST" : "CANCELLED_RESERVATION";
 
-            Call<ResponseBody> call = ClientUtils.reservationService.updateStatus(reservation.getId(),newStatus );
+            Call<ResponseBody> call = ClientUtils.reservationService.updateStatus(reservation.getId(), newStatus);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if(response.code() == 200){
-                        Log.d("REQ","Status changed");
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getContext(), "Reservation cancelled", Toast.LENGTH_LONG).show();
                         if (parentFragment != null && parentFragment instanceof ReservationsListener) {
                             ReservationsListener reservationsListener = (ReservationsListener) parentFragment;
                             reservationsListener.getReservations();
                         } else {
                             Log.e("GuestsReservationsCard", "Parent fragment does not implement ReservationsListener");
                         }
-                    }
-                    else{
-                        Log.d("REQ",response.message());
+                        Log.d("GuestsReservationsCard", "Status changed");
+                    } else {
+                        String errorMessage = ClientUtils.getError(response, "Reservation could not be cancelled");
+                        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_LONG).show();
+                        Log.d("GuestsReservationsCard", response.message());
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.e("GuestsReservationsCard", "Status could not be changed: " + t.getMessage());
                 }
             });
         });
