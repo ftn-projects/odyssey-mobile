@@ -194,7 +194,7 @@ public class ProfileFragment extends Fragment {
     }
 
     public void submitReview(HostReview review) {
-        ClientUtils.reviewService.create(review).enqueue(new Callback<ResponseBody>() {
+        ClientUtils.reviewService.createHostReview(review).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
