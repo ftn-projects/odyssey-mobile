@@ -59,25 +59,7 @@ public class NotificationSummaryAdapter extends ArrayAdapter<Notification> {
             readNotification(notification.getId());
             Bundle args = new Bundle();
             args.putSerializable("notification", notification);
-            switch (notification.getType()) {
-                case GENERIC:
-                    Navigation.findNavController(rootView).navigate(R.id.nav_generic_notification, args);
-                    break;
-                case ACCOMMODATION_REVIEW:
-                    Navigation.findNavController(rootView).navigate(R.id.nav_accommodation_notification, args);
-                    break;
-                case HOST_REVIEW:
-                    Navigation.findNavController(rootView).navigate(R.id.nav_host_notification, args);
-                    break;
-                case RESERVATION_ACCEPTED:
-                case RESERVATION_CANCELLED:
-                case RESERVATION_DECLINED:
-                case RESERVATION_REQUESTED:
-                    Navigation.findNavController(rootView).navigate(R.id.nav_reservation_notification, args);
-                    break;
-                default:
-                    throw new RuntimeException("Unknown notification type");
-            }
+            Navigation.findNavController(rootView).navigate(R.id.nav_generic_notification, args);
         });
 
         int background = R.drawable.unread_notification_background;
