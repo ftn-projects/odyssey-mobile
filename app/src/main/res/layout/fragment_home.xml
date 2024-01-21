@@ -57,6 +57,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="3dp"
+                            android:fontFamily="@font/montserrat_regular"
                             android:text="Anywhere">
 
                         </TextView>
@@ -72,6 +73,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="5dp"
                                 android:text="Anytime"
+                                android:fontFamily="@font/montserrat_regular"
                                 android:textColor="@color/zirko_siva" />
 
                             <TextView
@@ -83,6 +85,7 @@
 
                             <TextView
                                 android:id="@+id/searchButtonGuests"
+                                android:fontFamily="@font/montserrat_regular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Anyone"
@@ -112,12 +115,31 @@
                 android:id="@+id/sortAndFilterContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
                 <Spinner
                     android:id="@+id/sortSpinner"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_regular"
+                    />
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/favoriteButtonGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:entries="@array/sort_options"/>
+                    app:singleSelection="true">
+                    <Button
+                        android:id="@+id/buttonFavoriteToggle"
+                        style="@style/HeartToggleButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:icon="@drawable/ic_heart_icon"
+                        android:text="Favorites"
+                        android:drawableTintMode="src_in"
+                        />
+                </com.google.android.material.button.MaterialButtonToggleGroup>
             </LinearLayout>
         </LinearLayout>
 

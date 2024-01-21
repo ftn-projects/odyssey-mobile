@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -27,9 +28,12 @@ import com.example.odyssey.model.accommodations.Amenity;
 import com.example.odyssey.model.accommodations.AvailabilitySlot;
 import com.example.odyssey.model.stats.AccommodationTotalStats;
 import com.example.odyssey.services.ShakeDetector;
+import com.example.odyssey.utils.TokenUtils;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -89,6 +93,7 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
         super.onPause();
         shakeDetector.stopListening();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -106,10 +111,14 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
 
         Spinner sortSpinner = rootView.findViewById(R.id.sortSpinner);
 
+        List<String> entries = Arrays.asList("Title Ascending", "Title Descending");
+        ArrayAdapter adapter = new ArrayAdapter(requireContext(), R.layout.my_selected_item, entries);
+        adapter.setDropDownViewResource(R.layout.my_dropdown_item);
+        sortSpinner.setAdapter(adapter);
+
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerSelected();
             }
 
@@ -128,9 +137,47 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        MaterialButtonToggleGroup toggleGroup = view.findViewById(R.id.favoriteButtonGroup);
+        toggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (TokenUtils.getRole() == null || !TokenUtils.getRole().equals("GUEST")) {
+                Toast.makeText(getContext(), "You must be logged in as a guest to use this feature", Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                if (isChecked) {
+                    getFavorites();
+                } else {
+                    populateAccommodationCards(accommodations);
+                }
+            }
+        });
     }
 
-    private void spinnerSelected(){
+    private void getFavorites() {
+        Call<ArrayList<Accommodation>> call = ClientUtils.accommodationService.getFavorites(TokenUtils.getId());
+        call.enqueue(new Callback<ArrayList<Accommodation>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Accommodation>> call, Response<ArrayList<Accommodation>> response) {
+                if (response.code() == 200) {
+                    List<Accommodation> favoritesResponse = response.body();
+
+                    List<Accommodation> commonAccommodations = accommodations.stream()
+                            .filter(accommodation -> favoritesResponse.stream().anyMatch(fav -> fav.getId() == accommodation.getId()))
+                            .collect(Collectors.toList());
+
+                    populateAccommodationCards(commonAccommodations);
+                } else {
+                    Log.d("REZ", "Bad");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Accommodation>> call, Throwable t) {
+                Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
+            }
+        });
+    }
+
+    private void spinnerSelected() {
         Spinner sortSpinner = rootView.findViewById(R.id.sortSpinner);
         int position = sortSpinner.getSelectedItemPosition();
         switch (position) {
@@ -146,7 +193,7 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
         populateAccommodationCards(accommodations);
     }
 
-    private void switchSpinner(){
+    private void switchSpinner() {
         Spinner sortSpinner = rootView.findViewById(R.id.sortSpinner);
         int position = sortSpinner.getSelectedItemPosition();
         switch (position) {
@@ -161,10 +208,11 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
         }
     }
 
-    private void setSpinnerSelection(int position){
+    private void setSpinnerSelection(int position) {
         Spinner sortSpinner = rootView.findViewById(R.id.sortSpinner);
         sortSpinner.setSelection(position);
     }
+
     private void showPopup() {
         FilterPopupDialog dialog = new FilterPopupDialog();
         dialog.setFilterDialogListener(this);
@@ -239,7 +287,7 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
     private void populateAccommodationCards(List<Accommodation> accommodations) {
         LinearLayout container = getView().findViewById(R.id.accommodation_cards_container);
         container.removeAllViews();
-        for (Accommodation accommodation : accommodations){
+        for (Accommodation accommodation : accommodations) {
             AccommodationCard fragment = new AccommodationCard();
 
             Bundle args = new Bundle();
@@ -281,13 +329,13 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
         }
     }
 
-    private void sortAscending(){
+    private void sortAscending() {
         accommodations = accommodations.stream()
                 .sorted(Comparator.comparing(Accommodation::getTitle))
                 .collect(Collectors.toList());
     }
 
-    private void sortDescending(){
+    private void sortDescending() {
         accommodations = accommodations.stream()
                 .sorted(Comparator.comparing(Accommodation::getTitle).reversed())
                 .collect(Collectors.toList());
