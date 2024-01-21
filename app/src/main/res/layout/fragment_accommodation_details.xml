@@ -95,33 +95,40 @@
                     android:orientation="horizontal"
                     android:paddingTop="16dp">
 
-                    <!-- First item: ShapeableImageView with the custom profile icon -->
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="28dp">
-
-                        <ImageView
-                            android:id="@+id/hostImageView"
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
-                            android:layout_gravity="center_vertical"
-                            android:adjustViewBounds="true"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/user_stock_image"
-                            app:strokeWidth="1dp" />
-                    </androidx.cardview.widget.CardView>
-
-                    <!-- Second item: Text "Hosted by Gradimir" -->
-                    <TextView
-                        android:id="@+id/details_host_name"
+                    <LinearLayout
+                        android:id="@+id/details_host_container"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="8dp"
-                        android:fontFamily="@font/montserrat_regular"
-                        android:textSize="16sp" />
+                        android:layout_height="wrap_content">
+
+                        <!-- First item: ShapeableImageView with the custom profile icon -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="28dp">
+
+                            <ImageView
+                                android:id="@+id/hostImageView"
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:layout_gravity="center_vertical"
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/user_stock_image"
+                                app:strokeWidth="1dp" />
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Second item: Text "Hosted by Gradimir" -->
+                        <TextView
+                            android:id="@+id/details_host_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:textSize="16sp" />
+                    </LinearLayout>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/details_host_edit"
@@ -130,7 +137,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="@string/edit"
-                        android:fontFamily="@font/montserrat_regular">
+                        android:fontFamily="@font/montserrat_regular"
+                        android:layout_marginLeft="40dp">
 
                     </com.google.android.material.button.MaterialButton>
 

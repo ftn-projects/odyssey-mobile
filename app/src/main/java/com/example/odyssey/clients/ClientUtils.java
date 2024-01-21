@@ -59,7 +59,7 @@ public class ClientUtils {
             .client(getClient())
             .build();
 
-    public static String getError(Response<ResponseBody> response, String defaultValue) {
+    public static String getError(Response<?> response, String defaultValue) {
         String error = defaultValue;
         if (response.headers().names().contains("Error-Type")) {
             try {

@@ -29,9 +29,16 @@
 
     <fragment
         android:id="@+id/nav_account"
-        android:name="com.example.odyssey.fragments.AccountFragment"
+        android:name="com.example.odyssey.fragments.user.AccountFragment"
         android:label="@string/account"
         tools:layout="@layout/fragment_account">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.odyssey.fragments.user.ProfileFragment"
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_profile">
     </fragment>
 
     <fragment
@@ -146,6 +153,12 @@
         android:id="@+id/nav_notifications"
         android:name="com.example.odyssey.fragments.NotificationListFragment"
         tools:layout="@layout/fragment_notification_list">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_report"
+        android:name="com.example.odyssey.fragments.ReportPopupDialog"
+        tools:layout="@layout/report_dialog">
     </fragment>
 
 </navigation>
