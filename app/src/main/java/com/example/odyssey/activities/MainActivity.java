@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     private NavController navController;
     private AppBarConfiguration appBarConfiguration;
-    private final String role = TokenUtils.getRole(); // edit to change role
+    private String role;
     private Toolbar toolbar;
     private BadgeDrawable notificationBadge = null;
     private StompClient stompClient = null;
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         toolbar = binding.activityHomeBase.toolbar;
+        role = TokenUtils.getRole();
         setContentView(binding.getRoot());
 
         setupActionBar();
