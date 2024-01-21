@@ -1,6 +1,7 @@
 package com.example.odyssey.clients;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Log;
 
 import com.example.odyssey.model.notifications.Notification;
@@ -17,13 +18,15 @@ import ua.naiksoftware.stomp.Stomp;
 
 public class StompClient {
     ua.naiksoftware.stomp.StompClient stompClient;
+    Context context;
 
-    public StompClient() {
-        this(ClientUtils.WEB_SOCKET_PATH);
+    public StompClient(Context context) {
+        this(context, ClientUtils.WEB_SOCKET_PATH);
     }
 
     @SuppressLint("CheckResult")
-    public StompClient(String url) {
+    public StompClient(Context context, String url) {
+        this.context = context;
         stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, url);
         stompClient.connect();
         stompClient.lifecycle().subscribe(lifecycleEvent -> {
@@ -50,7 +53,7 @@ public class StompClient {
                 .subscribe(stompMessage -> {
                     Log.d("(¬‿¬)", "Stomp message received: " + stompMessage.getPayload());
                     Long userId = Long.valueOf(stompMessage.getPayload());
-                    if (userId.equals(TokenUtils.getId())) {
+                    if (userId.equals(TokenUtils.getId(context))) {
                         runnable.run();
                     }
                 }, throwable -> Log.e("(¬‿¬)", "Stomp subscribe error", throwable));
@@ -72,7 +75,7 @@ public class StompClient {
                     Long userId = Long.valueOf(Objects.requireNonNull(map.get("userId")));
                     Long notificationId = Long.valueOf(Objects.requireNonNull(map.get("notificationId")));
 
-                    if (userId.equals(TokenUtils.getId())) {
+                    if (userId.equals(TokenUtils.getId(context))) {
                         consumer.accept(notificationId);
                     }
                 }, throwable -> Log.e("(¬‿¬)", "Stomp subscribe error", throwable));

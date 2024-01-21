@@ -214,7 +214,7 @@ public class AccountFragment extends Fragment {
                     return;
                 }
                 Toast.makeText(requireActivity(), "Account deactivated!", Toast.LENGTH_SHORT).show();
-                TokenUtils.removeToken();
+                TokenUtils.removeToken(requireContext());
                 Navigation.findNavController(requireActivity(), R.id.fragment_container_main).navigate(R.id.nav_home);
             }
 

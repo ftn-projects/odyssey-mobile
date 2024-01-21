@@ -139,7 +139,7 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
         super.onViewCreated(view, savedInstanceState);
         MaterialButtonToggleGroup toggleGroup = view.findViewById(R.id.favoriteButtonGroup);
         toggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
-            if (TokenUtils.getRole() == null || !TokenUtils.getRole().equals("GUEST")) {
+            if (TokenUtils.getRole(requireContext()) == null || !TokenUtils.getRole(requireContext()).equals("GUEST")) {
                 Toast.makeText(getContext(), "You must be logged in as a guest to use this feature", Toast.LENGTH_SHORT).show();
                 return;
             } else {
@@ -153,7 +153,7 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
     }
 
     private void getFavorites() {
-        Call<ArrayList<Accommodation>> call = ClientUtils.accommodationService.getFavorites(TokenUtils.getId());
+        Call<ArrayList<Accommodation>> call = ClientUtils.accommodationService.getFavorites(TokenUtils.getId(requireContext()));
         call.enqueue(new Callback<ArrayList<Accommodation>>() {
             @Override
             public void onResponse(Call<ArrayList<Accommodation>> call, Response<ArrayList<Accommodation>> response) {

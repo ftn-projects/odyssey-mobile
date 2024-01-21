@@ -377,7 +377,7 @@ public class HostStatsFragment extends Fragment {
     }
 
     private void getTotalStats() {
-        Call<TotalStats> call = ClientUtils.accommodationService.generatePeriodStats(TokenUtils.getId(), dates.get(0), dates.get(1));
+        Call<TotalStats> call = ClientUtils.accommodationService.generatePeriodStats(TokenUtils.getId(requireContext()), dates.get(0), dates.get(1));
 
         call.enqueue(new Callback<TotalStats>() {
             @Override
@@ -397,7 +397,7 @@ public class HostStatsFragment extends Fragment {
     }
 
     private void getAllAccommodationStats() {
-        Call<ArrayList<AccommodationTotalStats>> call = ClientUtils.accommodationService.getPeriodStatsAllAccommodation(TokenUtils.getId(), dates.get(0), dates.get(1));
+        Call<ArrayList<AccommodationTotalStats>> call = ClientUtils.accommodationService.getPeriodStatsAllAccommodation(TokenUtils.getId(requireContext()), dates.get(0), dates.get(1));
 
         call.enqueue(new Callback<ArrayList<AccommodationTotalStats>>() {
             @Override
@@ -428,7 +428,7 @@ public class HostStatsFragment extends Fragment {
     }
 
     private void downloadReport() {
-        Call<ResponseBody> call = ClientUtils.fileDownloadService.downloadHostReport(TokenUtils.getId(), dates.get(0), dates.get(1));
+        Call<ResponseBody> call = ClientUtils.fileDownloadService.downloadHostReport(TokenUtils.getId(requireContext()), dates.get(0), dates.get(1));
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

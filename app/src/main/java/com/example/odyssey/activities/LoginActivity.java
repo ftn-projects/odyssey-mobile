@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                         return;
                     }
 
-                    TokenUtils.saveToken(response.body().getToken());
+                    TokenUtils.saveToken(getApplicationContext(), response.body().getToken());
                     Log.d("REZ", "Good");
                     startActivity(intent);
                 } else {

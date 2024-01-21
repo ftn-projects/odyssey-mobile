@@ -71,7 +71,7 @@ public class ReviewSectionFragment extends Fragment {
         } else {
             Log.e("SubmitReviewFragment", "Invalid type");
         }
-        if (TokenUtils.getRole()==null || ( TokenUtils.getRole().equals("GUEST") || TokenUtils.getRole().equals("USER") )) {
+        if (TokenUtils.getRole(requireContext())==null || ( TokenUtils.getRole(requireContext()).equals("GUEST") || TokenUtils.getRole(requireContext()).equals("USER") )) {
             createReviewCreation();
         }
         createReviewList();

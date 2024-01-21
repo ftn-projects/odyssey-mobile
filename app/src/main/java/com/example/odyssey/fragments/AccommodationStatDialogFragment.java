@@ -120,7 +120,7 @@ public class AccommodationStatDialogFragment extends DialogFragment {
 
 
     private void downloadReport() {
-        Call<ResponseBody> call = ClientUtils.fileDownloadService.downloadAccommodationReport(TokenUtils.getId(), accommodationStats.getStart(), accommodationStats.getEnd());
+        Call<ResponseBody> call = ClientUtils.fileDownloadService.downloadAccommodationReport(TokenUtils.getId(requireContext()), accommodationStats.getStart(), accommodationStats.getEnd());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

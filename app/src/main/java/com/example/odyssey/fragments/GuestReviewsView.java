@@ -55,7 +55,7 @@ public class GuestReviewsView extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guest_reviews_view, container, false);
         reviewsContainer = view.findViewById(R.id.guest_reviews_view_container);
-        setGuestId(TokenUtils.getId());
+        setGuestId(TokenUtils.getId(requireContext()));
         return view;
     }
 

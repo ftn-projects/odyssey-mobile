@@ -60,7 +60,7 @@ public class HostAccommodationsView extends Fragment {
     }
 
     private void getAccommodations(){
-        Call<ArrayList<Accommodation>> call = ClientUtils.accommodationService.findByHostId(TokenUtils.getId());
+        Call<ArrayList<Accommodation>> call = ClientUtils.accommodationService.findByHostId(TokenUtils.getId(requireContext()));
         call.enqueue(new Callback<ArrayList<Accommodation>>() {
             @Override
             public void onResponse(Call<ArrayList<Accommodation>> call, Response<ArrayList<Accommodation>> response) {

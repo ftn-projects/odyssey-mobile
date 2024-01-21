@@ -51,7 +51,7 @@ public class UserManagementAdapter extends ArrayAdapter<UserWithReports> {
         ImageView profileImage = convertView.findViewById(R.id.profile_image);
 
         String displayName = user.getName() + " " + user.getSurname();
-        if (user.getId().equals(TokenUtils.getId()))
+        if (user.getId().equals(TokenUtils.getId(getContext())))
             displayName += " (You)";
         nameView.setText(displayName);
         roleView.setText(user.getRole());

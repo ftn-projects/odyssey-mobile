@@ -46,7 +46,7 @@ public class NotificationListFragment extends Fragment {
 
         read = null;
         if (stompClient != null) stompClient.disconnect();
-        stompClient = new StompClient();
+        stompClient = new StompClient(requireContext());
         stompClient.subscribe(() -> updateNotifications(read));
     }
 
@@ -71,7 +71,7 @@ public class NotificationListFragment extends Fragment {
 
     public void updateNotifications(Boolean read) {
         this.read = read;
-        ClientUtils.notificationService.findByUserId(TokenUtils.getId(), null, read).enqueue(new Callback<List<Notification>>() {
+        ClientUtils.notificationService.findByUserId(TokenUtils.getId(requireContext()), null, read).enqueue(new Callback<List<Notification>>() {
             @Override
             public void onResponse(@NonNull Call<List<Notification>> call, @NonNull Response<List<Notification>> response) {
                 if (response.isSuccessful()) {

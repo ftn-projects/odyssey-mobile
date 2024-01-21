@@ -66,7 +66,7 @@ public class ReportPopupDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.report_dialog, container, false);
 
         TextView reporter = view.findViewById(R.id.reporterName);
-        getNameAndSurname(TokenUtils.getId(), reporter);
+        getNameAndSurname(TokenUtils.getId(requireContext()), reporter);
 
         TextView reporting = view.findViewById(R.id.reportingName);
         getNameAndSurname(reported, reporting);
@@ -75,7 +75,7 @@ public class ReportPopupDialog extends DialogFragment {
 
         Button report = view.findViewById(R.id.buttonReport);
         report.setOnClickListener(v -> {
-            UserReportSubmission rep = new UserReportSubmission(description.getText().toString(), TokenUtils.getId(), reported);
+            UserReportSubmission rep = new UserReportSubmission(description.getText().toString(), TokenUtils.getId(requireContext()), reported);
             makeReport(rep);
         });
 
@@ -112,9 +112,9 @@ public class ReportPopupDialog extends DialogFragment {
     }
 
     public void makeReport(UserReportSubmission rep) {
-        Long host = TokenUtils.getRole().equals("HOST") ? TokenUtils.getId() : reported;
-        Long guest = TokenUtils.getRole().equals("GUEST") ? TokenUtils.getId() : reported;
-        boolean isHost = host.equals(TokenUtils.getId());
+        Long host = TokenUtils.getRole(requireContext()).equals("HOST") ? TokenUtils.getId(requireContext()) : reported;
+        Long guest = TokenUtils.getRole(requireContext()).equals("GUEST") ? TokenUtils.getId(requireContext()) : reported;
+        boolean isHost = host.equals(TokenUtils.getId(requireContext()));
         List<String> statuses = new ArrayList<>();
         statuses.add("ACCEPTED");
 

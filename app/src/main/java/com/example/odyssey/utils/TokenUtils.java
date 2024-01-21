@@ -1,5 +1,7 @@
 package com.example.odyssey.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Base64;
 import android.util.Log;
 
@@ -11,22 +13,32 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
 public class TokenUtils {
-    private static final String TOKEN_PROPERTY_KEY = "odyssey_token";
+    public static final String TOKEN_PROPERTY_KEY = "odyssey_token";
+    public static final String APPLICATION_PREFERENCES_KEY = "odyssey_preferences";
 
-    public static void removeToken() {
-        System.clearProperty(TOKEN_PROPERTY_KEY);
+    public static void removeToken(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(APPLICATION_PREFERENCES_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove(TOKEN_PROPERTY_KEY).apply();
     }
 
-    public static void saveToken(String token) {
-        System.setProperty(TOKEN_PROPERTY_KEY, token);
+    public static void saveToken(Context context, String token) {
+        SharedPreferences preferences = context.getSharedPreferences(APPLICATION_PREFERENCES_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(TOKEN_PROPERTY_KEY, token).apply();
     }
 
-    public static String getToken() {
-        return System.getProperty(TOKEN_PROPERTY_KEY);
+    public static String getToken(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(APPLICATION_PREFERENCES_KEY, Context.MODE_PRIVATE);
+        return preferences.getString(TOKEN_PROPERTY_KEY, null);
     }
 
-    public static Token decodeToken() {
-        String token = getToken();
+    public static String getToken(SharedPreferences preferences) {
+        return preferences.getString(TOKEN_PROPERTY_KEY, null);
+    }
+
+    public static Token decodeToken(Context context) {
+        String token = getToken(context);
         if (token == null) return new Token();
 
         try {
@@ -49,16 +61,12 @@ public class TokenUtils {
         return new String(decodedBytes, StandardCharsets.UTF_8);
     }
 
-    public static String getRole() {
-        return decodeToken().getRole();
+    public static String getRole(Context context) {
+        return decodeToken(context).getRole();
     }
 
-    public static String getEmail() {
-        return decodeToken().getEmail();
-    }
-
-    public static Long getId() {
-        return decodeToken().getId();
+    public static Long getId(Context context) {
+        return decodeToken(context).getId();
     }
 
     public static class Token {

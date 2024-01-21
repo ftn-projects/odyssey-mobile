@@ -66,7 +66,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Long loggedInId = TokenUtils.getId(), id = loggedInId;
+        Long loggedInId = TokenUtils.getId(requireContext()), id = loggedInId;
         if (getArguments() != null && getArguments().containsKey(ARG_USER_ID))
             id = getArguments().getLong(ARG_USER_ID);
 
@@ -96,7 +96,7 @@ public class ProfileFragment extends Fragment {
         reviewBtn.setOnClickListener(v1 -> submitReview());
 
         Button reportButton = v.findViewById(R.id.report_button);
-        reportButton.setVisibility(isLogged || TokenUtils.getId() == null ? View.GONE : View.VISIBLE);
+        reportButton.setVisibility(isLogged || TokenUtils.getId(requireContext()) == null ? View.GONE : View.VISIBLE);
         reportButton.setOnClickListener(v1 -> submitReport());
         Button editButton = v.findViewById(R.id.edit_button);
         editButton.setVisibility(isLogged ? View.VISIBLE : View.GONE);
@@ -134,7 +134,7 @@ public class ProfileFragment extends Fragment {
     public void submitReview() {
         Double rating = (double) ratingBar.getRating();
         String comment = Objects.requireNonNull(reviewInput.getText()).toString().trim();
-        if (TokenUtils.getId() == null || !TokenUtils.getRole().equals("GUEST")) {
+        if (TokenUtils.getId(requireContext()) == null || !TokenUtils.getRole(requireContext()).equals("GUEST")) {
             Toast.makeText(requireActivity(), "You must be logged in as a guest to make a review", Toast.LENGTH_LONG).show();
             return;
         }
@@ -243,9 +243,9 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getLoggedIn() {
-        if (TokenUtils.getId() == null) return;
+        if (TokenUtils.getId(requireContext()) == null) return;
 
-        ClientUtils.userService.findById(TokenUtils.getId()).enqueue(new Callback<User>() {
+        ClientUtils.userService.findById(TokenUtils.getId(requireContext())).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 if (!response.isSuccessful()) {

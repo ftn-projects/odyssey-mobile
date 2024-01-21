@@ -52,7 +52,7 @@ public class UserManagementDetailsFragment extends Fragment {
         if (user == null)
             throw new RuntimeException("User is null");
 
-        isAdmin = TokenUtils.getId().equals(user.getId());
+        isAdmin = TokenUtils.getId(requireContext()).equals(user.getId());
     }
 
     @Override

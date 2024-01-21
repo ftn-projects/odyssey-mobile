@@ -195,7 +195,7 @@ public class SubmitReviewFragment extends Fragment {
         });
     }
     private void getCurrentUser() {
-        Call<User> getUserCall = ClientUtils.userService.findById(TokenUtils.getId());
+        Call<User> getUserCall = ClientUtils.userService.findById(TokenUtils.getId(requireContext()));
         getUserCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {

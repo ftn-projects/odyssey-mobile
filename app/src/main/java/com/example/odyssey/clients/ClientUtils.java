@@ -1,5 +1,7 @@
 package com.example.odyssey.clients;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.odyssey.BuildConfig;
@@ -25,6 +27,28 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ClientUtils {
     public static final String SERVICE_API_PATH = "http://" + BuildConfig.SERVER_IP + "/api/v1/";
     public static final String WEB_SOCKET_PATH = "ws://" + BuildConfig.SERVER_IP + "/websocket";
+    public static SharedPreferences preferences = null;
+
+    public static void setPreferences(SharedPreferences preferences) {
+        ClientUtils.preferences = preferences;
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(SERVICE_API_PATH)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(getClient())
+                .build();
+
+        amenityService = retrofit.create(AmenityService.class);
+        authService = retrofit.create(AuthService.class);
+        userService = retrofit.create(UserService.class);
+        accommodationService = retrofit.create(AccommodationService.class);
+        reviewService = retrofit.create(ReviewService.class);
+        accommodationRequestService = retrofit.create(AccommodationRequestService.class);
+        reservationService = retrofit.create(ReservationService.class);
+        fileDownloadService = retrofit.create(FileDownloadService.class);
+        reportService = retrofit.create(ReportService.class);
+        notificationService = retrofit.create(NotificationService.class);
+    }
 
     /*
      * Ovo ce nam sluziti za debug, da vidimo da li zahtevi i odgovori idu
@@ -38,7 +62,7 @@ public class ClientUtils {
                 .connectTimeout(120, TimeUnit.SECONDS)
                 .readTimeout(120, TimeUnit.SECONDS)
                 .writeTimeout(120, TimeUnit.SECONDS)
-                .addInterceptor(loggingInterceptor).addInterceptor(new AuthInterceptor()).build();
+                .addInterceptor(loggingInterceptor).addInterceptor(new AuthInterceptor(preferences)).build();
     }
 
     /*

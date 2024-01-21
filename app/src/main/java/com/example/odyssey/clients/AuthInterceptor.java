@@ -1,6 +1,8 @@
 package com.example.odyssey.clients;
 
 
+import android.content.SharedPreferences;
+
 import androidx.annotation.NonNull;
 
 import com.example.odyssey.utils.TokenUtils;
@@ -12,10 +14,18 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class AuthInterceptor implements Interceptor {
+    SharedPreferences preferences;
+
+    public AuthInterceptor(SharedPreferences preferences) {
+        this.preferences = preferences;
+    }
+
     @NonNull
     @Override
-    public Response intercept(Chain chain) throws IOException {
-        String accessToken = TokenUtils.getToken();
+    public Response intercept(@NonNull Chain chain) throws IOException {
+        if (preferences == null) return chain.proceed(chain.request());
+
+        String accessToken = TokenUtils.getToken(preferences);
         Request request = chain.request();
 
         if (request.header("skip") == null && accessToken != null)

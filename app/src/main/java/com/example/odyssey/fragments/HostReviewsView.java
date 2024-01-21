@@ -67,7 +67,7 @@ public class HostReviewsView extends Fragment {
     private void getAccommodationReviews(){
         ArrayList<Review.Status> statuses = new ArrayList<>();
         statuses.add(Review.Status.ACCEPTED);
-        Call<ArrayList<AccommodationReview>> call = ClientUtils.reviewService.getAllAccommodationReviewsByHostId(TokenUtils.getId(), statuses);
+        Call<ArrayList<AccommodationReview>> call = ClientUtils.reviewService.getAllAccommodationReviewsByHostId(TokenUtils.getId(requireContext()), statuses);
         call.enqueue(new Callback<ArrayList<AccommodationReview>>() {
             @Override
             public void onResponse(Call<ArrayList<AccommodationReview>> call, Response<ArrayList<AccommodationReview>> response) {
@@ -91,7 +91,7 @@ public class HostReviewsView extends Fragment {
     private void getHostReviews(){
         ArrayList<Review.Status> statuses = new ArrayList<>();
         statuses.add(Review.Status.ACCEPTED);
-        Call<ArrayList<HostReview>> call = ClientUtils.reviewService.getAllHostReviews(TokenUtils.getId(), null,statuses);
+        Call<ArrayList<HostReview>> call = ClientUtils.reviewService.getAllHostReviews(TokenUtils.getId(requireContext()), null,statuses);
         call.enqueue(new Callback<ArrayList<HostReview>>() {
             @Override
             public void onResponse(Call<ArrayList<HostReview>> call, Response<ArrayList<HostReview>> response) {

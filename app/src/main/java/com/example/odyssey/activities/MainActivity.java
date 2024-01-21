@@ -66,9 +66,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d("(¬‿¬)", "HomeActivity onCreate()");
 
+        if (TokenUtils.getToken(getApplicationContext()) == null) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         toolbar = binding.activityHomeBase.toolbar;
-        role = TokenUtils.getRole();
+        role = TokenUtils.getRole(getApplicationContext());
         setContentView(binding.getRoot());
 
         setupActionBar();
@@ -99,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (role != null) {
             navView.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(item -> {
-                TokenUtils.removeToken();
+                TokenUtils.removeToken(getApplicationContext());
                 restart();
                 return true;
             });
@@ -170,17 +177,17 @@ R.id.nav_host_stats, R.id.nav_admin_accommodations, R.id.nav_host_accommodations
 
     private void setupStompClient() {
         if (badgeClient == null) {
-            badgeClient = new StompClient();
+            badgeClient = new StompClient(getApplicationContext());
             badgeClient.subscribe(this::updateNotificationCount);
         }
         if (notificationClient == null) {
-            notificationClient = new StompClient();
+            notificationClient = new StompClient(getApplicationContext());
             notificationClient.subscribe(this::sendNotificationId);
         }
     }
 
     private void updateNotificationCount() {
-        ClientUtils.notificationService.findByUserId(TokenUtils.getId(), null, false).enqueue(new Callback<List<Notification>>() {
+        ClientUtils.notificationService.findByUserId(TokenUtils.getId(getApplicationContext()), null, false).enqueue(new Callback<List<Notification>>() {
             @Override
             public void onResponse(@NonNull Call<List<Notification>> call, @NonNull Response<List<Notification>> response) {
                 if (response.isSuccessful()) {

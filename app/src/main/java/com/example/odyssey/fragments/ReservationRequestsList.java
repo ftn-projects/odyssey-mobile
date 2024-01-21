@@ -174,7 +174,7 @@ public class ReservationRequestsList extends Fragment {
         }
 
         Call<List<AccreditReservation>> call = ClientUtils.reservationService.getReservationsByHost(
-                TokenUtils.getId(),
+                TokenUtils.getId(requireContext()),
                 titleText,
                 statuses,
                 starting,

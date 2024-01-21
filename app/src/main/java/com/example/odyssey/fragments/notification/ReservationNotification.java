@@ -99,7 +99,7 @@ public class ReservationNotification extends Fragment {
         if(reservation.getGuestNumber()!=null) guestNumber.setText(reservation.getGuestNumber().toString());
         if(reservation.getStart()!=null) startDate.setText(reservation.getStart().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         if(reservation.getStart()!=null) endDate.setText(reservation.getEnd().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        if(TokenUtils.getRole().equals("GUEST")) guesthost.setText(reservation.getAccommodation().getHost().getName() + " " + reservation.getAccommodation().getHost().getSurname());
+        if(TokenUtils.getRole(requireContext()).equals("GUEST")) guesthost.setText(reservation.getAccommodation().getHost().getName() + " " + reservation.getAccommodation().getHost().getSurname());
         else guesthost.setText(reservation.getGuest().getName() + " " + reservation.getGuest().getSurname());
         return v;
     }

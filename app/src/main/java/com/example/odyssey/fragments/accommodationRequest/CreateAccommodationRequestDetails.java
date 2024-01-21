@@ -61,7 +61,7 @@ public class CreateAccommodationRequestDetails extends Fragment {
             request = (AccommodationRequestSubmission) getArguments().getSerializable(ARG_REQUEST);
         else {
             request = new AccommodationRequestSubmission();
-            request.setHostId(TokenUtils.getId());
+            request.setHostId(TokenUtils.getId(requireContext()));
             request.setAccommodationId(accommodationId);
             request.setRequestType(accommodationId == null ?
                     AccommodationRequestSubmission.Type.CREATE : AccommodationRequestSubmission.Type.UPDATE);

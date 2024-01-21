@@ -59,7 +59,7 @@ public class ReservationListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        hostMode = TokenUtils.getRole().equals("HOST");
+        hostMode = TokenUtils.getRole(requireContext()).equals("HOST");
     }
 
     @Override
@@ -177,8 +177,8 @@ public class ReservationListFragment extends Fragment {
 
         Call<List<AccreditReservation>> call;
         if (hostMode)
-            call = ClientUtils.reservationService.getReservationsByHost(TokenUtils.getId(), titleText, statuses, starting, ending);
-        else call = ClientUtils.reservationService.getReservationsByGuest(TokenUtils.getId(), titleText, statuses, starting, ending);
+            call = ClientUtils.reservationService.getReservationsByHost(TokenUtils.getId(requireContext()), titleText, statuses, starting, ending);
+        else call = ClientUtils.reservationService.getReservationsByGuest(TokenUtils.getId(requireContext()), titleText, statuses, starting, ending);
 
         call.enqueue(new Callback<List<AccreditReservation>>() {
             @Override

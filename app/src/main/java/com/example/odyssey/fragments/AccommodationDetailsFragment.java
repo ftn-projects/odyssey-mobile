@@ -520,7 +520,7 @@ public class AccommodationDetailsFragment extends Fragment {
             Toast.makeText(requireActivity(), "Invalid input data", Toast.LENGTH_LONG).show();
             return;
         }
-        if (TokenUtils.getId() == null || TokenUtils.getRole().equals("USER")) {
+        if (TokenUtils.getId(requireContext()) == null || TokenUtils.getRole(requireContext()).equals("USER")) {
             Toast.makeText(requireActivity(), "You must be logged in as a user to make a reservation", Toast.LENGTH_LONG).show();
             return;
         }
@@ -554,7 +554,7 @@ public class AccommodationDetailsFragment extends Fragment {
     }
 
     private void getCurrentUser() {
-        Call<User> getUserCall = ClientUtils.userService.findById(TokenUtils.getId());
+        Call<User> getUserCall = ClientUtils.userService.findById(TokenUtils.getId(requireContext()));
         getUserCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
@@ -584,6 +584,6 @@ public class AccommodationDetailsFragment extends Fragment {
     };
 
     private boolean isOwnerMode() {
-        return accommodation.getHost().getId().equals(TokenUtils.getId());
+        return accommodation.getHost().getId().equals(TokenUtils.getId(requireContext()));
     }
 }

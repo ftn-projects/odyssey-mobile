@@ -96,12 +96,12 @@ public class HostReviewCard extends Fragment {
         trashIcon = view.findViewById(R.id.accommodation_review_trash_icon);
         flagIcon = view.findViewById(R.id.accommodation_review_flag_icon);
 
-        if(TokenUtils.getId() != null && hostReview.getSubmitter().getId() == TokenUtils.getId()){
+        if(TokenUtils.getId(requireContext()) != null && hostReview.getSubmitter().getId() == TokenUtils.getId(requireContext())){
             trashIcon.setVisibility(View.VISIBLE);
         }
         else trashIcon.setVisibility(View.GONE);
 
-        if(TokenUtils.getId() != null && hostReview.getHost().getId() == TokenUtils.getId())
+        if(TokenUtils.getId(requireContext()) != null && hostReview.getHost().getId() == TokenUtils.getId(requireContext()))
         {
             flagIcon.setVisibility(View.VISIBLE);
         }

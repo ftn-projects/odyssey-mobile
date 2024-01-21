@@ -165,14 +165,14 @@ public class AccommodationCard extends Fragment {
     }
 
     private void checkFavorites(Boolean executable) {
-        if(TokenUtils.getId()==null || !TokenUtils.getRole().equals("GUEST")) {
+        if(TokenUtils.getId(requireContext())==null || !TokenUtils.getRole(requireContext()).equals("GUEST")) {
             if(executable){
                 Toast.makeText(getContext(), "You must be logged in as a guest to favorite accommodations", Toast.LENGTH_SHORT).show();
             }
             return;
         }
 
-        Call<ArrayList<Accommodation>> call = ClientUtils.accommodationService.getFavorites(TokenUtils.getId());
+        Call<ArrayList<Accommodation>> call = ClientUtils.accommodationService.getFavorites(TokenUtils.getId(requireContext()));
         call.enqueue(new Callback<ArrayList<Accommodation>>() {
             @Override
             public void onResponse(Call<ArrayList<Accommodation>> call, Response<ArrayList<Accommodation>> response) {
@@ -208,7 +208,7 @@ public class AccommodationCard extends Fragment {
 
 
     private void addFavorite(){
-        Call<Void> call = ClientUtils.accommodationService.addFavorite(TokenUtils.getId(), accommodation.getId());
+        Call<Void> call = ClientUtils.accommodationService.addFavorite(TokenUtils.getId(requireContext()), accommodation.getId());
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -231,7 +231,7 @@ public class AccommodationCard extends Fragment {
     }
 
     private void removeFavorite(){
-        Call<Void> call = ClientUtils.accommodationService.removeFavorite(TokenUtils.getId(), accommodation.getId());
+        Call<Void> call = ClientUtils.accommodationService.removeFavorite(TokenUtils.getId(requireContext()), accommodation.getId());
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
