@@ -168,6 +168,7 @@
         android:name="com.example.odyssey.fragments.notification.ReservationNotification"
         android:label="Notification"
         tools:layout="@layout/fragment_notification_list">
+    </fragment>
       
     <fragment
         android:id="@+id/nav_report"
@@ -191,6 +192,24 @@
         android:id="@+id/nav_accommodation_request_details"
         android:name="com.example.odyssey.fragments.accommodation.AccommodationRequestDetailsFragment"
         tools:layout="@layout/fragment_accommodation_request_details">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_review_accommodation_details"
+        android:name="com.example.odyssey.fragments.review.AccommodationReviewDetails"
+        tools:layout="@layout/fragment_accommodation_review_details">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_review_host_details"
+        android:name="com.example.odyssey.fragments.review.HostReviewDetails"
+        tools:layout="@layout/fragment_host_review_details">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_review_management"
+        android:name="com.example.odyssey.fragments.review.ReviewManagementFragment"
+        tools:layout="@layout/fragment_review_management">
     </fragment>
 
 </navigation>

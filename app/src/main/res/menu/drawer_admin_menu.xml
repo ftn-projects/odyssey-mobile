@@ -19,7 +19,7 @@
             android:icon="@drawable/ic_manage_users"
             android:orderInCategory="3" />
 
-        <item android:id="@+id/nav_admin_reviews"
+        <item android:id="@+id/nav_review_management"
             android:title="@string/admin_reviews"
             android:icon="@drawable/ic_manage_reviews"
             android:orderInCategory="4" />

@@ -5,14 +5,14 @@ import com.example.odyssey.model.users.User;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Review implements Serializable {
+public abstract class Review implements Serializable {
     private Long id;
     private Double rating;
     private String comment;
     private LocalDateTime submissionDate;
     private User submitter;
     private Status status;
-    public enum Status {REQUESTED, DECLINED, ACCEPTED}
+    public enum Status {REQUESTED, DECLINED, ACCEPTED, REPORTED}
 
     public Review(Long id, Double rating, String comment, LocalDateTime submissionDate, User submitter, Status status) {
         this.id = id;
@@ -22,6 +22,8 @@ public class Review implements Serializable {
         this.submitter = submitter;
         this.status = status;
     }
+
+    public abstract String getTitle();
 
     public Long getId() {
         return id;

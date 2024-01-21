@@ -5,6 +5,7 @@ import com.example.odyssey.model.reviews.HostReview;
 import com.example.odyssey.model.reviews.Review;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -17,6 +18,12 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ReviewService {
+    @GET("reviews")
+    Call<List<Review>> getAll(
+            @Query("search") String search,
+            @Query("statuses") List<Review.Status> statuses,
+            @Query("types") List<String> types
+    );
 
     @GET("reviews/accommodation")
     Call<ArrayList<AccommodationReview>> getAllAccommodationReviews(
@@ -68,4 +75,12 @@ public interface ReviewService {
     @DELETE("reviews/host/{id}")
     Call<ResponseBody> deleteHostReview(@Path("id") Long id);
 
+    @PUT("reviews/accept/{id}")
+    Call<ResponseBody> accept(@Path("id") Long id);
+
+    @PUT("reviews/decline/{id}")
+    Call<ResponseBody> decline(@Path("id") Long id);
+
+    @PUT("reviews/dismiss/{id}")
+    Call<ResponseBody> dismiss(@Path("id") Long id);
 }

@@ -22,4 +22,8 @@ private Accommodation accommodation;
         this.accommodation = accommodation;
     }
 
+    @Override
+    public String getTitle() {
+        return accommodation.getTitle();
+    }
 }

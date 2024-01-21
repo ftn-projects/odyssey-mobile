@@ -47,7 +47,7 @@ public class NotificationListFragment extends Fragment {
         read = null;
         if (stompClient != null) stompClient.disconnect();
         stompClient = new StompClient();
-        stompClient.subscribe("/topic/notifications", () -> updateNotifications(read));
+        stompClient.subscribe(() -> updateNotifications(read));
     }
 
     @Override

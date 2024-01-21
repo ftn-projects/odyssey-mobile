@@ -81,7 +81,6 @@ public class UserManagementDetailsFragment extends Fragment {
         String imagePath = ClientUtils.SERVICE_API_PATH + "users/image/" + user.getId();
         Glide.with(requireContext()).load(imagePath).into(profileImage);
 
-
         loadData();
         return v;
     }
