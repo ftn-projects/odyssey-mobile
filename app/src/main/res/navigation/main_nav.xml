@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.odyssey.fragments.HomeFragment"
+        android:label="@string/home"
+        tools:layout="@layout/fragment_home">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_guest_reviews"
+        android:name="com.example.odyssey.fragments.GuestReviewsView"
+        android:label="My Reviews"
+        tools:layout="@layout/fragment_guest_reviews_view">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_host_accommodations_view"
+        android:name="com.example.odyssey.fragments.HostAccommodationsView"
+        android:label="My Accommodations"
+        tools:layout="@layout/fragment_host_accommodations_view">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_account"
+        android:name="com.example.odyssey.fragments.user.AccountFragment"
+        android:label="@string/account"
+        tools:layout="@layout/fragment_account">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.odyssey.fragments.user.ProfileFragment"
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_profile">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_guest_reservations"
+        android:name="com.example.odyssey.fragments.GuestsReservationsList"
+        android:label="@string/guest_reservations"
+        tools:layout="@layout/fragment_guests_reservations_list">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_host_reviews"
+        android:name="com.example.odyssey.fragments.HostReviewsView"
+        android:label="My Reviews"
+        tools:layout="@layout/fragment_host_reviews_view">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_host_reservations"
+        android:name="com.example.odyssey.fragments.ReservationListFragment"
+        android:label="@string/host_reservations"
+        tools:layout="@layout/fragment_reservation_list">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_host_reservation_requests"
+        android:name="com.example.odyssey.fragments.ReservationRequestsList"
+        android:label="Reservation requests"
+        tools:layout="@layout/fragment_reservation_requests_list">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_host_stats"
+        android:name="com.example.odyssey.fragments.HostStatsFragment"
+        android:label="@string/host_stats"
+        tools:layout="@layout/fragment_home">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_admin_users"
+        android:name="com.example.odyssey.fragments.HomeFragment"
+        android:label="@string/admin_users"
+        tools:layout="@layout/fragment_home">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_admin_reviews"
+        android:name="com.example.odyssey.fragments.HomeFragment"
+        android:label="@string/admin_reviews"
+        tools:layout="@layout/fragment_home">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_admin_accommodations"
+        android:name="com.example.odyssey.fragments.accommodation.AccommodationManagementFragment"
+        android:label="@string/admin_accommodations"
+        tools:layout="@layout/fragment_accommodation_management">
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_accommodation_details"
+        android:name="com.example.odyssey.fragments.AccommodationDetailsFragment"
+        android:label="Details"
+        tools:layout="@layout/fragment_accommodation_details">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_accommodation_create_details"
+        android:name="com.example.odyssey.fragments.accommodationRequest.CreateAccommodationRequestDetails"
+        tools:layout="@layout/fragment_create_accommodation_request_details">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_accommodation_create_amenities"
+        android:name="com.example.odyssey.fragments.accommodationRequest.CreateAccommodationRequestAmenities"
+        tools:layout="@layout/fragment_create_accommodation_request_amenities">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_accommodation_create_images"
+        android:name="com.example.odyssey.fragments.accommodationRequest.CreateAccommodationRequestImages"
+        tools:layout="@layout/fragment_create_accommodation_request_images">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_accommodation_create_slots"
+        android:name="com.example.odyssey.fragments.accommodationRequest.CreateAccommodationRequestSlots"
+        tools:layout="@layout/fragment_create_accommodation_request_slots">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_accommodation_create_map"
+        android:name="com.example.odyssey.fragments.accommodationRequest.CreateAccommodationRequestMap"
+        tools:layout="@layout/fragment_create_accommodation_request_map">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_notifications"
+        android:name="com.example.odyssey.fragments.notification.NotificationListFragment"
+        android:label="@string/notifications"
+        tools:layout="@layout/fragment_notification_list">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_generic_notification"
+        android:name="com.example.odyssey.fragments.notification.GenericNotification"
+        android:label="Notification"
+        tools:layout="@layout/fragment_notification_list">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_accommodation_notification"
+        android:name="com.example.odyssey.fragments.notification.AccommodationReviewNotification"
+        android:label="Notification"
+        tools:layout="@layout/fragment_accommodation_review_notification">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_host_notification"
+        android:name="com.example.odyssey.fragments.notification.HostReviewNotification"
+        android:label="Notification"
+        tools:layout="@layout/fragment_host_review_notification">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_reservation_notification"
+        android:name="com.example.odyssey.fragments.notification.ReservationNotification"
+        android:label="Notification"
+        tools:layout="@layout/fragment_reservation_notification">
+    </fragment>
+      
+    <fragment
+        android:id="@+id/nav_report"
+        android:name="com.example.odyssey.fragments.ReportPopupDialog"
+        tools:layout="@layout/report_dialog">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_user_management"
+        android:name="com.example.odyssey.fragments.user.UserManagementFragment"
+        tools:layout="@layout/fragment_user_management">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_user_management_details"
+        android:name="com.example.odyssey.fragments.user.UserManagementDetailsFragment"
+        tools:layout="@layout/fragment_user_management_details">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_accommodation_request_details"
+        android:name="com.example.odyssey.fragments.accommodation.AccommodationRequestDetailsFragment"
+        tools:layout="@layout/fragment_accommodation_request_details">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_review_accommodation_details"
+        android:name="com.example.odyssey.fragments.review.AccommodationReviewDetails"
+        tools:layout="@layout/fragment_accommodation_review_details">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_review_host_details"
+        android:name="com.example.odyssey.fragments.review.HostReviewDetails"
+        tools:layout="@layout/fragment_host_review_details">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_review_management"
+        android:name="com.example.odyssey.fragments.review.ReviewManagementFragment"
+        tools:layout="@layout/fragment_review_management">
+    </fragment>
+
+</navigation>

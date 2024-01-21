@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/searchPopup"
+    android:layout_margin="15dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/rounded_corners_filter">
+
+
+        <!-- Header Section -->
+        <RelativeLayout
+            android:id="@+id/headerSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/headerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Search"
+                android:fontFamily="@font/montserrat_regular"
+                android:textSize="18sp"/>
+
+            <ImageView
+                android:id="@+id/closeIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_close_icon"
+                android:contentDescription="Close"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/search_close_button"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="Close"
+                android:background="@drawable/ic_close_icon"
+                android:layout_gravity="center_vertical"
+                android:gravity="fill_vertical|center_horizontal"/>
+
+        </RelativeLayout>
+
+        <!-- Scrollable Section -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="15dp">
+
+                    <!-- First Element: TextView - Date range -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date range"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:textStyle="bold"/>
+
+                    <!-- Second Element: LinearLayout with two TextViews - Starting and End dates -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp">
+
+                        <TextView
+                            android:id="@+id/startDateTextFilter"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Starting date not selected"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:textSize="12sp"/>
+
+                        <TextView
+                            android:id="@+id/endDateTextFilter"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="End date not selected"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:gravity="end"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+
+                    <!-- Third Element: MaterialButton - Select date -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/selectDateButtonFilter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Select date"
+                        android:fontFamily="@font/montserrat_regular"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="25dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" Location"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/locationInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Location"
+                        android:fontFamily="@font/montserrat_regular"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="25dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Guests"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/NumberOfGuestsFilter"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Number of guests"
+                        android:layout_marginTop="10dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/NumberOfGuestsEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:inputType="number" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </ScrollView>
+        <!-- Footer Section -->
+        <LinearLayout
+            android:id="@+id/footerSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/clearAllText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="@string/clear_filter"
+                android:textSize="16sp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/search_apply_button"
+                android:layout_width="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Apply"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+

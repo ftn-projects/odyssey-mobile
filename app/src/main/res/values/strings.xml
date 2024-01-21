@@ -1,11 +1,31 @@
 <resources>
-    <string name="app_name">Odyssey</string>
-    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="app_name" translatable="false">Odyssey</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="clear_filter"><u>Clear all</u></string>
+    <string name="read_more"><u>Read more</u></string>
+    <string name="placeholder_date"><u>Dec 12-17</u></string>
+    <string name="navigation_drawer_open">Navigation Drawer Open</string>
+    <string name="navigation_drawer_close">Navigation Drawer Close</string>
+    <string name="home">Home</string>
+    <string name="account">Account</string>
+    <string name="search">Search</string>
+    <string name="admin_users">Users management</string>
+    <string name="admin_reviews">Reviews management</string>
+    <string name="admin_accommodations">Accommodations management</string>
+    <string name="guest_reservations">My reservations</string>
+    <string name="host_accommodations">My accommodations</string>
+    <string name="host_reservations">Reservations</string>
+    <string name="host_stats">Stats</string>
+    <string name="logout">Log out</string>
+
+    <string name="example_name_surname">Petar Petrović</string>
+    <string name="example_name">Petar</string>
+    <string name="example_surname">Petrović</string>
+    <string name="example_email">petar.petrovic@gmail.com</string>
+    <string name="example_street">Bulevar Oslobođenja 45</string>
+    <string name="example_phone">(+381) 65 2034 175</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
@@ -43,4 +63,99 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="submit">Submit</string>
+    <string name="btn_edit_image">EDIT IMAGE</string>
+    <string name="profile_picture">Profile picture</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="email">Email</string>
+    <string name="address">Address</string>
+    <string name="phone">Phone</string>
+    <string name="btn_send_confirmation">SEND CONFIRMATION</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="deactivate_account">DEACTIVATE ACCOUNT</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
+    <string name="notifications">Notifications</string>
+    <string name="update_details">Update details</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="street">Street</string>
+    <string name="example_city">Novi Sad</string>
+    <string name="example_country">Serbia</string>
+    <string name="hidden_password">***********</string>
+    <string name="new_password">New password</string>
+    <string name="old_password">Old password</string>
+    <string name="create_accommodation">Create accommodation</string>
+    <string name="create">Create</string>
+    <string name="back">Back</string>
+    <string name="edit_icon">Edit icon</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="date">Date</string>
+    <string name="cancel_btn">CANCEL</string>
+    <string name="role">Role</string>
+    <string name="about_me">About me</string>
+    <string name="contact">Contact</string>
+    <string name="report">Report</string>
+    <string name="edit_btn">EDIT</string>
+    <string name="about">About</string>
+    <string name="profile">Profile</string>
+    <string name="my_profile">My profile</string>
+    <string name="my_accommodations">My accommodations</string>
+    <string name="reservation_requests">Reservation requests</string>
+
+    <string-array name="sort_options">
+        <item>Sort title ascending</item>
+        <item>Sort title descending</item>
+    </string-array>
+    <string-array name="accommodation_types">
+        <item>Room</item>
+        <item>Apartment</item>
+        <item>House</item>
+    </string-array>
+    <string-array name="price_types">
+        <item>Per night</item>
+        <item>Per person</item>
+    </string-array>
+    <string-array name="confirmation_types">
+        <item>Automatic</item>
+        <item>Manual</item>
+    </string-array>
+    <string-array name="accommodation_locations">
+        <item>New York, USA</item>
+        <item>Paris, France</item>
+        <item>Tokyo, Japan</item>
+        <item>Rome, Italy</item>
+        <item>Sydney, Australia</item>
+        <item>Rio de Janeiro, Brazil</item>
+        <item>London, United Kingdom</item>
+        <item>Beijing, China</item>
+        <item>Cairo, Egypt</item>
+        <item>Moscow, Russia</item>
+        <item>Dubai, United Arab Emirates</item>
+        <item>Mumbai, India</item>
+        <item>Cape Town, South Africa</item>
+        <item>Toronto, Canada</item>
+        <item>Seoul, South Korea</item>
+        <item>Berlin, Germany</item>
+        <item>Istanbul, Turkey</item>
+        <item>Buenos Aires, Argentina</item>
+        <item>Barcelona, Spain</item>
+        <item>Singapore, Singapore</item>
+        <item>Bangkok, Thailand</item>
+        <item>Amsterdam, Netherlands</item>
+        <item>Hong Kong, China</item>
+        <item>San Francisco, USA</item>
+        <item>Stockholm, Sweden</item>
+        <item>Mexico City, Mexico</item>
+        <item>Athens, Greece</item>
+        <item>Sao Paulo, Brazil</item>
+        <item>Vienna, Austria</item>
+        <item>Prague, Czech Republic</item>
+    </string-array>
+
 </resources>
