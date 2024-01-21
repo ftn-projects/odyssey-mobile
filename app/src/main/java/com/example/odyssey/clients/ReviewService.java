@@ -1,7 +1,5 @@
 package com.example.odyssey.clients;
 
-import com.example.odyssey.model.accommodations.Accommodation;
-import com.example.odyssey.model.accommodations.AccommodationRequest;
 import com.example.odyssey.model.reviews.AccommodationReview;
 import com.example.odyssey.model.reviews.HostReview;
 import com.example.odyssey.model.reviews.Review;

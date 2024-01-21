@@ -125,9 +125,6 @@ public class AccommodationDetailsFragment extends Fragment {
         this.rootView = view;
         getCurrentUser();
         accommodation = (Accommodation) getArguments().getSerializable("Accommodation");
-
-
-
         return view;
     }
 

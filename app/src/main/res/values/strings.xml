@@ -104,6 +104,8 @@
     <string name="about">About</string>
     <string name="profile">Profile</string>
     <string name="my_profile">My profile</string>
+    <string name="my_accommodations">My accommodations</string>
+    <string name="reservation_requests">Reservation requests</string>
 
     <string-array name="sort_options">
         <item>Sort title ascending</item>

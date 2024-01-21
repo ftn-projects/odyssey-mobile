@@ -25,7 +25,7 @@ import com.bumptech.glide.Glide;
 import com.example.odyssey.R;
 import com.example.odyssey.activities.MainActivity;
 import com.example.odyssey.clients.ClientUtils;
-import com.example.odyssey.model.accommodations.AccommodationRequest;
+import com.example.odyssey.model.accommodations.AccommodationRequestSubmission;
 import com.example.odyssey.utils.FileUploadUtils;
 
 import java.io.IOException;
@@ -40,7 +40,7 @@ import retrofit2.Response;
 
 public class CreateAccommodationRequestImages extends Fragment {
     private static final String ARG_REQUEST = "request";
-    private AccommodationRequest request = null;
+    private AccommodationRequestSubmission request = null;
     Button selectImageButton, createBtn, backBtn;
     LinearLayout imagesLayout;
     View v;
@@ -58,7 +58,7 @@ public class CreateAccommodationRequestImages extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null && getArguments().containsKey(ARG_REQUEST))
-            request = (AccommodationRequest) getArguments().getSerializable(ARG_REQUEST);
+            request = (AccommodationRequestSubmission) getArguments().getSerializable(ARG_REQUEST);
     }
 
     @Override
@@ -78,9 +78,9 @@ public class CreateAccommodationRequestImages extends Fragment {
 
         createBtn.setOnClickListener(v -> {
             collectImages();
-            ClientUtils.accommodationRequestService.create(request).enqueue(new Callback<AccommodationRequest>() {
+            ClientUtils.accommodationRequestService.create(request).enqueue(new Callback<AccommodationRequestSubmission>() {
                 @Override
-                public void onResponse(@NonNull Call<AccommodationRequest> call, @NonNull Response<AccommodationRequest> response) {
+                public void onResponse(@NonNull Call<AccommodationRequestSubmission> call, @NonNull Response<AccommodationRequestSubmission> response) {
                     if (response.isSuccessful()) {
                         Toast.makeText(requireActivity(), "Accommodation request created", Toast.LENGTH_SHORT).show();
                         assert response.body() != null;
@@ -93,7 +93,7 @@ public class CreateAccommodationRequestImages extends Fragment {
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<AccommodationRequest> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<AccommodationRequestSubmission> call, @NonNull Throwable t) {
                     Log.e("CreateAccommodationMap", t.getMessage() != null ? t.getMessage() : "Could not make a reservation request");
                 }
             });

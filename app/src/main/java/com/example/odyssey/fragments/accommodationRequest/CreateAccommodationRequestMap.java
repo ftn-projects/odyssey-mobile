@@ -17,7 +17,7 @@ import androidx.navigation.Navigation;
 
 import com.example.odyssey.R;
 import com.example.odyssey.activities.MainActivity;
-import com.example.odyssey.model.accommodations.AccommodationRequest;
+import com.example.odyssey.model.accommodations.AccommodationRequestSubmission;
 import com.example.odyssey.utils.Validation;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -47,7 +47,7 @@ import java.util.concurrent.TimeUnit;
 
 public class CreateAccommodationRequestMap extends Fragment implements MapListener {
     private static final String ARG_REQUEST = "request";
-    private AccommodationRequest request = null;
+    private AccommodationRequestSubmission request = null;
 
     MapView mapView;
     LinearLayout map;
@@ -73,7 +73,7 @@ public class CreateAccommodationRequestMap extends Fragment implements MapListen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null && getArguments().containsKey(ARG_REQUEST))
-            request = (AccommodationRequest) getArguments().getSerializable(ARG_REQUEST);
+            request = (AccommodationRequestSubmission) getArguments().getSerializable(ARG_REQUEST);
     }
 
     @Override

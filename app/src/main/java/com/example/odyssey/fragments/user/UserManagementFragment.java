@@ -56,7 +56,7 @@ public class UserManagementFragment extends Fragment {
         adapter = new UserManagementAdapter(requireContext(), v, new ArrayList<>());
         usersView.setAdapter(adapter);
 
-        MaterialButton allBtn = v.findViewById(R.id.all_toggle);
+        MaterialButton allBtn = v.findViewById(R.id.requested_toggle);
         MaterialButton activeBtn = v.findViewById(R.id.active_toggle);
         MaterialButton blockedBtn = v.findViewById(R.id.blocked_toggle);
         MaterialButton reportedBtn = v.findViewById(R.id.reported_toggle);

@@ -106,9 +106,9 @@
 
     <fragment
         android:id="@+id/nav_admin_accommodations"
-        android:name="com.example.odyssey.fragments.HomeFragment"
+        android:name="com.example.odyssey.fragments.accommodation.AccommodationManagementFragment"
         android:label="@string/admin_accommodations"
-        tools:layout="@layout/fragment_home">
+        tools:layout="@layout/fragment_accommodation_management">
     </fragment>
 
 
@@ -171,6 +171,12 @@
         android:id="@+id/nav_user_management_details"
         android:name="com.example.odyssey.fragments.user.UserManagementDetailsFragment"
         tools:layout="@layout/fragment_user_management_details">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_accommodation_request_details"
+        android:name="com.example.odyssey.fragments.accommodation.AccommodationRequestDetailsFragment"
+        tools:layout="@layout/fragment_accommodation_request_details">
     </fragment>
 
 </navigation>
