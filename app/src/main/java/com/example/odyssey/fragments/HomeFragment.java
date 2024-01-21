@@ -1,13 +1,21 @@
 package com.example.odyssey.fragments;
 
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -18,12 +26,16 @@ import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.accommodations.Amenity;
 import com.example.odyssey.model.accommodations.AvailabilitySlot;
 import com.example.odyssey.model.stats.AccommodationTotalStats;
+import com.example.odyssey.services.ShakeDetector;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,7 +52,8 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
     private String location;
     private Integer numberOfGuests;
 
-    private ArrayList<Accommodation> accommodations = new ArrayList<>();
+    private ShakeDetector shakeDetector;
+    private List<Accommodation> accommodations = new ArrayList<>();
     private View rootView;
 
     public HomeFragment() {
@@ -54,8 +67,28 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i("(¬‿¬)", "HomeFragment onCreate()");
+
+        shakeDetector = new ShakeDetector(requireContext());
+        shakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
+            @Override
+            public void onShakeDetected() {
+                switchSpinner();
+            }
+        });
+
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        shakeDetector.startListening();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        shakeDetector.stopListening();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,6 +104,21 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
         ImageButton searchButton = rootView.findViewById(R.id.search_button);
         searchButton.setOnClickListener(view -> getAccommodations());
 
+        Spinner sortSpinner = rootView.findViewById(R.id.sortSpinner);
+
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                spinnerSelected();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Handle no selection (optional)
+            }
+        });
+
         this.rootView = rootView;
         getAccommodations();
         return rootView;
@@ -82,6 +130,41 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
         super.onViewCreated(view, savedInstanceState);
     }
 
+    private void spinnerSelected(){
+        Spinner sortSpinner = rootView.findViewById(R.id.sortSpinner);
+        int position = sortSpinner.getSelectedItemPosition();
+        switch (position) {
+            case 0:
+                sortAscending();
+                break;
+            case 1:
+                sortDescending();
+                break;
+            default:
+                break;
+        }
+        populateAccommodationCards(accommodations);
+    }
+
+    private void switchSpinner(){
+        Spinner sortSpinner = rootView.findViewById(R.id.sortSpinner);
+        int position = sortSpinner.getSelectedItemPosition();
+        switch (position) {
+            case 0:
+                setSpinnerSelection(1);
+                break;
+            case 1:
+                setSpinnerSelection(0);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void setSpinnerSelection(int position){
+        Spinner sortSpinner = rootView.findViewById(R.id.sortSpinner);
+        sortSpinner.setSelection(position);
+    }
     private void showPopup() {
         FilterPopupDialog dialog = new FilterPopupDialog();
         dialog.setFilterDialogListener(this);
@@ -139,9 +222,8 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
             @Override
             public void onResponse(Call<ArrayList<Accommodation>> call, Response<ArrayList<Accommodation>> response) {
                 if (response.code() == 200) {
-                    LinearLayout accommodationContainer = rootView.findViewById(R.id.accommodation_cards_container);
                     accommodations = response.body();
-                    populateAccommodationCards(accommodations);
+                    spinnerSelected();
                 } else {
                     Log.d("REZ", "Bad");
                 }
@@ -197,5 +279,17 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
         } else {
             searchButtonGuests.setText("Anyone");
         }
+    }
+
+    private void sortAscending(){
+        accommodations = accommodations.stream()
+                .sorted(Comparator.comparing(Accommodation::getTitle))
+                .collect(Collectors.toList());
+    }
+
+    private void sortDescending(){
+        accommodations = accommodations.stream()
+                .sorted(Comparator.comparing(Accommodation::getTitle).reversed())
+                .collect(Collectors.toList());
     }
 }

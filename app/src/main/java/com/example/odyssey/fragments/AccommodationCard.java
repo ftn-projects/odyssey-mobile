@@ -166,7 +166,7 @@ public class AccommodationCard extends Fragment {
     private void checkFavorites(Boolean executable) {
         if(TokenUtils.getId()==null || !TokenUtils.getRole().equals("GUEST")) {
             if(executable){
-                Toast.makeText(getContext(), "You must be logged in as a user to favorite accommodations", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "You must be logged in as a guest to favorite accommodations", Toast.LENGTH_SHORT).show();
             }
             return;
         }
