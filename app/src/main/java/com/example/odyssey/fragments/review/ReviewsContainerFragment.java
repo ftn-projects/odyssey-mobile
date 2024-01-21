@@ -17,6 +17,7 @@ import com.example.odyssey.fragments.AccommodationReviewCard;
 import com.example.odyssey.fragments.HostReviewCard;
 import com.example.odyssey.model.reviews.AccommodationReview;
 import com.example.odyssey.model.reviews.HostReview;
+import com.example.odyssey.model.reviews.Review;
 import com.example.odyssey.model.stats.AccommodationTotalStats;
 import com.example.odyssey.model.stats.TotalStats;
 import com.example.odyssey.utils.TokenUtils;
@@ -80,7 +81,9 @@ public class ReviewsContainerFragment extends Fragment {
     }
 
     private void getAccommodationReviews() {
-        Call<ArrayList<AccommodationReview>> call = ClientUtils.reviewService.getAllAccommodationReviews(id, null, null);
+        ArrayList<Review.Status> statuses = new ArrayList<>();
+        statuses.add(Review.Status.ACCEPTED);
+        Call<ArrayList<AccommodationReview>> call = ClientUtils.reviewService.getAllAccommodationReviews(id, null, statuses);
 
         call.enqueue(new Callback<ArrayList<AccommodationReview>>() {
             @Override
@@ -98,7 +101,9 @@ public class ReviewsContainerFragment extends Fragment {
     }
 
     private void getHostReviews() {
-        Call<ArrayList<HostReview>> call = ClientUtils.reviewService.getAllHostReviews(id, null, null);
+        ArrayList<Review.Status> statuses = new ArrayList<>();
+        statuses.add(Review.Status.ACCEPTED);
+        Call<ArrayList<HostReview>> call = ClientUtils.reviewService.getAllHostReviews(id, null, statuses);
 
         call.enqueue(new Callback<ArrayList<HostReview>>() {
             @Override

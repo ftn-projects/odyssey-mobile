@@ -42,6 +42,13 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_host_reviews"
+        android:name="com.example.odyssey.fragments.HostReviewsView"
+        android:label="My Reviews"
+        tools:layout="@layout/fragment_host_reviews_view">
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_host_reservations"
         android:name="com.example.odyssey.fragments.HomeFragment"
         android:label="@string/host_reservations"

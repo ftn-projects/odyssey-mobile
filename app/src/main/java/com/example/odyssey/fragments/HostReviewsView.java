@@ -25,18 +25,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GuestReviewsView extends Fragment {
-
-    private Long guestId;
-
-    private List<AccommodationReview> accommodationReviews;
-    LinearLayout reviewsContainer;
-    public GuestReviewsView() {
+public class HostReviewsView extends Fragment {
+    private LinearLayout reviewsContainer;
+    public HostReviewsView() {
 
     }
 
-    public static GuestReviewsView newInstance() {
-        GuestReviewsView fragment = new GuestReviewsView();
+    public static HostReviewsView newInstance(String param1, String param2) {
+        HostReviewsView fragment = new HostReviewsView();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -46,29 +42,56 @@ public class GuestReviewsView extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
         }
     }
 
+    public void loadAll() {
+        reviewsContainer.removeAllViews();
+        getAccommodationReviews();
+        getHostReviews();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_guest_reviews_view, container, false);
-        reviewsContainer = view.findViewById(R.id.guest_reviews_view_container);
-        setGuestId(TokenUtils.getId());
-        return view;
+
+        return inflater.inflate(R.layout.fragment_host_reviews_view, container, false);
     }
 
-    public void setGuestId(Long guestId) {
-        this.guestId = guestId;
-        reviewsContainer.removeAllViews();
-        getGuestAccommodationReviews();
-        getGuestHostReviews();
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        reviewsContainer = view.findViewById(R.id.host_reviews_view_container);
+        loadAll();
     }
 
-    private void getGuestHostReviews(){
-        ArrayList<Review.Status> listTypes = new ArrayList<>(Arrays.asList(Review.Status.ACCEPTED));
-        Call<ArrayList<HostReview>> call = ClientUtils.reviewService.getAllHostReviews(null,guestId,listTypes);
+    private void getAccommodationReviews(){
+        ArrayList<Review.Status> statuses = new ArrayList<>();
+        statuses.add(Review.Status.ACCEPTED);
+        Call<ArrayList<AccommodationReview>> call = ClientUtils.reviewService.getAllAccommodationReviewsByHostId(TokenUtils.getId(), statuses);
+        call.enqueue(new Callback<ArrayList<AccommodationReview>>() {
+            @Override
+            public void onResponse(Call<ArrayList<AccommodationReview>> call, Response<ArrayList<AccommodationReview>> response) {
+                if (response.code() == 200) {
+                    List<AccommodationReview> reviews = response.body();
+                    if (reviews != null) {
+                        populateAccommodationReviews(reviews);
+
+                    } else {
+                        Log.d("REZ", "Bad");
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<ArrayList<AccommodationReview>> call, Throwable t) {
+                Log.d("REZ",t.getMessage() != null?t.getMessage():"error");
+            }
+        });
+    }
+
+    private void getHostReviews(){
+        ArrayList<Review.Status> statuses = new ArrayList<>();
+        statuses.add(Review.Status.ACCEPTED);
+        Call<ArrayList<HostReview>> call = ClientUtils.reviewService.getAllHostReviews(TokenUtils.getId(), null,statuses);
         call.enqueue(new Callback<ArrayList<HostReview>>() {
             @Override
             public void onResponse(Call<ArrayList<HostReview>> call, Response<ArrayList<HostReview>> response) {
@@ -84,29 +107,6 @@ public class GuestReviewsView extends Fragment {
             }
             @Override
             public void onFailure(Call<ArrayList<HostReview>> call, Throwable t) {
-                Log.d("REZ",t.getMessage() != null?t.getMessage():"error");
-            }
-        });
-    }
-
-    private void getGuestAccommodationReviews() {
-        ArrayList<Review.Status> listTypes = new ArrayList<>(Arrays.asList(Review.Status.ACCEPTED));
-        Call<ArrayList<AccommodationReview>> call = ClientUtils.reviewService.getAllAccommodationReviews(null,guestId,listTypes);
-        call.enqueue(new Callback<ArrayList<AccommodationReview>>() {
-            @Override
-            public void onResponse(Call<ArrayList<AccommodationReview>> call, Response<ArrayList<AccommodationReview>> response) {
-                if (response.code() == 200) {
-                    accommodationReviews = response.body();
-                    if (accommodationReviews != null) {
-                        populateAccommodationReviews(accommodationReviews);
-
-                    } else {
-                        Log.d("REZ", "Bad");
-                    }
-                }
-            }
-            @Override
-            public void onFailure(Call<ArrayList<AccommodationReview>> call, Throwable t) {
                 Log.d("REZ",t.getMessage() != null?t.getMessage():"error");
             }
         });

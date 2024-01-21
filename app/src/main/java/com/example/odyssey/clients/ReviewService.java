@@ -31,13 +31,19 @@ public interface ReviewService {
     Call<ArrayList<HostReview>> getAllHostReviews(
             @Query("hostId") Long hostId,
             @Query("submitterId") Long submitterId,
-            @Query("status") ArrayList<Review.Status> listTypes
+            @Query("listTypes") ArrayList<Review.Status> listTypes
     );
     @GET("reviews/accommodation/{id}")
     Call<ArrayList<AccommodationReview>> getOneAccommodationReview(@Query("id") Long id);
 
     @GET("reviews/host/{id}")
     Call<ArrayList<Review>> getOneHostReview(@Query("id") Long id);
+
+    @GET("reviews/accommodation/host/{id}")
+    Call<ArrayList<AccommodationReview>> getAllAccommodationReviewsByHostId(
+            @Path("id") Long id,
+            @Query("listTypes") ArrayList<Review.Status> listTypes
+    );
 
     @GET("reviews/accommodation/rating/{id}")
     Call<ArrayList<Integer>> getAccommodationRatings(@Path("id") Long id);
@@ -47,6 +53,7 @@ public interface ReviewService {
 
     @POST("reviews/accommodation")
     Call<ResponseBody> createAccommodationReview(@Body AccommodationReview request);
+
 
 
     @POST("reviews/host")

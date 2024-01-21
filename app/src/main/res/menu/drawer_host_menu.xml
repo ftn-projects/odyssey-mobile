@@ -34,19 +34,24 @@
             android:icon="@drawable/ic_accommodation"
             android:orderInCategory="6" />
 
+        <item android:id="@+id/nav_host_reviews"
+            android:title="My reviews"
+            android:icon="@drawable/ic_manage_reviews"
+            android:orderInCategory="7" />
+
         <item android:id="@+id/nav_host_notifications"
             android:title="@string/notifications"
             android:icon="@drawable/ic_notification"
-            android:orderInCategory="7" />
+            android:orderInCategory="8" />
 
         <item android:id="@+id/nav_host_stats"
             android:title="@string/host_stats"
             android:icon="@drawable/ic_stats"
-            android:orderInCategory="8" />
+            android:orderInCategory="9" />
 
         <item android:id="@+id/nav_logout"
             android:title="@string/logout"
             android:icon="@drawable/ic_logout"
-            android:orderInCategory="9" />
+            android:orderInCategory="10" />
     </group>
 </menu>
