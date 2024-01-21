@@ -6,6 +6,7 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Parcel;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -37,7 +38,9 @@ import com.example.odyssey.clients.ClientUtils;
 import com.example.odyssey.fragments.accommodationRequest.CreateAccommodationRequestDetails;
 import com.example.odyssey.fragments.user.ProfileFragment;
 import com.example.odyssey.fragments.review.ReviewSectionFragment;
-
+import com.example.odyssey.model.TimeSlot;
+import com.example.odyssey.model.reservations.AccreditReservation;
+import com.example.odyssey.model.reservations.ReservationRequest;
 import com.example.odyssey.model.users.User;
 import com.example.odyssey.model.accommodations.Accommodation;
 import com.example.odyssey.model.accommodations.Amenity;
@@ -45,6 +48,7 @@ import com.example.odyssey.model.accommodations.AvailabilitySlot;
 import com.example.odyssey.model.reviews.AccommodationReview;
 import com.example.odyssey.utils.TokenUtils;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
@@ -61,7 +65,10 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
@@ -91,6 +98,10 @@ public class AccommodationDetailsFragment extends Fragment {
     View rootView;
     Marker pickedLocationMarker;
 
+    private Long startDateLong;
+
+    private Long endDateLong;
+
     LinearLayout reviewsSummaryContainer;
 
     public AccommodationDetailsFragment() {
@@ -115,6 +126,15 @@ public class AccommodationDetailsFragment extends Fragment {
         getCurrentUser();
         accommodation = (Accommodation) getArguments().getSerializable("Accommodation");
 
+
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        addReviewSection();
         Set<Amenity> amenities = accommodation.getAmenities();
         reservationInputSection = view.findViewById(R.id.details_reservation_input_section);
         toggleReservationButton = view.findViewById(R.id.toggle_reservation_button);
@@ -193,10 +213,29 @@ public class AccommodationDetailsFragment extends Fragment {
             MaterialDatePicker<Pair<Long, Long>> materialDatePicker = MaterialDatePicker.Builder.dateRangePicker().setSelection(new Pair<>(
                     MaterialDatePicker.thisMonthInUtcMilliseconds(),
                     MaterialDatePicker.todayInUtcMilliseconds()
-            )).build();
+            )).setCalendarConstraints(new CalendarConstraints.Builder()
+                    .setValidator(new CalendarConstraints.DateValidator() {
+                        @Override
+                        public int describeContents() {
+                            return 0;
+                        }
+
+                        @Override
+                        public void writeToParcel(@NonNull Parcel dest, int flags) {
+
+                        }
+
+                        @Override
+                        public boolean isValid(long date) {
+                            return isDateAvailable(accommodation, date);
+                        }
+                    })
+                    .build()).build();
             materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
                 @Override
                 public void onPositiveButtonClick(Pair<Long, Long> selection) {
+                    startDateLong = selection.first;
+                    endDateLong = selection.second;
                     startDate = new Date(selection.first);
                     endDate = new Date(selection.second);
                     String date1 = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(startDate);
@@ -289,16 +328,27 @@ public class AccommodationDetailsFragment extends Fragment {
             e.printStackTrace();
         }
 
-        return view;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        addReviewSection();
+    public boolean isDateAvailable(Accommodation accommodationInput, long dateMil) {
 
+        LocalDateTime now = LocalDateTime.now();
+        Instant instant = Instant.ofEpochMilli(dateMil);
+        LocalDateTime date = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+        if (date.isBefore(now)) {
+            return false;
+        }
+
+        for (AvailabilitySlot availabilitySlot : accommodationInput.getAvailableSlots()) {
+
+            TimeSlot timeSlot = availabilitySlot.getTimeSlot();
+            if (timeSlot.coolerContainsDay(date.toLocalDate())) {
+                return true;
+            }
+        }
+
+        return false;
     }
-
     public void setImages() {
         ArrayList<SlideModel> imageList = new ArrayList<>();
 
@@ -343,7 +393,6 @@ public class AccommodationDetailsFragment extends Fragment {
             }
         });
     }
-
     public void loadAccommodation(Long accommodationId, Date startDate, Date endDate, Integer numberOfGuests) {
         Long startDateLong = startDate != null ? startDate.getTime() : null;
         Long endDateLong = endDate != null ? endDate.getTime() : null;
@@ -478,8 +527,32 @@ public class AccommodationDetailsFragment extends Fragment {
             Toast.makeText(requireActivity(), "You must be logged in as a user to make a reservation", Toast.LENGTH_LONG).show();
             return;
         }
+        Long rid = 1L;
+        Instant instantStart = Instant.ofEpochMilli(startDateLong);
+        Instant instantEnd = Instant.ofEpochMilli(endDateLong);
+        LocalDateTime startDateLocalDate = instantStart.atZone(ZoneId.systemDefault()).toLocalDateTime();
+        LocalDateTime endDateLocalDate = instantEnd.atZone(ZoneId.systemDefault()).toLocalDateTime();
+        TimeSlot timeSlot = new TimeSlot(startDateLocalDate, endDateLocalDate);
+        ReservationRequest reservation = new ReservationRequest(rid, accommodation.getTotalPrice(), numberOfGuests, ReservationRequest.Status.REQUESTED, LocalDateTime.now(), timeSlot, accommodation.getId(), loggedUser.getId());
 
-        Toast.makeText(requireActivity(), "Reservation sent successfully", Toast.LENGTH_LONG).show();
+        Call<ResponseBody> getUserCall = ClientUtils.reservationService.createReservation(reservation);
+        Log.e("REZ", "Sending reservation request");
+        getUserCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(requireActivity(), "Reservation request sent", Toast.LENGTH_LONG).show();
+                } else {
+                    loggedUser = null;
+                    Toast.makeText(requireActivity(), "Error sending reservation request", Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                loggedUser = null;
+                t.printStackTrace();
+            }
+        });
 
     }
 

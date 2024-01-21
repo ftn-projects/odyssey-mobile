@@ -105,7 +105,8 @@ public class AccommodationCard extends Fragment {
 
         locationTextView.setText(accommodation.getAddress().getCity() + ", " + accommodation.getAddress().getCountry());
         accommodationNameView.setText(accommodation.getTitle());
-        accommodationRatingView.setText(accommodation.getAverageRating().toString());
+        if(accommodation.getAverageRating()!=null)
+            accommodationRatingView.setText(accommodation.getAverageRating().toString());
         if (accommodation.getDefaultPrice() != null && accommodation.getDefaultPrice() > 0) {
             perPricingPriceNumberView.setText(accommodation.getDefaultPrice().toString());
             if (accommodation.getPricing() == Accommodation.PricingType.PER_NIGHT)

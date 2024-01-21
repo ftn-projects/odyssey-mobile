@@ -30,6 +30,9 @@ public interface AccommodationService {
     @GET("accommodations/{id}")
     Call<Accommodation> findById(@Path("id") Long id);
 
+    @GET("accommodations/host/{id}")
+    Call<ArrayList<Accommodation>> findByHostId(@Path("id") Long id);
+
     @GET("accommodations/{id}/totalPrice")
     Call<Accommodation> getAccommodationWithPrice(
             @Path("id") Long id,

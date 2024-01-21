@@ -97,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
 
         navController = Navigation.findNavController(this, R.id.fragment_container_main);
         appBarConfiguration = new AppBarConfiguration
-                .Builder(R.id.nav_home, R.id.nav_guest_reservations, R.id.nav_guest_reviews, R.id.nav_host_reservations,
-                R.id.nav_host_accommodations, R.id.nav_host_stats, R.id.nav_admin_accommodations, R.id.nav_admin_reviews, R.id.nav_admin_users)
+                .Builder(R.id.nav_home, R.id.nav_guest_reservations, R.id.nav_guest_reviews, R.id.nav_host_reviews, R.id.nav_host_reservations,
+R.id.nav_host_stats, R.id.nav_admin_accommodations, R.id.nav_host_accommodations_view ,R.id.nav_admin_reviews, R.id.nav_admin_users)
                 .setOpenableLayout(drawer)
                 .build();
         NavigationUI.setupWithNavController(navView, navController);
