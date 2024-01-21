@@ -380,7 +380,8 @@ public class AccommodationDetailsFragment extends Fragment {
                         }
                     }
                 } else {
-                    Log.d("REZ", "Bad");
+                    String error = ClientUtils.getError(response, "Error while getting accommodation images");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -405,7 +406,8 @@ public class AccommodationDetailsFragment extends Fragment {
 
                     }
                 } else {
-                    Log.d("REZ", "Bad");
+                    String error = ClientUtils.getError(response, "Error while getting accommodation prices");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -541,7 +543,8 @@ public class AccommodationDetailsFragment extends Fragment {
                     Toast.makeText(requireActivity(), "Reservation request sent", Toast.LENGTH_LONG).show();
                 } else {
                     loggedUser = null;
-                    Toast.makeText(requireActivity(), "Error sending reservation request", Toast.LENGTH_LONG).show();
+                    String error = ClientUtils.getError(response, "Error while sending reservation");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
             @Override
@@ -562,6 +565,8 @@ public class AccommodationDetailsFragment extends Fragment {
                     loggedUser = response.body();
                 } else {
                     loggedUser = null;
+                    String error = ClientUtils.getError(response, "Error while getting user data");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
             @Override

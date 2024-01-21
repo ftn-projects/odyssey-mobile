@@ -148,6 +148,9 @@ public class AccommodationReviewCard extends Fragment {
                 if (response.code() == 200) {
                     flagIcon.setVisibility(View.GONE);
                     Toast.makeText(getContext(), "Review reported", Toast.LENGTH_SHORT).show();
+                }else{
+                    String error = ClientUtils.getError(response, "Error while reporting review");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -170,7 +173,8 @@ public class AccommodationReviewCard extends Fragment {
                     Toast.makeText(getContext(), "Review deleted", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Toast.makeText(getContext(), "Error deleting review", Toast.LENGTH_SHORT).show();
+                    String error = ClientUtils.getError(response, "Error while deleting review");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 

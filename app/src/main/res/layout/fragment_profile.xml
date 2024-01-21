@@ -7,7 +7,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".fragments.user.ProfileFragment">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <!-- HEADER -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -258,61 +264,13 @@
         android:layout_marginLeft="30dp"
         android:text="REPORT"/>
 
-    <!-- REVIEW SUBMISSION -->
     <LinearLayout
-        android:id="@+id/review_submission"
+        android:id="@+id/profile_fragment_reviews_section_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <!-- RatingBar -->
-            <RatingBar
-                android:id="@+id/rating_bar"
-                style="?android:attr/ratingBarStyleIndicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:isIndicator="false"
-                android:numStars="5"
-                android:progressTint="@color/star_color"
-                android:rating="0" />
-        </LinearLayout>
-
-        <!-- TextInputLayout with TextInputEditText for the comment -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/review_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_regular"
-                android:hint="Write a comment" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- MaterialButton for submitting the comment -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/review_button"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:fontFamily="@font/montserrat_regular"
-            android:text="@string/submit" />
-
+        />
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/review_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"/>
-
+    </ScrollView>
 </LinearLayout>
 

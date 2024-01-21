@@ -11,6 +11,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -136,7 +137,8 @@ public class FilterPopupDialog extends DialogFragment{
                     populateCheckBoxes();
 
                 }else{
-                    Log.e("REZ","Meesage recieved: "+response.code());
+                    String error = ClientUtils.getError(response, "Error while getting amenities");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 

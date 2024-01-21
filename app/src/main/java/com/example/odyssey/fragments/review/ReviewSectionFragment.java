@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
@@ -86,7 +87,8 @@ public class ReviewSectionFragment extends Fragment {
                 if (response.isSuccessful()) {
                     createReviewSummary(response.body());
                 } else {
-                    Log.e("REZ", "Unable to get ratings");
+                    String error = ClientUtils.getError(response, "Error while getting accommodation ratings");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -106,7 +108,8 @@ public class ReviewSectionFragment extends Fragment {
                 if (response.isSuccessful()) {
                     createReviewSummary(response.body());
                 } else {
-                    Log.e("REZ", "Unable to get ratings");
+                    String error = ClientUtils.getError(response, "Error while getting host ratings");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 

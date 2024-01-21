@@ -152,7 +152,8 @@ public class AccommodationCard extends Fragment {
                         Glide.with(getContext()).load(imagePath).into(imageView);
                     }
                 } else {
-                    Log.d("REZ", "Bad");
+                    String error = ClientUtils.getError(response, "Error while getting images");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -195,7 +196,8 @@ public class AccommodationCard extends Fragment {
                     }
 
                 } else {
-                    Log.d("REZ", "Bad");
+                    String error = ClientUtils.getError(response, "Error while getting favorite accommodations");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -219,7 +221,8 @@ public class AccommodationCard extends Fragment {
                     animateHeartFill();
                 }
                 else {
-                    Log.d("REZ", "Bad");
+                    String error = ClientUtils.getError(response, "Error while adding to favorites");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -242,7 +245,8 @@ public class AccommodationCard extends Fragment {
                     animateHeartFill();
                 }
                 else {
-                    Log.d("REZ", "Bad");
+                    String error = ClientUtils.getError(response, "Error while removing from favorites");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 

@@ -385,6 +385,9 @@ public class HostStatsFragment extends Fragment {
                 if (response.isSuccessful()) {
                     setTotalStats(response.body());
                     getAllAccommodationStats();
+                }else{
+                    String error = ClientUtils.getError(response, "Error while generating stats");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -405,6 +408,10 @@ public class HostStatsFragment extends Fragment {
                 if (response.isSuccessful()) {
                     setAccommodationTotalStatsList(response.body());
                     populateData();
+                }
+                else{
+                    String error = ClientUtils.getError(response, "Error while generating stats");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -436,6 +443,10 @@ public class HostStatsFragment extends Fragment {
                     // Get the download URL from the response body
                     FileDownloadManager manager = new FileDownloadManager();
                     manager.requestDownload(call.request().url().toString(), getContext(), getActivity(), "hostReport.pdf");
+                }
+                else{
+                    String error = ClientUtils.getError(response, "Error while downloading report");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 

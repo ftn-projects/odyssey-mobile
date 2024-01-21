@@ -90,6 +90,9 @@ public class ReviewsContainerFragment extends Fragment {
             public void onResponse(Call<ArrayList<AccommodationReview>> call, Response<ArrayList<AccommodationReview>> response) {
                 if (response.isSuccessful()) {
                     populateAccommodationReviews(response.body());
+                }else{
+                    String error = ClientUtils.getError(response, "Error while getting accommodation reviews");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -110,6 +113,9 @@ public class ReviewsContainerFragment extends Fragment {
             public void onResponse(Call<ArrayList<HostReview>> call, Response<ArrayList<HostReview>> response) {
                 if (response.isSuccessful()) {
                     populateHostReviews(response.body());
+                }else{
+                    String error = ClientUtils.getError(response, "Errror while getting host reviews");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 

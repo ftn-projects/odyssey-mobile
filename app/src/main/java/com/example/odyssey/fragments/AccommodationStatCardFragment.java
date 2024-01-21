@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.odyssey.R;
@@ -105,7 +106,8 @@ public class AccommodationStatCardFragment extends Fragment {
                         setImagePath(ClientUtils.SERVICE_API_PATH + "accommodations/" + accommodationStats.getAccommodation().getId() + "/images/" + accommodationImages.get(0));
                     }
                 }else{
-                    Log.d("REZ","Bad");
+                    String error = ClientUtils.getError(response, "Error while getting images");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 
