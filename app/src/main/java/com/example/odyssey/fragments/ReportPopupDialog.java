@@ -17,7 +17,7 @@ import androidx.navigation.Navigation;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
-import com.example.odyssey.model.reports.UserReport;
+import com.example.odyssey.model.reports.UserReportSubmission;
 import com.example.odyssey.model.reservations.AccreditReservation;
 import com.example.odyssey.model.users.User;
 import com.example.odyssey.utils.TokenUtils;
@@ -26,8 +26,8 @@ import com.google.android.material.button.MaterialButton;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -75,7 +75,7 @@ public class ReportPopupDialog extends DialogFragment {
 
         Button report = view.findViewById(R.id.buttonReport);
         report.setOnClickListener(v -> {
-            UserReport rep = new UserReport(description.getText().toString(), TokenUtils.getId(), reported);
+            UserReportSubmission rep = new UserReportSubmission(description.getText().toString(), TokenUtils.getId(), reported);
             makeReport(rep);
         });
 
@@ -111,7 +111,7 @@ public class ReportPopupDialog extends DialogFragment {
         });
     }
 
-    public void makeReport(UserReport rep) {
+    public void makeReport(UserReportSubmission rep) {
         Long host = TokenUtils.getRole().equals("HOST") ? TokenUtils.getId() : reported;
         Long guest = TokenUtils.getRole().equals("GUEST") ? TokenUtils.getId() : reported;
         boolean isHost = host.equals(TokenUtils.getId());
@@ -192,11 +192,11 @@ public class ReportPopupDialog extends DialogFragment {
 
     }
 
-    private void sendReport(UserReport rep) {
-        Call<Void> call = ClientUtils.reportService.reportUser(rep);
-        call.enqueue(new Callback<Void>() {
+    private void sendReport(UserReportSubmission rep) {
+        Call<ResponseBody> call = ClientUtils.reportService.reportUser(rep);
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     dismiss();
                     Toast.makeText(requireActivity(), "Your report has been sent", Toast.LENGTH_LONG).show();
@@ -209,7 +209,7 @@ public class ReportPopupDialog extends DialogFragment {
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d("FAILED", t.getMessage() != null ? t.getMessage() : "error");
             }
         });

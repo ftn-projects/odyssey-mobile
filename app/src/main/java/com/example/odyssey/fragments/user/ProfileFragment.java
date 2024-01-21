@@ -52,7 +52,6 @@ public class ProfileFragment extends Fragment {
     private TextInputEditText reviewInput;
     private LinearLayout bioSection;
     private LinearLayout reviewList;
-    private Button reportButton, editButton;
     private RatingBar ratingBar;
     private User user, loggedIn;
     private boolean isLogged = true;
@@ -73,8 +72,6 @@ public class ProfileFragment extends Fragment {
 
         userId = id;
         isLogged = loggedInId != null && loggedInId.equals(id);
-        loadData(id);
-        getLoggedIn();
     }
 
     @Override
@@ -98,10 +95,10 @@ public class ProfileFragment extends Fragment {
         Button reviewBtn = v.findViewById(R.id.review_button);
         reviewBtn.setOnClickListener(v1 -> submitReview());
 
-        reportButton = v.findViewById(R.id.report_button);
+        Button reportButton = v.findViewById(R.id.report_button);
         reportButton.setVisibility(isLogged || TokenUtils.getId() == null ? View.GONE : View.VISIBLE);
         reportButton.setOnClickListener(v1 -> submitReport());
-        editButton = v.findViewById(R.id.edit_button);
+        Button editButton = v.findViewById(R.id.edit_button);
         editButton.setVisibility(isLogged ? View.VISIBLE : View.GONE);
         editButton.setOnClickListener(c -> {
             Bundle bundle = new Bundle();
@@ -115,6 +112,8 @@ public class ProfileFragment extends Fragment {
         v.findViewById(R.id.profile_address_section).setVisibility(isLogged ? View.VISIBLE : View.GONE);
         v.findViewById(R.id.review_submission).setVisibility(isLogged ? View.GONE : View.VISIBLE);
 
+        loadData(userId);
+        getLoggedIn();
         return v;
     }
 
@@ -194,7 +193,7 @@ public class ProfileFragment extends Fragment {
     }
 
     public void submitReview(HostReview review) {
-        ClientUtils.reviewService.create(review).enqueue(new Callback<ResponseBody>() {
+        ClientUtils.reviewService.createHostReview(review).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) {

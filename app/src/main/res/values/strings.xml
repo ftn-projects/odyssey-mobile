@@ -103,6 +103,7 @@
     <string name="edit_btn">EDIT</string>
     <string name="about">About</string>
     <string name="profile">Profile</string>
+    <string name="my_profile">My profile</string>
 
     <string-array name="sort_options">
         <item>Sort title ascending</item>

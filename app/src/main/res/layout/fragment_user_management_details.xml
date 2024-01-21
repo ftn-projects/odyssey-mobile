@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.user.ProfileFragment">
+    tools:context=".fragments.user.UserManagementDetailsFragment">
 
     <!-- HEADER -->
     <LinearLayout
@@ -29,7 +29,8 @@
                 android:layout_height="100dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                app:strokeWidth="1dp"/>
+                app:strokeWidth="1dp"
+                android:contentDescription="Profile image" />
         </androidx.cardview.widget.CardView>
 
         <LinearLayout
@@ -46,6 +47,14 @@
                 android:fontFamily="@font/montserrat_semibold"
                 android:textSize="18sp"
                 android:text="@string/name" />
+
+            <TextView
+                android:id="@+id/profile_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_semibold"
+                android:layout_marginTop="10dp"
+                android:text="ACTIVE" />
 
             <TextView
                 android:id="@+id/profile_role"
@@ -243,76 +252,31 @@
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/edit_button"
+        android:id="@+id/activate_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="30dp"
         android:layout_marginLeft="30dp"
-        android:text="EDIT"/>
+        android:text="ACTIVATE"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/report_button"
+        android:id="@+id/deactivate_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="30dp"
         android:layout_marginLeft="30dp"
-        android:text="REPORT"/>
+        android:text="BLOCK"/>
 
-    <!-- REVIEW SUBMISSION -->
-    <LinearLayout
-        android:id="@+id/review_submission"
+    <ListView
+        android:id="@+id/reports_list"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="30dp"
+        android:layout_marginBottom="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <!-- RatingBar -->
-            <RatingBar
-                android:id="@+id/rating_bar"
-                style="?android:attr/ratingBarStyleIndicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:isIndicator="false"
-                android:numStars="5"
-                android:progressTint="@color/star_color"
-                android:rating="0" />
-        </LinearLayout>
 
-        <!-- TextInputLayout with TextInputEditText for the comment -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/review_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_regular"
-                android:hint="Write a comment" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- MaterialButton for submitting the comment -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/review_button"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:fontFamily="@font/montserrat_regular"
-            android:text="@string/submit" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/review_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"/>
 
 </LinearLayout>
 
