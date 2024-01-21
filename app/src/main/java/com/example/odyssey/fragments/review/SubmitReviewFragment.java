@@ -85,7 +85,11 @@ public class SubmitReviewFragment extends Fragment {
     }
 
     private void submitReview(){
-        if(!isReviewDataValid()) return;;
+        if(!isReviewDataValid()) return;
+        if(loggedUser == null || TokenUtils.getRole()!="GUEST") {
+            Toast.makeText(requireActivity(), "You must be logged in as a guest to submit a review", Toast.LENGTH_LONG).show();
+            return;
+        }
         RatingBar ratingBar = getView().findViewById(R.id.review_rating_bar);
         Double rating = Double.valueOf(ratingBar.getRating());
         TextInputEditText commentInput = getView().findViewById(R.id.review_comment_input);
@@ -123,7 +127,8 @@ public class SubmitReviewFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Toast.makeText(requireActivity(), "Successfully created a review!", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(requireActivity(), "Unexpected error while creating a review", Toast.LENGTH_LONG).show();
+                    String error = ClientUtils.getError(response, "Error while sending accommodation review");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -143,7 +148,8 @@ public class SubmitReviewFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Toast.makeText(requireActivity(), "Successfully created a review!", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(requireActivity(), "Unexpected error while creating a review", Toast.LENGTH_LONG).show();
+                    String error = ClientUtils.getError(response, "Error while creating host review");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -164,6 +170,8 @@ public class SubmitReviewFragment extends Fragment {
                     accommodation = response.body();
                 } else {
                     accommodation = null;
+                    String error = ClientUtils.getError(response, "Error while getting accommodation");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -183,7 +191,8 @@ public class SubmitReviewFragment extends Fragment {
                 if (response.isSuccessful()) {
                     host = response.body();
                 } else {
-                    host = null;
+                    String error = ClientUtils.getError(response, "Error while getting user");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -203,6 +212,8 @@ public class SubmitReviewFragment extends Fragment {
                     loggedUser = response.body();
                 } else {
                     loggedUser = null;
+                    String error = ClientUtils.getError(response, "Error while getting user");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 

@@ -166,7 +166,8 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
 
                     populateAccommodationCards(commonAccommodations);
                 } else {
-                    Log.d("REZ", "Bad");
+                    String error = ClientUtils.getError(response, "Error while getting favorites");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -273,7 +274,8 @@ public class HomeFragment extends Fragment implements FilterPopupDialog.FilterDi
                     accommodations = response.body();
                     spinnerSelected();
                 } else {
-                    Log.d("REZ", "Bad");
+                    String error = ClientUtils.getError(response, "Error while getting accommodations");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 

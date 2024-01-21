@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.odyssey.R;
 import com.example.odyssey.clients.ClientUtils;
@@ -80,6 +81,10 @@ public class GuestReviewsView extends Fragment {
                     } else {
                         Log.d("REZ", "Bad");
                     }
+                }
+                else{
+                    String error = ClientUtils.getError(response, "Error while getting host reviews");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
             @Override

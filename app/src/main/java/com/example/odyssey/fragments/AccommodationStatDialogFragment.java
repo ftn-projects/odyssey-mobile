@@ -7,7 +7,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.DataSet;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,16 +30,6 @@ import com.example.odyssey.model.stats.AccommodationTotalStats;
 import com.example.odyssey.model.stats.MonthlyStats;
 import com.example.odyssey.services.FileDownloadManager;
 import com.example.odyssey.utils.TokenUtils;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.DataSet;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.button.MaterialButton;
 
 import java.time.Instant;
@@ -128,6 +127,9 @@ public class AccommodationStatDialogFragment extends DialogFragment {
                     // Get the download URL from the response body
                     FileDownloadManager manager = new FileDownloadManager();
                     manager.requestDownload(call.request().url().toString(), getContext(), getActivity(), "accommodationReport.pdf");
+                }else{
+                    String error = ClientUtils.getError(response, "Error while downloading accommodation report");
+                    Toast.makeText(requireActivity(), error, Toast.LENGTH_LONG).show();
                 }
             }
 
