@@ -95,7 +95,10 @@
     <string name="edit_icon">Edit icon</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
-
+    <string-array name="sort_options">
+        <item>Sort title ascending</item>
+        <item>Sort title descending</item>
+    </string-array>
     <string-array name="accommodation_types">
         <item>Room</item>
         <item>Apartment</item>

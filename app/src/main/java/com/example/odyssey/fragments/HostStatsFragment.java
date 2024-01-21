@@ -29,6 +29,7 @@ import com.example.odyssey.clients.FileDownloadService;
 import com.example.odyssey.model.stats.AccommodationTotalStats;
 import com.example.odyssey.model.stats.TotalStats;
 import com.example.odyssey.services.FileDownloadManager;
+import com.example.odyssey.services.RotationDetector;
 import com.example.odyssey.utils.TokenUtils;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -69,18 +70,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HostStatsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HostStatsFragment extends Fragment {
+    private RotationDetector rotationDetector;
     private List<Long> dates;
 
     public void setDates(List<Long> dates) {
@@ -135,6 +133,42 @@ public class HostStatsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_host_stats, container, false);
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.BODY_SENSORS) != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.BODY_SENSORS}, 1001);
+        } else {
+            // Permission is granted, start rotation detection
+        }
+
+        rotationDetector = new RotationDetector(requireContext());
+
+        rotationDetector.setOnRotationListener(new RotationDetector.OnRotationListener() {
+            @Override
+            public void onRotationChanged(float azimuth, float pitch, float roll) {
+                Log.e("RotationDetector", "azimuth: " + azimuth + " pitch: " + pitch + " roll: " + roll);
+                float rotation = (float) Math.toDegrees(azimuth);
+                rotatePieChart(90 - rotation);
+            }
+        });
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        rotationDetector.startListening();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        rotationDetector.stopListening();
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         if (dates == null || dates.size() != 2) {
             LocalDate today = LocalDate.now();
@@ -177,10 +211,12 @@ public class HostStatsFragment extends Fragment {
                 downloadReport();
             }
         });
-
-        return view;
     }
 
+    private void rotatePieChart(float degrees){
+        PieChart pieChart = getView().findViewById(R.id.mainPieChart);
+        pieChart.setRotation(degrees);
+    }
 
     private void populateData() {
         if (totalStats == null || accommodationTotalStatsList == null) return;

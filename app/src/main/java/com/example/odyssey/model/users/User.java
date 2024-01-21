@@ -15,7 +15,7 @@ public class User implements Serializable {
     private Settings settings;
     private String bio;
 
-    public static class Settings {
+    public static class Settings implements Serializable{
         private Boolean reservationRequested = true;
         private Boolean reservationAccepted = true;
         private Boolean reservationDeclined = true;
