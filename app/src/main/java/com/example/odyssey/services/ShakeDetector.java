@@ -8,7 +8,7 @@ import android.hardware.SensorManager;
 import android.util.Log;
 
 public class ShakeDetector {
-    private static final float SHAKE_THRESHOLD = 15F; // Adjust as needed
+    private static final float SHAKE_THRESHOLD = 14F; // Adjust as needed
     private SensorManager sensorManager;
     private Sensor accelerometer;
     private OnShakeListener listener;

@@ -233,73 +233,11 @@
                             android:layout_height="wrap_content" />
                     </LinearLayout>
                 </LinearLayout>
-
                 <LinearLayout
-                    android:id="@+id/accommodation_details_summary_reviews_container"
+                    android:id="@+id/accommodation_details_reviews_section_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" />
-
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <!-- First item: Text "Amenities" -->
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp">
-
-                        <!-- RatingBar -->
-                        <RatingBar
-
-                            android:id="@+id/accommodation_review_rating_bar"
-                            style="?android:attr/ratingBarStyleIndicator"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:isIndicator="false"
-                            android:numStars="5"
-                            android:progressTint="@color/star_color"
-                            android:rating="3" />
-
-                        <!-- TextInputLayout with TextInputEditText for the comment -->
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/accommodation_review_comment"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:hint="Write a comment" />
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <!-- MaterialButton for submitting the comment -->
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/accommodation_review_submit_button"
-                            style="@style/Widget.MaterialComponents.Button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:text="Submit" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/accommodation_details_reviews_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"/>
-                </LinearLayout>
-
+                    android:orientation="vertical"/>
             </LinearLayout>
         </ScrollView>
 
